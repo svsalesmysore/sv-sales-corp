@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Rajdhani:wght@500;600;700&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
@@ -46,6 +47,15 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+@theme {
+  --color-brand-red: #C0392B;
+  --color-brand-dark: #1A1A2E;
+  --color-brand-steel: #2C3E50;
+  --color-brand-silver: #BDC3C7;
+  --color-brand-gold: #F39C12;
+  --font-display: "Rajdhani", system-ui, sans-serif;
 }
 
 :root {
