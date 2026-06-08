@@ -4,7 +4,7 @@ const DE_SIZES = ['6x7','8x9','10x11','12x13','14x15','16x17','18x19','20x22','2
 const RING_SIZES = ['6x7','8x9','10x11','12x13','14x15','16x17','18x19','20x22','21x23','24x27','30x32','36x41']
 
 export const spannersWrenchesProducts: Product[] = [
-  { id: 'open-end-spanner-set', name: 'Open End Spanner Set (6×7 to 30×32)', description: 'Set of 11 open-end spanners 6×7 to 30×32mm — chrome vanadium, Taparia', categoryId: 'spanners-wrenches', subcategory: 'Spanner Sets', unit: 'Set', imageQuery: 'open end spanner set chrome vanadium', tags: ['spanner','set','open end'], brand: 'Taparia', inStock: true },
+  { id: 'open-end-spanner-set', name: 'Open End Spanner Set (6×7 to 30×32)', description: 'Set of 11 open-end spanners 6×7 to 30×32mm — chrome vanadium, Taparia', categoryId: 'spanners-wrenches', subcategory: 'Spanner Sets', unit: 'Set', imageQuery: 'open end spanner set chrome vanadium', tags: ['spanner','set','open end'], brand: 'Taparia', inStock: true, sketchfabModelId: 'af6cd1168c544d78944b04ad01681317' },
   { id: 'ring-spanner-set', name: 'Ring Spanner Set (6×7 to 30×32)', description: 'Set of 11 ring spanners 6×7 to 30×32mm — drop-forged, Taparia', categoryId: 'spanners-wrenches', subcategory: 'Spanner Sets', unit: 'Set', imageQuery: 'ring spanner set taparia chrome', tags: ['spanner','set','ring'], brand: 'Taparia', inStock: true },
   ...DE_SIZES.map((size) => ({
     id: `double-end-spanner-${size}`,
