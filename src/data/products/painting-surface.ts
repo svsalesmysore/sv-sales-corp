@@ -1,0 +1,11 @@
+import type { Product } from '../types'
+
+export const paintingSurfaceProducts: Product[] = [
+  { id: 'painting-brush-2in', name: 'Painting Brush 2" (Mahindra)', description: '2-inch Mahindra paint brush for automotive finishing', categoryId: 'painting-surface', subcategory: 'Paint Brushes', unit: 'No', imageQuery: 'paint brush 2 inch automotive finishing', tags: ['brush','2 inch','Mahindra'], brand: 'Mahindra', inStock: true },
+  { id: 'painting-brush-3in', name: 'Painting Brush 3" (Mahindra)', description: '3-inch Mahindra paint brush', categoryId: 'painting-surface', subcategory: 'Paint Brushes', unit: 'No', imageQuery: 'paint brush 3 inch mahindra', tags: ['brush','3 inch','Mahindra'], brand: 'Mahindra', inStock: true },
+  { id: 'painting-brush-4in', name: 'Painting Brush 4" (Mahindra)', description: '4-inch Mahindra paint brush for large surfaces', categoryId: 'painting-surface', subcategory: 'Paint Brushes', unit: 'No', imageQuery: 'paint brush 4 inch wide large surface', tags: ['brush','4 inch','Mahindra'], brand: 'Mahindra', inStock: true },
+  { id: 'painting-spray-gun', name: 'Painting Spray Gun', description: 'Gravity-feed spray gun for automotive paint application', categoryId: 'painting-surface', subcategory: 'Spray Equipment', unit: 'No', imageQuery: 'automotive spray paint gun gravity feed', tags: ['spray gun','paint','automotive'], inStock: true },
+  { id: 'painting-mask', name: 'Painting Mask', description: 'Protective respirator mask for spray painting', categoryId: 'painting-surface', subcategory: 'Safety', unit: 'No', imageQuery: 'painting mask respirator spray protective', tags: ['mask','respirator','painting'], inStock: true },
+  { id: 'painting-poly-film', name: 'Painting Poly Film', description: 'Masking poly film for protecting surfaces during painting', categoryId: 'painting-surface', subcategory: 'Masking', unit: 'No', imageQuery: 'painting masking poly film automotive', tags: ['poly film','masking','painting'], inStock: true },
+  { id: 'coating-brush', name: 'Coating Brush', description: 'Brush for applying coatings, sealants and adhesives', categoryId: 'painting-surface', subcategory: 'Paint Brushes', unit: 'No', imageQuery: 'coating brush sealant application tool', tags: ['coating brush','sealant'], inStock: true },
+]

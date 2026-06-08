@@ -1,0 +1,11 @@
+import type { Product } from '../types'
+
+export const electricalFansProducts: Product[] = [
+  { id: 'battery-terminals', name: 'Battery Terminals', description: 'Lead battery terminals for automotive battery connections', categoryId: 'electrical-fans', subcategory: 'Electrical', unit: 'No', imageQuery: 'battery terminals automotive lead clamp', tags: ['battery','terminals','automotive'], inStock: true },
+  { id: 'delux-spotter-switch', name: 'Delux Spotter Timing Switch', description: 'Electronic timing switch for spot welding and electrical equipment', categoryId: 'electrical-fans', subcategory: 'Electrical', unit: 'No', imageQuery: 'spot welder timing switch electronic control', tags: ['timing switch','spot welder','electronic'], inStock: true },
+  { id: 'ceiling-fan', name: 'Ceiling Fan', description: 'Standard ceiling fan for workshop and office use', categoryId: 'electrical-fans', subcategory: 'Fans', unit: 'No', imageQuery: 'ceiling fan industrial workshop standard', tags: ['fan','ceiling'], inStock: true },
+  { id: 'wall-mounting-fan', name: 'Wall Mounting Fan', description: 'Wall-mounted oscillating fan for workshop ventilation', categoryId: 'electrical-fans', subcategory: 'Fans', unit: 'No', imageQuery: 'wall mount fan workshop oscillating', tags: ['fan','wall mount'], inStock: true },
+  { id: 'industrial-pedestal-fan', name: 'Industrial Pedestal Fan', description: 'Heavy-duty industrial pedestal fan for large workshop spaces', categoryId: 'electrical-fans', subcategory: 'Industrial Fans', unit: 'No', imageQuery: 'industrial pedestal fan heavy duty workshop', tags: ['fan','industrial','pedestal'], inStock: true },
+  { id: 'industrial-wall-fan', name: 'Industrial Wall Mounting Fan', description: 'High-power industrial wall fan for workshop and factory ventilation', categoryId: 'electrical-fans', subcategory: 'Industrial Fans', unit: 'No', imageQuery: 'industrial wall fan high power factory', tags: ['fan','industrial','wall'], inStock: true },
+  { id: 'industrial-exhaust-fan', name: 'Industrial Exhaust Fan', description: 'Industrial exhaust fan for workshop fume and heat extraction', categoryId: 'electrical-fans', subcategory: 'Industrial Fans', unit: 'No', imageQuery: 'industrial exhaust fan ventilation workshop', tags: ['fan','exhaust','industrial'], inStock: true },
+]
