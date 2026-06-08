@@ -1,30 +1,57 @@
 /**
- * Generates a consistent, keyword-relevant product image URL.
- * Uses loremflickr.com — no API key required, pulls real Flickr photos.
- * The `lock` param seeds the random so the same product always shows the same image.
+ * Product image utilities.
+ * Uses loremflickr.com — no API key, real Flickr photos.
+ *
+ * Strategy: use tested category-level keywords (guaranteed to have Flickr coverage)
+ * combined with a per-product numeric seed so each product gets a different photo
+ * within the same relevant visual domain.
+ */
+
+/**
+ * Tested, working loremflickr keywords for each product category.
+ * Every entry was verified to return a real photo (not defaultImage) in June 2026.
+ */
+const CATEGORY_KEYWORDS: Record<string, string> = {
+  'tyre-repair':         'tire,wheel,repair',
+  'spanners-wrenches':   'wrench,spanner,tool',
+  'sockets-drives':      'socket,ratchet',
+  'pliers-screwdrivers': 'pliers,screwdriver,tool',
+  'jacks-lifting':       'jack,car,hydraulic',
+  'pneumatic-air':       'compressor,pneumatic,air',
+  'grease-lubrication':  'grease,lubrication',
+  'welding':             'welding,welder',
+  'painting-surface':    'spray,paint,automotive',
+  'fastening-clamping':  'clamp,fastener',
+  'electrical-fans':     'industrial,fan,workshop',
+  'safety-protective':   'safety,gloves,ppe',
+  'sealing-adhesives':   'sealant,adhesive',
+  'miscellaneous':       'bearing,industrial,workshop',
+}
+
+/** Numeric seed from any string — stable across reloads */
+function toSeed(s: string): number {
+  return s.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0)
+}
+
+/**
+ * Returns a consistent, category-relevant photo URL for a product.
+ * @param categoryId  e.g. "tyre-repair"
+ * @param productId   used as seed for variety within the category
+ * @param width       image width in pixels (default 400)
+ * @param height      image height in pixels (default 300)
  */
 export function getProductImage(
-  imageQuery: string,
-  seed: string,
+  categoryId: string,
+  productId: string,
   width = 400,
   height = 300,
 ): string {
-  // Take up to 3 meaningful keywords, comma-join (loremflickr separator)
-  const keywords = imageQuery
-    .split(/[\s,]+/)
-    .filter(Boolean)
-    .slice(0, 3)
-    .join(',')
-
-  // Numeric seed from string so each product is stable across reloads
-  const numericSeed = seed
-    .split('')
-    .reduce((acc, c) => acc + c.charCodeAt(0), 0)
-
-  return `https://loremflickr.com/${width}/${height}/${encodeURIComponent(keywords)}?lock=${numericSeed}`
+  const keywords = CATEGORY_KEYWORDS[categoryId] ?? 'industrial,tools,workshop'
+  const seed = toSeed(productId)
+  return `https://loremflickr.com/${width}/${height}/${encodeURIComponent(keywords)}?lock=${seed}`
 }
 
-/** Fallback image when the primary fails */
+/** Generic fallback when an image fails to load */
 export function getFallbackImage(width = 400, height = 300): string {
-  return `https://loremflickr.com/${width}/${height}/industrial,tools,workshop?lock=42`
+  return `https://loremflickr.com/${width}/${height}/industrial,tools,workshop?lock=1`
 }

@@ -22,7 +22,7 @@ export default function ProductCard({ product, showCategory = false }: Props) {
 
   const imageUrl = imgError
     ? getFallbackImage(400, 300)
-    : getProductImage(product.imageQuery, product.id, 400, 300)
+    : getProductImage(product.categoryId, product.id, 400, 300)
 
   const handleAddToQuote = (e: React.MouseEvent) => {
     e.preventDefault()

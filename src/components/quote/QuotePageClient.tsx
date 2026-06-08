@@ -144,7 +144,7 @@ export default function QuotePageClient() {
               const imgErr = imgErrors[item.product.id]
               const imgUrl = imgErr
                 ? getFallbackImage(120, 90)
-                : getProductImage(item.product.imageQuery, item.product.id, 120, 90)
+                : getProductImage(item.product.categoryId, item.product.id, 120, 90)
 
               return (
                 <div key={item.product.id} className="bg-white rounded-xl border border-gray-100 p-4 flex items-start gap-4">
