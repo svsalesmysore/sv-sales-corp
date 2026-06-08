@@ -16,7 +16,7 @@ const CATEGORY_KEYWORDS: Record<string, string> = {
   'spanners-wrenches':   'wrench,spanner,tool',
   'sockets-drives':      'socket,ratchet',
   'pliers-screwdrivers': 'pliers,screwdriver,tool',
-  'jacks-lifting':       'jack,car,hydraulic',
+  'jacks-lifting':       'car,jack,garage',
   'pneumatic-air':       'compressor,pneumatic,air',
   'grease-lubrication':  'grease,lubrication',
   'welding':             'welding,welder',
@@ -25,7 +25,7 @@ const CATEGORY_KEYWORDS: Record<string, string> = {
   'electrical-fans':     'industrial,fan,workshop',
   'safety-protective':   'safety,gloves,ppe',
   'sealing-adhesives':   'sealant,adhesive',
-  'miscellaneous':       'bearing,industrial,workshop',
+  'miscellaneous':       'workshop,equipment,mechanical',
 }
 
 /** Numeric seed from any string — stable across reloads */
