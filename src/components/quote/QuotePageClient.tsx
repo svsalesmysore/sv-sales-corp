@@ -8,6 +8,7 @@ import { toast } from 'sonner'
 import { useQuoteCart } from '@/context/QuoteCartContext'
 import { BRAND } from '@/lib/brand'
 import { cn } from '@/lib/utils'
+import { getProductImage, getFallbackImage } from '@/lib/image'
 
 interface FormData {
   name:    string
@@ -142,8 +143,8 @@ export default function QuotePageClient() {
             {items.map((item) => {
               const imgErr = imgErrors[item.product.id]
               const imgUrl = imgErr
-                ? `https://source.unsplash.com/120x90/?industrial,workshop`
-                : `https://source.unsplash.com/120x90/?${encodeURIComponent(item.product.imageQuery)}`
+                ? getFallbackImage(120, 90)
+                : getProductImage(item.product.imageQuery, item.product.id, 120, 90)
 
               return (
                 <div key={item.product.id} className="bg-white rounded-xl border border-gray-100 p-4 flex items-start gap-4">

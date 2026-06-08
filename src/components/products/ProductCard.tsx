@@ -7,6 +7,7 @@ import { ShoppingCart, Check, Eye } from 'lucide-react'
 import { toast } from 'sonner'
 import { useQuoteCart } from '@/context/QuoteCartContext'
 import { cn } from '@/lib/utils'
+import { getProductImage, getFallbackImage } from '@/lib/image'
 import type { Product } from '@/data/types'
 
 interface Props {
@@ -20,8 +21,8 @@ export default function ProductCard({ product, showCategory = false }: Props) {
   const inCart = isInCart(product.id)
 
   const imageUrl = imgError
-    ? `https://source.unsplash.com/400x300/?industrial,workshop`
-    : `https://source.unsplash.com/400x300/?${encodeURIComponent(product.imageQuery)}`
+    ? getFallbackImage(400, 300)
+    : getProductImage(product.imageQuery, product.id, 400, 300)
 
   const handleAddToQuote = (e: React.MouseEvent) => {
     e.preventDefault()

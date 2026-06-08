@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Image from 'next/image'
 import { Box, ImageIcon, ExternalLink } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { getProductImage, getFallbackImage } from '@/lib/image'
 
 interface Props {
   productName: string
@@ -16,8 +17,8 @@ export default function ProductViewer3D({ productName, imageQuery, sketchfabMode
   const [imgError, setImgError] = useState(false)
 
   const imageUrl = imgError
-    ? `https://source.unsplash.com/800x600/?industrial,tools`
-    : `https://source.unsplash.com/800x600/?${encodeURIComponent(imageQuery)}`
+    ? getFallbackImage(800, 600)
+    : getProductImage(imageQuery, imageQuery, 800, 600)
 
   return (
     <div className="rounded-2xl overflow-hidden border border-gray-200 bg-gray-50">
