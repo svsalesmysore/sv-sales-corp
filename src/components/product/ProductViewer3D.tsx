@@ -8,18 +8,17 @@ import { getProductImage, getFallbackImage } from '@/lib/image'
 
 interface Props {
   productName: string
-  categoryId: string
   productId: string
   sketchfabModelId?: string
 }
 
-export default function ProductViewer3D({ productName, categoryId, productId, sketchfabModelId }: Props) {
+export default function ProductViewer3D({ productName, productId, sketchfabModelId }: Props) {
   const [mode, setMode] = useState<'photo' | '3d'>('photo')
   const [imgError, setImgError] = useState(false)
 
   const imageUrl = imgError
-    ? getFallbackImage(800, 600)
-    : getProductImage(categoryId, productId, 800, 600)
+    ? getFallbackImage()
+    : getProductImage(productId)
 
   return (
     <div className="rounded-2xl overflow-hidden border border-gray-200 bg-gray-50">

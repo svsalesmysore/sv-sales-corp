@@ -21,8 +21,8 @@ export default function ProductCard({ product, showCategory = false }: Props) {
   const inCart = isInCart(product.id)
 
   const imageUrl = imgError
-    ? getFallbackImage(400, 300)
-    : getProductImage(product.categoryId, product.id, 400, 300)
+    ? getFallbackImage()
+    : getProductImage(product.id)
 
   const handleAddToQuote = (e: React.MouseEvent) => {
     e.preventDefault()

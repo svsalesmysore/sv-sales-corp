@@ -50,7 +50,6 @@ export default function ProductDetailClient({ product, categoryName, relatedProd
           <div>
             <ProductViewer3D
               productName={product.name}
-              categoryId={product.categoryId}
               productId={product.id}
               sketchfabModelId={product.sketchfabModelId}
             />
