@@ -15,14 +15,16 @@ import type { Product } from '@/data/types'
 function ResultRow({ product, onClose }: { product: Product; onClose: () => void }) {
   const { addItem, isInCart } = useQuoteCart()
   const hasSizes = !!product.sizeOptions?.length
-  const [size, setSize] = useState<string | undefined>(product.sizeOptions?.[0])
+  const [size, setSize] = useState<string>('')          // unselected by default — must confirm
   const [qty, setQty] = useState(1)
   const [imgErr, setImgErr] = useState(false)
   const added = isInCart(product.id, hasSizes ? size : undefined)
+  const needsSize = hasSizes && !size
 
   const img = imgErr ? getFallbackImage() : getProductImage(product.id)
 
   const add = () => {
+    if (needsSize) { toast.error(`Please select a ${product.sizeLabel || 'size'}`); return }
     addItem(product, hasSizes ? size : undefined, qty)
     toast.success('Added to quote', {
       description: `${product.name}${hasSizes ? ` — ${size}` : ''} × ${qty}`,
@@ -48,9 +50,13 @@ function ResultRow({ product, onClose }: { product: Product; onClose: () => void
             <select
               value={size}
               onChange={(e) => setSize(e.target.value)}
-              className="text-xs border border-gray-200 rounded-lg px-2 py-1 text-brand-dark bg-white focus:outline-none focus:ring-1 focus:ring-brand-red/40 max-w-[150px]"
+              className={cn(
+                'text-xs border rounded-lg px-2 py-1 bg-white focus:outline-none focus:ring-1 focus:ring-brand-red/40 max-w-[160px]',
+                needsSize ? 'border-brand-red/50 text-gray-500' : 'border-gray-200 text-brand-dark'
+              )}
               aria-label={product.sizeLabel || 'Size'}
             >
+              <option value="" disabled>Select {product.sizeLabel || 'size'}…</option>
               {product.sizeOptions!.map((o) => <option key={o} value={o}>{o}</option>)}
             </select>
           )}
@@ -70,7 +76,9 @@ function ResultRow({ product, onClose }: { product: Product; onClose: () => void
         onClick={add}
         className={cn(
           'shrink-0 flex items-center gap-1.5 text-xs font-medium px-3 py-2 rounded-lg transition-all',
-          added ? 'bg-green-50 text-green-600 border border-green-200' : 'bg-brand-red text-white hover:bg-brand-red/80'
+          added ? 'bg-green-50 text-green-600 border border-green-200'
+                : needsSize ? 'bg-gray-100 text-gray-400 border border-gray-200'
+                : 'bg-brand-red text-white hover:bg-brand-red/80'
         )}
       >
         {added ? <Check className="w-3.5 h-3.5" /> : <ShoppingCart className="w-3.5 h-3.5" />}
@@ -80,15 +88,21 @@ function ResultRow({ product, onClose }: { product: Product; onClose: () => void
   )
 }
 
+const BRANDS = ['All', 'Lion', 'GOWIN', 'Elephant'] as const
+
 export default function SearchOverlay({ open, onClose }: { open: boolean; onClose: () => void }) {
   const [query, setQuery] = useState('')
+  const [brand, setBrand] = useState<(typeof BRANDS)[number]>('All')
   const deferred = useDeferredValue(query)
   const inputRef = useRef<HTMLInputElement>(null)
 
   const results = useMemo(() => {
     const q = deferred.trim()
-    return q.length >= 2 ? searchProducts(q).slice(0, 40) : []
-  }, [deferred])
+    if (q.length < 2) return []
+    let r = searchProducts(q)
+    if (brand !== 'All') r = r.filter((p) => (p.brand ?? '').toLowerCase() === brand.toLowerCase())
+    return r.slice(0, 40)
+  }, [deferred, brand])
 
   // focus input + lock scroll + Esc to close
   useEffect(() => {
@@ -118,6 +132,23 @@ export default function SearchOverlay({ open, onClose }: { open: boolean; onClos
           <button onClick={onClose} className="text-gray-400 hover:text-gray-600 shrink-0" aria-label="Close search">
             <X className="w-5 h-5" />
           </button>
+        </div>
+
+        {/* brand filter */}
+        <div className="flex items-center gap-2 px-4 py-2.5 border-b border-gray-100 overflow-x-auto">
+          <span className="text-xs text-gray-400 shrink-0">Brand:</span>
+          {BRANDS.map((b) => (
+            <button
+              key={b}
+              onClick={() => setBrand(b)}
+              className={cn(
+                'text-xs rounded-full px-3 py-1 font-medium transition-colors shrink-0',
+                brand === b ? 'bg-brand-red text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+              )}
+            >
+              {b}
+            </button>
+          ))}
         </div>
 
         {/* results */}

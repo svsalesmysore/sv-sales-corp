@@ -28,6 +28,43 @@ export const getProductById = (id: string): Product | undefined =>
 export const getProductsByCategory = (catId: string): Product[] =>
   allProducts.filter((p) => p.categoryId === catId)
 
+/* ── brands ──────────────────────────────────────────────────── */
+export interface Brand {
+  id: string          // slug used in URLs
+  name: string        // display name (matches Product.brand)
+  blurb: string
+  productCount: number
+}
+
+const BRAND_META: Record<string, { name: string; blurb: string }> = {
+  lion:     { name: 'Lion',     blurb: 'Pneumatic tools, pressure washers, compressors, jacks & garage equipment' },
+  gowin:    { name: 'GOWIN',    blurb: 'Vices, clamps, pliers, hammers, pullers & quality hand tools' },
+  elephant: { name: 'Elephant', blurb: 'Painter spray guns, paint equipment, couplers & pneumatic accessories' },
+}
+
+export const brandSlug = (brand?: string): string => (brand ?? '').toLowerCase()
+
+export const brands: Brand[] = Object.entries(BRAND_META).map(([id, m]) => ({
+  id,
+  name: m.name,
+  blurb: m.blurb,
+  productCount: allProducts.filter((p) => brandSlug(p.brand) === id).length,
+}))
+
+export const getProductsByBrand = (brandId: string): Product[] =>
+  allProducts.filter((p) => brandSlug(p.brand) === brandId)
+
+/** Categories that contain at least one product of the given brand, with per-brand counts. */
+export const categoriesForBrand = (brandId: string): Category[] =>
+  categoriesWithCounts
+    .map((cat) => ({
+      ...cat,
+      productCount: allProducts.filter(
+        (p) => p.categoryId === cat.id && brandSlug(p.brand) === brandId,
+      ).length,
+    }))
+    .filter((cat) => cat.productCount > 0)
+
 export const searchProducts = (query: string): Product[] => {
   const q = query.toLowerCase()
   return allProducts.filter(

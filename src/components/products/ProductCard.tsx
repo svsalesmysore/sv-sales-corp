@@ -19,7 +19,8 @@ export default function ProductCard({ product, showCategory = false }: Props) {
   const { addItem, isInCart } = useQuoteCart()
   const [imgError, setImgError] = useState(false)
   const hasSizes = !!product.sizeOptions?.length
-  const [size, setSize] = useState<string | undefined>(product.sizeOptions?.[0])
+  const [size, setSize] = useState<string>('')          // unselected by default — must confirm
+  const needsSize = hasSizes && !size
   const inCart = isInCart(product.id, hasSizes ? size : undefined)
 
   const imageUrl = imgError
@@ -29,6 +30,7 @@ export default function ProductCard({ product, showCategory = false }: Props) {
   const handleAddToQuote = (e: React.MouseEvent) => {
     e.preventDefault()
     e.stopPropagation()
+    if (needsSize) { toast.error(`Please select a ${product.sizeLabel || 'size'}`); return }
     if (!inCart) {
       addItem(product, hasSizes ? size : undefined)
       toast.success(`Added to quote`, {
@@ -99,8 +101,12 @@ export default function ProductCard({ product, showCategory = false }: Props) {
               value={size}
               onChange={(e) => { e.stopPropagation(); setSize(e.target.value) }}
               onClick={(e) => e.stopPropagation()}
-              className="w-full text-xs border border-gray-200 rounded-lg px-2 py-1.5 text-brand-dark focus:outline-none focus:ring-1 focus:ring-brand-red/40 focus:border-brand-red bg-white"
+              className={cn(
+                'w-full text-xs border rounded-lg px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-brand-red/40 focus:border-brand-red bg-white',
+                needsSize ? 'border-brand-red/50 text-gray-500' : 'border-gray-200 text-brand-dark'
+              )}
             >
+              <option value="" disabled>Select {product.sizeLabel || 'size'}…</option>
               {product.sizeOptions!.map((opt) => (
                 <option key={opt} value={opt}>{opt}</option>
               ))}
@@ -118,6 +124,8 @@ export default function ProductCard({ product, showCategory = false }: Props) {
               'flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg transition-all',
               inCart
                 ? 'bg-green-50 text-green-600 border border-green-200 cursor-default'
+                : needsSize
+                ? 'bg-gray-100 text-gray-400 border border-gray-200'
                 : 'bg-brand-red text-white hover:bg-brand-red/80 hover:scale-105'
             )}
           >

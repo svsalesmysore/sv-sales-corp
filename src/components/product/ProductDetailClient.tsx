@@ -18,7 +18,8 @@ interface Props {
 export default function ProductDetailClient({ product, categoryName, relatedProducts }: Props) {
   const { addItem, isInCart } = useQuoteCart()
   const hasSizes = !!product.sizeOptions?.length
-  const [size, setSize] = useState<string | undefined>(product.sizeOptions?.[0])
+  const [size, setSize] = useState<string>('')          // unselected by default — must confirm
+  const needsSize = hasSizes && !size
   const inCart = isInCart(product.id, hasSizes ? size : undefined)
 
   // specs for the selected variant (family) merged over common specs
@@ -26,6 +27,7 @@ export default function ProductDetailClient({ product, categoryName, relatedProd
   const activeSpecs = { ...(product.specifications || {}), ...(activeVariant?.specifications || {}) }
 
   const handleAdd = () => {
+    if (needsSize) { toast.error(`Please select a ${product.sizeLabel || 'size'}`); return }
     if (!inCart) {
       addItem(product, hasSizes ? size : undefined)
       toast.success('Added to quote cart', { description: hasSizes ? `${product.name} — ${size}` : product.name })
@@ -147,6 +149,11 @@ export default function ProductDetailClient({ product, categoryName, relatedProd
               <p className="text-sm text-gray-500 mb-4">
                 ✦ We don&apos;t display prices online. Add to your quote cart and we&apos;ll send you the best bulk pricing.
               </p>
+              {needsSize && (
+                <p className="text-xs text-brand-red mb-2 font-medium">
+                  ↑ Please select a {product.sizeLabel || 'size'} above to continue.
+                </p>
+              )}
               <button
                 onClick={handleAdd}
                 disabled={inCart}
@@ -154,6 +161,8 @@ export default function ProductDetailClient({ product, categoryName, relatedProd
                   'w-full flex items-center justify-center gap-2 py-3 px-6 rounded-xl font-semibold text-base transition-all',
                   inCart
                     ? 'bg-green-50 text-green-600 border-2 border-green-200 cursor-default'
+                    : needsSize
+                    ? 'bg-gray-100 text-gray-400 border-2 border-gray-200'
                     : 'bg-brand-red text-white hover:bg-brand-red/80 shadow-lg shadow-brand-red/20 hover:scale-[1.02]'
                 )}
               >
