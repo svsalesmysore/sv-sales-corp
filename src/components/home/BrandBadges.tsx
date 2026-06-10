@@ -2,8 +2,8 @@ import { Shield, Star, Award } from 'lucide-react'
 import { BRAND } from '@/lib/brand'
 
 const stats = [
-  { icon: Star,   label: 'Products',           value: '363' },
-  { icon: Shield, label: 'Categories',          value: '45' },
+  { icon: Star,   label: 'Products',           value: '379' },
+  { icon: Shield, label: 'Categories',          value: '46' },
   { icon: Award,  label: 'Years in Business',   value: '25+' },
 ]
 

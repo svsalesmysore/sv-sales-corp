@@ -269,6 +269,12 @@
       "name": "FRL Units & Palm Sanders",
       "description": "FRL units & palm sanders.",
       "icon": "Filter"
+    },
+    {
+      "id": "elp-brass-fittings",
+      "name": "Brass Fittings & Couplers",
+      "description": "Pneumatic quick couplers, brass nipples, adaptors and PU tube fittings.",
+      "icon": "Cable"
     }
   ],
   "products": [
@@ -8307,6 +8313,319 @@
       ],
       "specifications": {
         "Type": "6\" Air Palm Sander"
+      },
+      "inStock": true
+    },
+    {
+      "id": "elp-coupler-steel",
+      "model": "Pneumatic Quick Coupler",
+      "name": "Pneumatic Quick Coupler \u2014 Regular Steel",
+      "description": "Pneumatic Quick Coupler \u2014 Regular Steel \u2014 Elephant / Painter. Type: Quick-release coupler & plug set (PH/PP/PM/PF + SH/SP/SM/SF) \u00b7 Body: Steel \u00b7 Sizes: 1/4\", 3/8\", 1/2\".",
+      "categoryId": "elp-brass-fittings",
+      "unit": "No",
+      "brand": "Elephant",
+      "tags": [
+        "Elephant",
+        "Painter",
+        "fitting",
+        "coupler"
+      ],
+      "specifications": {
+        "Type": "Quick-release coupler & plug set (PH/PP/PM/PF + SH/SP/SM/SF)",
+        "Body": "Steel",
+        "Sizes": "1/4\", 3/8\", 1/2\""
+      },
+      "inStock": true
+    },
+    {
+      "id": "elp-coupler-nitto",
+      "model": "Pneumatic Quick Coupler",
+      "name": "Pneumatic Quick Coupler \u2014 Japanese Nitto Type",
+      "description": "Pneumatic Quick Coupler \u2014 Japanese Nitto Type \u2014 Elephant / Painter. Type: One-touch quick coupler (JPH\u2013JSF) \u00b7 Standard: Japanese / Nitto \u00b7 Body: Steel \u00b7 Sizes: 1/4\", 3/8\", 1/2\".",
+      "categoryId": "elp-brass-fittings",
+      "unit": "No",
+      "brand": "Elephant",
+      "tags": [
+        "Elephant",
+        "Painter",
+        "fitting",
+        "coupler"
+      ],
+      "specifications": {
+        "Type": "One-touch quick coupler (JPH\u2013JSF)",
+        "Standard": "Japanese / Nitto",
+        "Body": "Steel",
+        "Sizes": "1/4\", 3/8\", 1/2\""
+      },
+      "inStock": true
+    },
+    {
+      "id": "elp-coupler-hq",
+      "model": "Pneumatic Quick Coupler",
+      "name": "Pneumatic Quick Coupler \u2014 High Quality Steel",
+      "description": "Pneumatic Quick Coupler \u2014 High Quality Steel \u2014 Elephant / Painter. Type: Premium one-touch coupler (SJPH\u2013SJSF) \u00b7 Body: Steel, Nitto type \u00b7 Sizes: 1/4\", 3/8\", 1/2\".",
+      "categoryId": "elp-brass-fittings",
+      "unit": "No",
+      "brand": "Elephant",
+      "tags": [
+        "Elephant",
+        "Painter",
+        "fitting",
+        "coupler"
+      ],
+      "specifications": {
+        "Type": "Premium one-touch coupler (SJPH\u2013SJSF)",
+        "Body": "Steel, Nitto type",
+        "Sizes": "1/4\", 3/8\", 1/2\""
+      },
+      "inStock": true
+    },
+    {
+      "id": "elp-brass-compression-adaptor",
+      "model": "Brass Compression Adaptor (Male \u00d7 Female)",
+      "name": "Brass Compression Adaptor (Male \u00d7 Female)",
+      "description": "Brass Compression Adaptor (Male \u00d7 Female) \u2014 Elephant / Painter. Type: Compression adaptor \u00b7 Thread: Male BSP \u00d7 Female NPT.",
+      "categoryId": "elp-brass-fittings",
+      "unit": "No",
+      "brand": "Elephant",
+      "tags": [
+        "Elephant",
+        "Painter",
+        "fitting",
+        "coupler"
+      ],
+      "specifications": {
+        "Type": "Compression adaptor",
+        "Thread": "Male BSP \u00d7 Female NPT"
+      },
+      "inStock": true
+    },
+    {
+      "id": "elp-brass-hex-socket",
+      "model": "Brass Hex Socket",
+      "name": "Brass Hex Socket",
+      "description": "Brass Hex Socket \u2014 Elephant / Painter. Type: Hex socket fitting.",
+      "categoryId": "elp-brass-fittings",
+      "unit": "No",
+      "brand": "Elephant",
+      "tags": [
+        "Elephant",
+        "Painter",
+        "fitting",
+        "coupler"
+      ],
+      "specifications": {
+        "Type": "Hex socket fitting"
+      },
+      "inStock": true
+    },
+    {
+      "id": "elp-brass-hex-plug",
+      "model": "Brass Hex Plug (BSP)",
+      "name": "Brass Hex Plug (BSP)",
+      "description": "Brass Hex Plug (BSP) \u2014 Elephant / Painter. Type: Hex plug \u00b7 Thread: BSP.",
+      "categoryId": "elp-brass-fittings",
+      "unit": "No",
+      "brand": "Elephant",
+      "tags": [
+        "Elephant",
+        "Painter",
+        "fitting",
+        "coupler"
+      ],
+      "specifications": {
+        "Type": "Hex plug",
+        "Thread": "BSP"
+      },
+      "inStock": true
+    },
+    {
+      "id": "elp-brass-y-nipple",
+      "model": "Brass Y-Joint Nipple (Hose)",
+      "name": "Brass Y-Joint Nipple (Hose)",
+      "description": "Brass Y-Joint Nipple (Hose) \u2014 Elephant / Painter. Type: Y joint nipple, hose.",
+      "categoryId": "elp-brass-fittings",
+      "unit": "No",
+      "brand": "Elephant",
+      "tags": [
+        "Elephant",
+        "Painter",
+        "fitting",
+        "coupler"
+      ],
+      "specifications": {
+        "Type": "Y joint nipple, hose"
+      },
+      "inStock": true
+    },
+    {
+      "id": "elp-brass-cross-nipple",
+      "model": "Brass Cross-Joint Nipple (Hose)",
+      "name": "Brass Cross-Joint Nipple (Hose)",
+      "description": "Brass Cross-Joint Nipple (Hose) \u2014 Elephant / Painter. Type: Cross joint nipple, hose.",
+      "categoryId": "elp-brass-fittings",
+      "unit": "No",
+      "brand": "Elephant",
+      "tags": [
+        "Elephant",
+        "Painter",
+        "fitting",
+        "coupler"
+      ],
+      "specifications": {
+        "Type": "Cross joint nipple, hose"
+      },
+      "inStock": true
+    },
+    {
+      "id": "elp-brass-straight-nipple",
+      "model": "Brass Straight-Joint Nipple (Hose)",
+      "name": "Brass Straight-Joint Nipple (Hose)",
+      "description": "Brass Straight-Joint Nipple (Hose) \u2014 Elephant / Painter. Type: Straight joint nipple, hose.",
+      "categoryId": "elp-brass-fittings",
+      "unit": "No",
+      "brand": "Elephant",
+      "tags": [
+        "Elephant",
+        "Painter",
+        "fitting",
+        "coupler"
+      ],
+      "specifications": {
+        "Type": "Straight joint nipple, hose"
+      },
+      "inStock": true
+    },
+    {
+      "id": "elp-brass-tee-nipple",
+      "model": "Brass Tee-Joint Nipple (Hose)",
+      "name": "Brass Tee-Joint Nipple (Hose)",
+      "description": "Brass Tee-Joint Nipple (Hose) \u2014 Elephant / Painter. Type: Tee joint nipple, hose.",
+      "categoryId": "elp-brass-fittings",
+      "unit": "No",
+      "brand": "Elephant",
+      "tags": [
+        "Elephant",
+        "Painter",
+        "fitting",
+        "coupler"
+      ],
+      "specifications": {
+        "Type": "Tee joint nipple, hose"
+      },
+      "inStock": true
+    },
+    {
+      "id": "elp-brass-hose-nipple",
+      "model": "Brass Hose Nipple (Male)",
+      "name": "Brass Hose Nipple (Male)",
+      "description": "Brass Hose Nipple (Male) \u2014 Elephant / Painter. Type: Hose nipple, male.",
+      "categoryId": "elp-brass-fittings",
+      "unit": "No",
+      "brand": "Elephant",
+      "tags": [
+        "Elephant",
+        "Painter",
+        "fitting",
+        "coupler"
+      ],
+      "specifications": {
+        "Type": "Hose nipple, male"
+      },
+      "inStock": true
+    },
+    {
+      "id": "elp-pu-tee",
+      "model": "Equal PU Tee Assembly",
+      "name": "Equal PU Tee Assembly",
+      "description": "Equal PU Tee Assembly \u2014 Elephant / Painter. Type: PU tube tee connector.",
+      "categoryId": "elp-brass-fittings",
+      "unit": "No",
+      "brand": "Elephant",
+      "tags": [
+        "Elephant",
+        "Painter",
+        "fitting",
+        "coupler"
+      ],
+      "specifications": {
+        "Type": "PU tube tee connector"
+      },
+      "inStock": true
+    },
+    {
+      "id": "elp-pu-elbow",
+      "model": "Equal PU Elbow Assembly",
+      "name": "Equal PU Elbow Assembly",
+      "description": "Equal PU Elbow Assembly \u2014 Elephant / Painter. Type: PU tube elbow connector.",
+      "categoryId": "elp-brass-fittings",
+      "unit": "No",
+      "brand": "Elephant",
+      "tags": [
+        "Elephant",
+        "Painter",
+        "fitting",
+        "coupler"
+      ],
+      "specifications": {
+        "Type": "PU tube elbow connector"
+      },
+      "inStock": true
+    },
+    {
+      "id": "elp-pu-connector",
+      "model": "PU Connector Assembly",
+      "name": "PU Connector Assembly",
+      "description": "PU Connector Assembly \u2014 Elephant / Painter. Type: PU tube straight connector.",
+      "categoryId": "elp-brass-fittings",
+      "unit": "No",
+      "brand": "Elephant",
+      "tags": [
+        "Elephant",
+        "Painter",
+        "fitting",
+        "coupler"
+      ],
+      "specifications": {
+        "Type": "PU tube straight connector"
+      },
+      "inStock": true
+    },
+    {
+      "id": "elp-inflator-open",
+      "model": "Air Inflator",
+      "name": "Air Inflator \u2014 Open End",
+      "description": "Air Inflator \u2014 Open End \u2014 Elephant / Painter. Type: Tyre air inflator, open end.",
+      "categoryId": "elp-pneumatic-acc",
+      "unit": "No",
+      "brand": "Elephant",
+      "tags": [
+        "Elephant",
+        "Painter",
+        "fitting",
+        "coupler"
+      ],
+      "specifications": {
+        "Type": "Tyre air inflator, open end"
+      },
+      "inStock": true
+    },
+    {
+      "id": "elp-inflator-close",
+      "model": "Air Inflator",
+      "name": "Air Inflator \u2014 Close End",
+      "description": "Air Inflator \u2014 Close End \u2014 Elephant / Painter. Type: Tyre air inflator, close end.",
+      "categoryId": "elp-pneumatic-acc",
+      "unit": "No",
+      "brand": "Elephant",
+      "tags": [
+        "Elephant",
+        "Painter",
+        "fitting",
+        "coupler"
+      ],
+      "specifications": {
+        "Type": "Tyre air inflator, close end"
       },
       "inStock": true
     }
