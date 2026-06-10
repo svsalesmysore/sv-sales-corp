@@ -7,5 +7,5 @@ export const BRAND = {
   mobile:    '9448044833',
   email:     'info@svsalescorporation.com',
   whatsapp:  '919448044833',
-  authorizedFor: ['Lion Pneumatic Tools', 'GOWIN Hand Tools', 'Pressure Washers', 'Garage Equipment'],
+  authorizedFor: ['Lion Pneumatic Tools', 'GOWIN Hand Tools', 'Elephant & Painter', 'Garage Equipment'],
 } as const

@@ -29,7 +29,7 @@ export default function CategoryGrid({ categories }: Props) {
             Product Categories
           </h2>
           <p className="text-gray-500 text-lg max-w-xl mx-auto">
-            235 products across 28 categories — Lion power equipment &amp; GOWIN hand tools for every workshop
+            360 products across 43 categories — Lion power equipment &amp; GOWIN hand tools for every workshop
           </p>
         </div>
 
