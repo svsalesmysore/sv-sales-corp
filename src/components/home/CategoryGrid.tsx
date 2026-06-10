@@ -2,14 +2,18 @@
 
 import Link from 'next/link'
 import {
-  Circle, Wrench, Settings2, Scissors, ArrowUpCircle, Wind,
-  Droplets, Zap, Paintbrush, Anchor, Cpu, Shield, Package, Box
+  Droplets, Waves, Sprout, Droplet, Settings2, Crosshair, CircleDot,
+  Container, Wind, Wrench, Gauge, Car, Disc3, PaintBucket, CircleDashed,
+  Filter, Cable, Zap, Box,
+  Construction, Scissors, PenTool, Hammer, Magnet, Axe, Ruler, Boxes
 } from 'lucide-react'
 import type { Category } from '@/data/types'
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
-  Circle, Wrench, Settings2, Scissors, ArrowUpCircle, Wind,
-  Droplets, Zap, Paintbrush, Anchor, Cpu, Shield, Package, Box,
+  Droplets, Waves, Sprout, Droplet, Settings2, Crosshair, CircleDot,
+  Container, Wind, Wrench, Gauge, Car, Disc3, PaintBucket, CircleDashed,
+  Filter, Cable, Zap, Box,
+  Construction, Scissors, PenTool, Hammer, Magnet, Axe, Ruler, Boxes,
 }
 
 interface Props {
@@ -25,7 +29,7 @@ export default function CategoryGrid({ categories }: Props) {
             Product Categories
           </h2>
           <p className="text-gray-500 text-lg max-w-xl mx-auto">
-            Over 198 products across 14 categories for automotive and industrial workshops
+            235 products across 28 categories — Lion power equipment &amp; GOWIN hand tools for every workshop
           </p>
         </div>
 

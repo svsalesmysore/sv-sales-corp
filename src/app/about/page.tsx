@@ -4,22 +4,22 @@ import { BRAND } from '@/lib/brand'
 
 export const metadata: Metadata = {
   title: 'About Us',
-  description: `Learn about S V Sales Corporation — Mysore's trusted automotive tools and tyre retreading dealer since 1999.`,
+  description: `Learn about S V Sales Corporation — Mysore's authorized dealer for Lion Pneumatic Tools, pressure washers and garage equipment since 1999.`,
 }
 
 const milestones = [
-  { year: '1999', title: 'Founded', desc: 'Established in Mysore as a specialized automotive tools dealer' },
-  { year: '2004', title: 'ELGI Authorized', desc: 'Became authorized dealer for ELGI Equipment' },
-  { year: '2008', title: 'Unipatch Partnership', desc: 'Started distributing Unipatch Rubber retreading products' },
-  { year: '2012', title: 'Taparia Tools', desc: 'Added Taparia professional hand tools to our portfolio' },
-  { year: '2020+', title: '198 Products', desc: 'Expanded catalog to 198 products across 14 categories' },
+  { year: '1999', title: 'Founded', desc: 'Established in Mysore as a specialized automotive tools & equipment dealer' },
+  { year: '2008', title: 'Cleaning Equipment', desc: 'Expanded into high-pressure washers and car-care equipment' },
+  { year: '2015', title: 'Pneumatic Range', desc: 'Added pneumatic impact wrenches, air compressors and garage tools' },
+  { year: '2020', title: 'Lion Dealership', desc: 'Became authorized dealer for the Lion Pneumatic Tools range' },
+  { year: '2026', title: '145 Products', desc: 'Full Lion catalogue — 145 products across 18 categories' },
 ]
 
 const values = [
-  { icon: Shield, title: 'Quality Assured', desc: 'Every product is sourced from authorized manufacturers and tested for workshop use' },
-  { icon: Award,  title: 'Authorized Dealer', desc: 'Official dealer for ELGI, Unipatch, Taparia, and Mysore Tubes' },
-  { icon: Users,  title: 'Wholesale & Retail', desc: 'Competitive pricing for both individual buyers and bulk wholesale orders' },
-  { icon: Star,   title: 'Expert Guidance', desc: '25+ years of experience helping workshops find the right tools' },
+  { icon: Shield, title: 'Quality Assured', desc: 'Genuine Lion products, built for professional garage and industrial use' },
+  { icon: Award,  title: 'Authorized Dealer', desc: 'Official dealer for the complete Lion Pneumatic Tools range' },
+  { icon: Users,  title: 'Wholesale & Retail', desc: 'Competitive pricing for individual buyers and bulk workshop orders' },
+  { icon: Star,   title: 'Expert Guidance', desc: '25+ years of experience helping workshops choose the right equipment' },
 ]
 
 export default function AboutPage() {

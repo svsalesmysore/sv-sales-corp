@@ -28,7 +28,7 @@ export default function HeroSection() {
         <div className="max-w-2xl">
           <div className="inline-flex items-center gap-2 bg-brand-red/20 border border-brand-red/40 rounded-full px-4 py-1.5 mb-6">
             <span className="w-2 h-2 bg-brand-red rounded-full animate-pulse" />
-            <span className="text-brand-silver text-sm">Authorized Dealer — ELGI · Unipatch · Taparia</span>
+            <span className="text-brand-silver text-sm">Authorized Dealer — Lion Pneumatic Tools &amp; GOWIN</span>
           </div>
 
           <h1 className="font-display font-bold text-5xl sm:text-6xl lg:text-7xl text-white leading-tight mb-6">
@@ -37,8 +37,8 @@ export default function HeroSection() {
           </h1>
 
           <p className="text-brand-silver text-lg sm:text-xl mb-8 leading-relaxed max-w-xl">
-            Mysore's trusted wholesale &amp; retail dealer for industrial and garage hand tools,
-            tyre retreading accessories, and automotive equipment.
+            Mysore&apos;s authorized dealer for Lion Pneumatic Tools &amp; GOWIN — pressure washers,
+            air compressors, impact wrenches, vices, hand tools, hydraulic jacks and garage equipment.
           </p>
 
           <div className="flex flex-wrap gap-4">

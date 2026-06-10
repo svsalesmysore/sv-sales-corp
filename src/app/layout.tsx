@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     template: `%s | ${BRAND.name}`,
   },
   description: `${BRAND.tagline} — Mysore, Karnataka`,
-  keywords: ['automotive tools', 'tyres', 'tyre retreading', 'Taparia tools', 'ELGI', 'Mysore', 'wholesale dealer'],
+  keywords: ['Lion Pneumatic Tools', 'pressure washer', 'air compressor', 'impact wrench', 'hydraulic jack', 'foam cannon', 'Mysore', 'dealer'],
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

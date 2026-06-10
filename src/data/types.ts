@@ -3,13 +3,14 @@ export type Unit = 'No' | 'Pair' | 'Set' | 'Pkt' | 'Mtr' | 'Ltr' | 'Roll' | 'Kg'
 
 export interface Product {
   id: string
+  model?: string
   name: string
   description: string
   categoryId: string
   subcategory?: string
   unit: Unit
   sketchfabModelId?: string
-  imageQuery: string
+  imageQuery?: string
   tags: string[]
   specifications?: Record<string, string>
   brand?: string
@@ -21,6 +22,6 @@ export interface Category {
   name: string
   description: string
   icon: string
-  imageQuery: string
+  imageQuery?: string
   productCount: number
 }

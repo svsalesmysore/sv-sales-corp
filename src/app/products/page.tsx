@@ -1,19 +1,23 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import {
-  Circle, Wrench, Settings2, Scissors, ArrowUpCircle, Wind,
-  Droplets, Zap, Paintbrush, Anchor, Cpu, Shield, Package, Box
+  Droplets, Waves, Sprout, Droplet, Settings2, Crosshair, CircleDot,
+  Container, Wind, Wrench, Gauge, Car, Disc3, PaintBucket, CircleDashed,
+  Filter, Cable, Zap, Box,
+  Construction, Scissors, PenTool, Hammer, Magnet, Axe, Ruler, Boxes
 } from 'lucide-react'
 import { categoriesWithCounts } from '@/data/index'
 
 export const metadata: Metadata = {
   title: 'Products',
-  description: 'Browse all 198 products across 14 categories at S V Sales Corporation, Mysore.',
+  description: 'Browse 235 products across 28 categories — Lion Pneumatic Tools & GOWIN hand tools at S V Sales Corporation, Mysore.',
 }
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
-  Circle, Wrench, Settings2, Scissors, ArrowUpCircle, Wind,
-  Droplets, Zap, Paintbrush, Anchor, Cpu, Shield, Package, Box,
+  Droplets, Waves, Sprout, Droplet, Settings2, Crosshair, CircleDot,
+  Container, Wind, Wrench, Gauge, Car, Disc3, PaintBucket, CircleDashed,
+  Filter, Cable, Zap, Box,
+  Construction, Scissors, PenTool, Hammer, Magnet, Axe, Ruler, Boxes,
 }
 
 export default function ProductsPage() {
@@ -24,7 +28,7 @@ export default function ProductsPage() {
         <div className="container mx-auto text-center">
           <h1 className="font-display font-bold text-5xl text-white mb-3">Product Catalog</h1>
           <p className="text-brand-silver text-lg max-w-xl mx-auto">
-            198+ products across 14 categories — industrial tools, tyre retreading, and automotive equipment
+            235 products across 28 categories — Lion pressure washers &amp; pneumatic tools plus GOWIN vices, hand tools &amp; garage equipment
           </p>
         </div>
       </div>

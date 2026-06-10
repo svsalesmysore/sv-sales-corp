@@ -3,7 +3,7 @@ import SearchClient from '@/components/search/SearchClient'
 
 export const metadata: Metadata = {
   title: 'Search Products',
-  description: 'Search all 198 products across 14 categories at S V Sales Corporation.',
+  description: 'Search 235 products across 28 categories — Lion Pneumatic Tools & GOWIN hand tools at S V Sales Corporation.',
 }
 
 export default function SearchPage() {

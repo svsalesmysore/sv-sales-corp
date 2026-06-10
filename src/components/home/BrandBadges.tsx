@@ -2,9 +2,9 @@ import { Shield, Star, Award } from 'lucide-react'
 import { BRAND } from '@/lib/brand'
 
 const stats = [
-  { icon: Star,   label: 'Products',          value: '198+' },
-  { icon: Shield, label: 'Authorized Brands',  value: '4' },
-  { icon: Award,  label: 'Years in Business',  value: '25+' },
+  { icon: Star,   label: 'Products',           value: '235' },
+  { icon: Shield, label: 'Categories',          value: '28' },
+  { icon: Award,  label: 'Years in Business',   value: '25+' },
 ]
 
 export default function BrandBadges() {
