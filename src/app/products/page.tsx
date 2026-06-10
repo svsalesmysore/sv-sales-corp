@@ -10,7 +10,7 @@ import { categoriesWithCounts } from '@/data/index'
 
 export const metadata: Metadata = {
   title: 'Products',
-  description: 'Browse 360 products across 43 categories — Lion Pneumatic Tools & GOWIN hand tools at S V Sales Corporation, Mysore.',
+  description: 'Browse 363 products across 45 categories — Lion Pneumatic Tools & GOWIN hand tools at S V Sales Corporation, Mysore.',
 }
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -28,7 +28,7 @@ export default function ProductsPage() {
         <div className="container mx-auto text-center">
           <h1 className="font-display font-bold text-5xl text-white mb-3">Product Catalog</h1>
           <p className="text-brand-silver text-lg max-w-xl mx-auto">
-            360 products across 43 categories — Lion pressure washers &amp; pneumatic tools plus GOWIN vices, hand tools &amp; garage equipment
+            363 products across 45 categories — Lion pressure washers &amp; pneumatic tools plus GOWIN vices, hand tools &amp; garage equipment
           </p>
         </div>
       </div>

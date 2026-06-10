@@ -171,55 +171,61 @@
     {
       "id": "elp-conventional-guns",
       "name": "Conventional & Texture Spray Guns",
-      "description": "Conventional & texture spray guns for general paint and texture work.",
+      "description": "Conventional & texture spray guns.",
       "icon": "PaintBucket"
     },
     {
       "id": "elp-professional-guns",
       "name": "Professional Spray Guns",
-      "description": "Professional-grade HVLP and pressure-feed spray guns.",
+      "description": "Professional HVLP & pressure-feed spray guns.",
       "icon": "Crosshair"
     },
     {
       "id": "elp-airless-guns",
       "name": "Airless Spray Guns",
-      "description": "Airless spray guns and tips for high-output painting.",
+      "description": "Airless spray guns & tips.",
       "icon": "Wind"
+    },
+    {
+      "id": "elp-electric-guns",
+      "name": "Electric & Lubricative Guns",
+      "description": "Electric & lubricative spray guns.",
+      "icon": "Zap"
     },
     {
       "id": "elp-special-guns",
       "name": "Special Purpose Spray Guns",
-      "description": "Sand-blasting, under-body, plaster and special-purpose spray guns.",
+      "description": "Sand-blasting, under-body, plaster & special-purpose guns.",
       "icon": "CircleDashed"
     },
     {
-      "id": "elp-pen-guns",
-      "name": "Pen & Double Nozzle Guns",
-      "description": "Pen guns and double-nozzle spray guns for fine work.",
-      "icon": "PenTool"
+      "id": "elp-automatic-guns",
+      "name": "Automatic & Airbrush Guns",
+      "description": "Automatic, airbrush & double-nozzle guns.",
+      "icon": "Settings2"
     },
     {
       "id": "elp-air-blow-guns",
       "name": "Air Blow Guns",
-      "description": "Air blow guns and cleaning guns.",
+      "description": "Air blow & cleaning guns.",
       "icon": "Waves"
     },
     {
       "id": "elp-paint-equipment",
       "name": "Paint Equipment",
-      "description": "Diaphragm pumps, agitators, regulators and bare pumps.",
+      "description": "Diaphragm pumps, agitators & regulators.",
       "icon": "Container"
     },
     {
       "id": "elp-spare-cups",
       "name": "Spray Gun Cups & Spares",
-      "description": "Spray-gun cups and spares.",
+      "description": "Spray-gun cups & spares.",
       "icon": "CircleDot"
     },
     {
       "id": "elp-hose",
       "name": "PU Hose & Coils",
-      "description": "PU hose and PU coils.",
+      "description": "PU hose & PU coils.",
       "icon": "Cable"
     },
     {
@@ -237,25 +243,31 @@
     {
       "id": "elp-pneumatic-acc",
       "name": "Pneumatic Accessories",
-      "description": "Foot pumps, car pumps, universal joints and pneumatic accessories.",
+      "description": "Foot/car pumps, FRL & pneumatic accessories.",
       "icon": "Disc3"
     },
     {
       "id": "elp-jacks",
       "name": "Hydraulic Jacks (Elephant)",
-      "description": "Elephant trolley, gear-box and piston hydraulic jacks.",
+      "description": "Elephant trolley, gear-box & piston jacks.",
       "icon": "Car"
     },
     {
       "id": "elp-pressure-washer",
       "name": "Pressure Washers (Elephant)",
-      "description": "Elephant high-pressure washers and pumps.",
+      "description": "Elephant high-pressure washers & pumps.",
       "icon": "Droplets"
+    },
+    {
+      "id": "elp-vacuum",
+      "name": "Vacuum Cleaners & Foam Tanks",
+      "description": "Wet & dry vacuum cleaners & foam tanks.",
+      "icon": "Box"
     },
     {
       "id": "elp-frl-sander",
       "name": "FRL Units & Palm Sanders",
-      "description": "FRL units and palm sanders.",
+      "description": "FRL units & palm sanders.",
       "icon": "Filter"
     }
   ],
@@ -5333,11 +5345,11 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
+        "Spray",
+        "PS-01",
         "Painter",
         "Guns",
-        "Conventional",
-        "PS-01",
-        "Spray"
+        "Conventional"
       ],
       "specifications": {
         "Operating Pressure": "20-50 psi",
@@ -5359,11 +5371,11 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "PS-02",
+        "Spray",
         "Painter",
         "Guns",
-        "Conventional",
-        "Spray"
+        "PS-02",
+        "Conventional"
       ],
       "specifications": {
         "Operating Pressure": "20-40 psi",
@@ -5385,11 +5397,11 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "PS-03",
+        "Spray",
         "Painter",
+        "PS-03",
         "Guns",
-        "Conventional",
-        "Spray"
+        "Conventional"
       ],
       "specifications": {
         "Operating Pressure": "20-40 psi",
@@ -5411,11 +5423,11 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
+        "Spray",
+        "PR-01",
         "Painter",
         "Guns",
-        "Conventional",
-        "PR-01",
-        "Spray"
+        "Conventional"
       ],
       "specifications": {
         "Operating Pressure": "30-60 psi",
@@ -5437,11 +5449,11 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
+        "Spray",
         "Painter",
-        "PR-02",
         "Guns",
         "Conventional",
-        "Spray"
+        "Texture"
       ],
       "specifications": {
         "Operating Pressure": "30-50 psi",
@@ -5463,11 +5475,11 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "H-827",
+        "Spray",
         "Painter",
         "Guns",
         "Conventional",
-        "Spray"
+        "Texture"
       ],
       "specifications": {
         "Operating Pressure": "20-40 psi",
@@ -5489,11 +5501,11 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
+        "Spray",
         "Painter",
         "Guns",
-        "Conventional",
         "TG-17",
-        "Spray"
+        "Conventional"
       ],
       "specifications": {
         "Operating Pressure": "80-100 psi",
@@ -5514,11 +5526,11 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
+        "Spray",
         "Painter",
         "Guns",
-        "Conventional",
         "TG-22",
-        "Spray"
+        "Conventional"
       ],
       "specifications": {
         "Operating Pressure": "80-100 psi",
@@ -5539,11 +5551,11 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "TG-16",
+        "Spray",
         "Painter",
         "Guns",
-        "Conventional",
-        "Spray"
+        "TG-16",
+        "Conventional"
       ],
       "specifications": {
         "Operating Pressure": "80-100 psi",
@@ -5564,11 +5576,11 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
+        "Spray",
         "Painter",
         "Guns",
-        "PF-01",
         "Conventional",
-        "Spray"
+        "Texture"
       ],
       "specifications": {
         "Operating Pressure": "PF-02",
@@ -5585,11 +5597,11 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
+        "Spray",
         "Painter",
         "Guns",
         "Conventional",
-        "W-71",
-        "Spray"
+        "W-71"
       ],
       "specifications": {
         "Operating Pressure": "W-77",
@@ -5606,11 +5618,11 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
+        "Spray",
         "Painter",
         "Guns",
-        "Conventional",
         "W-101",
-        "Spray"
+        "Conventional"
       ],
       "specifications": {
         "Operating Pressure": "W-200",
@@ -5627,11 +5639,11 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Painter",
-        "Guns",
+        "Spray",
         "Professional",
+        "Painter",
         "PF-02",
-        "Spray"
+        "Guns"
       ],
       "specifications": {
         "Operating Pressure": "20-30 psi",
@@ -5653,11 +5665,11 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
+        "Spray",
+        "Professional",
         "Painter",
         "Guns",
-        "Professional",
-        "PJ-01",
-        "Spray"
+        "Elephant"
       ],
       "specifications": {
         "Operating Pressure": "30-40 psi",
@@ -5679,11 +5691,11 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Painter",
-        "W-77",
-        "Guns",
+        "Spray",
         "Professional",
-        "Spray"
+        "Painter",
+        "Guns",
+        "W-77"
       ],
       "specifications": {
         "Operating Pressure": "40-50 psi",
@@ -5704,11 +5716,11 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
+        "Spray",
+        "Professional",
         "Painter",
         "Guns",
-        "Professional",
-        "Spray",
-        "Elephant"
+        "W-200"
       ],
       "specifications": {
         "Operating Pressure": "30-40 psi",
@@ -5729,11 +5741,11 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
+        "Spray",
+        "Professional",
         "Painter",
         "Guns",
-        "Professional",
-        "SF-12",
-        "Spray"
+        "SF-12"
       ],
       "specifications": {
         "Operating Pressure": "40-60 psi",
@@ -5755,11 +5767,11 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "R-450",
+        "Spray",
         "Painter",
         "Guns",
         "Airless",
-        "Spray"
+        "Elephant"
       ],
       "specifications": {
         "Motor Power": "220 V",
@@ -5774,17 +5786,17 @@
     {
       "id": "elp-egh-12",
       "model": "EGH-12",
-      "name": "EGH-12 Airless Spray Guns",
+      "name": "EGH-12 Electric & Lubricative Guns",
       "description": "EGH-12 \u2014 Elephant / Painter. Feed: EGH-13 \u00b7 Tip Size: NG-24.",
-      "categoryId": "elp-airless-guns",
+      "categoryId": "elp-electric-guns",
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Painter",
-        "Guns",
         "EGH-12",
-        "Airless",
-        "Spray"
+        "Painter",
+        "Electric",
+        "Guns",
+        "Lubricative"
       ],
       "specifications": {
         "Feed": "EGH-13",
@@ -5801,10 +5813,10 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
+        "Spray",
         "Painter",
         "Guns",
         "Airless",
-        "Spray",
         "Elephant"
       ],
       "specifications": {
@@ -5822,11 +5834,11 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
+        "Spray",
         "Painter",
         "Guns",
         "SBG-09",
-        "Airless",
-        "Spray"
+        "Airless"
       ],
       "specifications": {
         "Feed": "UBC-22",
@@ -5837,17 +5849,17 @@
     {
       "id": "elp-egh-13",
       "model": "EGH-13",
-      "name": "EGH-13 Special Purpose Spray Guns",
+      "name": "EGH-13 Electric & Lubricative Guns",
       "description": "EGH-13 \u2014 Elephant / Painter. Voltage: 230V~240 V \u00b7 Feed: 800 ml \u00b7 Power: 2.2 \u00b7 Cable Length: Suction.",
-      "categoryId": "elp-special-guns",
+      "categoryId": "elp-electric-guns",
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Purpose",
-        "Special",
         "Painter",
+        "Electric",
         "Guns",
-        "Spray"
+        "Lubricative",
+        "EGH-13"
       ],
       "specifications": {
         "Voltage": "230V~240 V",
@@ -5868,11 +5880,11 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Purpose",
-        "Special",
+        "Spray",
         "Painter",
         "Guns",
-        "NG-24"
+        "Purpose",
+        "Special"
       ],
       "specifications": {
         "Operating Pressure": "40-80 psi",
@@ -5893,11 +5905,11 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Purpose",
-        "Special",
+        "Spray",
         "Painter",
         "Guns",
-        "PDC-01"
+        "Purpose",
+        "Special"
       ],
       "specifications": {
         "Operating Pressure": "40-80 psi",
@@ -5917,11 +5929,11 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Purpose",
-        "Special",
+        "Spray",
+        "OSG-07",
         "Painter",
         "Guns",
-        "Spray"
+        "Purpose"
       ],
       "specifications": {
         "Operating Pressure": "40-80 psi",
@@ -5942,11 +5954,11 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Purpose",
-        "Special",
+        "Spray",
         "Painter",
+        "UBC-22",
         "Guns",
-        "UBC-22"
+        "Purpose"
       ],
       "specifications": {
         "Operating Pressure": "80-90 psi",
@@ -5966,10 +5978,10 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Purpose",
-        "Special",
+        "Spray",
         "Painter",
         "Guns",
+        "Purpose",
         "PSM-01"
       ],
       "specifications": {
@@ -5985,17 +5997,17 @@
     {
       "id": "elp-ab-17",
       "model": "AB-17",
-      "name": "AB-17 Special Purpose Spray Guns",
+      "name": "AB-17 Automatic & Airbrush Guns",
       "description": "AB-17 \u2014 Elephant / Painter. Operating Pressure: AB-19 \u00b7 Cup Capacity: AB-21.",
-      "categoryId": "elp-special-guns",
+      "categoryId": "elp-automatic-guns",
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Purpose",
-        "Special",
+        "Airbrush",
         "Painter",
         "Guns",
-        "Spray"
+        "Automatic",
+        "Elephant"
       ],
       "specifications": {
         "Operating Pressure": "AB-19",
@@ -6006,17 +6018,17 @@
     {
       "id": "elp-ab-23",
       "model": "AB-23",
-      "name": "AB-23 Special Purpose Spray Guns",
+      "name": "AB-23 Automatic & Airbrush Guns",
       "description": "AB-23 \u2014 Elephant / Painter. Operating Pressure: AC-02 / AC-03.",
-      "categoryId": "elp-special-guns",
+      "categoryId": "elp-automatic-guns",
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Purpose",
-        "Special",
+        "Airbrush",
         "AB-23",
         "Painter",
-        "Guns"
+        "Guns",
+        "Automatic"
       ],
       "specifications": {
         "Operating Pressure": "AC-02 / AC-03"
@@ -6026,17 +6038,17 @@
     {
       "id": "elp-ab-22",
       "model": "AB-22",
-      "name": "AB-22 Special Purpose Spray Guns",
+      "name": "AB-22 Automatic & Airbrush Guns",
       "description": "AB-22 \u2014 Elephant / Painter. Operating Pressure: Air Controller.",
-      "categoryId": "elp-special-guns",
+      "categoryId": "elp-automatic-guns",
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Purpose",
-        "AB-22",
-        "Special",
+        "Airbrush",
         "Painter",
-        "Guns"
+        "Guns",
+        "Automatic",
+        "AB-22"
       ],
       "specifications": {
         "Operating Pressure": "Air Controller"
@@ -6046,17 +6058,17 @@
     {
       "id": "elp-dn-18",
       "model": "DN-18",
-      "name": "DN-18 Special Purpose Spray Guns",
+      "name": "DN-18 Automatic & Airbrush Guns",
       "description": "DN-18 \u2014 Elephant / Painter. Operating Pressure: DN-19 \u00b7 Cup Capacity: DN-20.",
-      "categoryId": "elp-special-guns",
+      "categoryId": "elp-automatic-guns",
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Purpose",
-        "Special",
+        "Airbrush",
         "Painter",
         "Guns",
-        "Spray"
+        "Automatic",
+        "DN-18"
       ],
       "specifications": {
         "Operating Pressure": "DN-19",
@@ -6067,17 +6079,17 @@
     {
       "id": "elp-ab-19",
       "model": "AB-19",
-      "name": "AB-19 Pen & Double Nozzle Guns",
+      "name": "AB-19 Automatic & Airbrush Guns",
       "description": "AB-19 \u2014 Elephant / Painter. Operating Pressure: 7 ml \u00b7 Feed: 0.3 \u00b7 Air Inlet: 6 mm \u00b7 Control: 30 Pcs..",
-      "categoryId": "elp-pen-guns",
+      "categoryId": "elp-automatic-guns",
       "unit": "No",
       "brand": "Elephant",
       "tags": [
+        "Airbrush",
         "Painter",
         "Guns",
-        "AB-19",
-        "Elephant",
-        "Double"
+        "Automatic",
+        "AB-19"
       ],
       "specifications": {
         "Operating Pressure": "7 ml",
@@ -6090,17 +6102,17 @@
     {
       "id": "elp-ab-21",
       "model": "AB-21",
-      "name": "AB-21 Pen & Double Nozzle Guns",
+      "name": "AB-21 Automatic & Airbrush Guns",
       "description": "AB-21 \u2014 Elephant / Painter. Operating Pressure: 10-30 psi \u00b7 Feed: 20/40 ml \u00b7 Air Inlet: 0.3 \u00b7 Control: Gravity.",
-      "categoryId": "elp-pen-guns",
+      "categoryId": "elp-automatic-guns",
       "unit": "No",
       "brand": "Elephant",
       "tags": [
+        "Airbrush",
         "Painter",
         "Guns",
-        "AB-21",
-        "Elephant",
-        "Double"
+        "Automatic",
+        "AB-21"
       ],
       "specifications": {
         "Operating Pressure": "10-30 psi",
@@ -6115,17 +6127,17 @@
     {
       "id": "elp-dn-19",
       "model": "DN-19",
-      "name": "DN-19 Pen & Double Nozzle Guns",
+      "name": "DN-19 Automatic & Airbrush Guns",
       "description": "DN-19 \u2014 Elephant / Painter. Operating Pressure: 30-50 psi \u00b7 Air Inlet: 1.3 \u00b7 Control: Pressure \u00b7 Weight: 1/4\u2019\u2019.",
-      "categoryId": "elp-pen-guns",
+      "categoryId": "elp-automatic-guns",
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Painter",
         "DN-19",
+        "Painter",
+        "Airbrush",
         "Guns",
-        "Elephant",
-        "Double"
+        "Automatic"
       ],
       "specifications": {
         "Operating Pressure": "30-50 psi",
@@ -6139,17 +6151,17 @@
     {
       "id": "elp-dn-20",
       "model": "DN-20",
-      "name": "DN-20 Pen & Double Nozzle Guns",
+      "name": "DN-20 Automatic & Airbrush Guns",
       "description": "DN-20 \u2014 Elephant / Painter. Operating Pressure: 25-35 psi \u00b7 Air Inlet: 1.0 \u00b7 Control: Pressure \u00b7 Weight: 4 mm.",
-      "categoryId": "elp-pen-guns",
+      "categoryId": "elp-automatic-guns",
       "unit": "No",
       "brand": "Elephant",
       "tags": [
+        "Airbrush",
         "Painter",
         "Guns",
-        "Elephant",
-        "DN-20",
-        "Double"
+        "Automatic",
+        "DN-20"
       ],
       "specifications": {
         "Operating Pressure": "25-35 psi",
@@ -6163,17 +6175,17 @@
     {
       "id": "elp-abg-04",
       "model": "ABG-04",
-      "name": "ABG-04 Pen & Double Nozzle Guns",
+      "name": "ABG-04 Automatic & Airbrush Guns",
       "description": "ABG-04 \u2014 Elephant / Painter. Operating Pressure: ABG-05 P \u00b7 Feed: ABG-06.",
-      "categoryId": "elp-pen-guns",
+      "categoryId": "elp-automatic-guns",
       "unit": "No",
       "brand": "Elephant",
       "tags": [
+        "Airbrush",
         "Painter",
         "Guns",
-        "ABG-04",
-        "Elephant",
-        "Double"
+        "Automatic",
+        "Elephant"
       ],
       "specifications": {
         "Operating Pressure": "ABG-05 P",
@@ -6184,17 +6196,17 @@
     {
       "id": "elp-abg-06",
       "model": "ABG-06",
-      "name": "ABG-06 Air Blow Guns",
+      "name": "ABG-06 Automatic & Airbrush Guns",
       "description": "ABG-06 \u2014 Elephant / Painter. Max. Pressure: 8-10 Bar \u00b7 Air Inlet: 1/4\u201d \u00b7 Weight: 90 gm \u00b7 Std. Packing: 100 Pcs..",
-      "categoryId": "elp-air-blow-guns",
+      "categoryId": "elp-automatic-guns",
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "ABG-06",
+        "Airbrush",
         "Painter",
         "Guns",
-        "Blow",
-        "Elephant"
+        "Automatic",
+        "ABG-06"
       ],
       "specifications": {
         "Max. Pressure": "8-10 Bar",
@@ -6215,9 +6227,9 @@
       "tags": [
         "Painter",
         "Guns",
-        "K-3",
         "Blow",
-        "Elephant"
+        "Elephant",
+        "K-3"
       ],
       "specifications": {
         "Operating Pressure": "30-40 psi",
@@ -6241,9 +6253,9 @@
       "tags": [
         "Painter",
         "Guns",
+        "F-2",
         "Blow",
-        "Elephant",
-        "F-2"
+        "Elephant"
       ],
       "specifications": {
         "Operating Pressure": "30-40 psi",
@@ -6265,11 +6277,11 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
+        "R-2R",
         "Painter",
         "Guns",
         "Blow",
-        "Elephant",
-        "R-2R"
+        "Elephant"
       ],
       "specifications": {
         "Operating Pressure": "R-2F",
@@ -6286,11 +6298,11 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Purpose",
-        "Special",
+        "Spray",
         "Painter",
         "Guns",
-        "R-2F"
+        "R-2F",
+        "Purpose"
       ],
       "specifications": {
         "Operating Pressure": "20-40 psi",
@@ -6312,11 +6324,11 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Purpose",
-        "Special",
+        "Spray",
         "Painter",
         "Guns",
-        "Spray"
+        "LPH-50",
+        "Purpose"
       ],
       "specifications": {
         "Operating Pressure": "20-30 psi",
@@ -6338,11 +6350,11 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Purpose",
-        "Special",
+        "Spray",
         "Painter",
         "Guns",
-        "SGD-71"
+        "Purpose",
+        "Special"
       ],
       "specifications": {
         "Operating Pressure": "20-50 psi",
@@ -6364,11 +6376,11 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Purpose",
-        "Special",
+        "Spray",
         "Painter",
         "Guns",
-        "HRS-80"
+        "HRS-80",
+        "Purpose"
       ],
       "specifications": {
         "Operating Pressure": "75-100 psi",
@@ -6390,11 +6402,11 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Purpose",
-        "Special",
+        "Spray",
         "Painter",
         "Guns",
-        "Spray"
+        "A-100",
+        "Purpose"
       ],
       "specifications": {
         "Operating Pressure": "30-50 psi",
@@ -6415,11 +6427,11 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Purpose",
-        "Special",
-        "WRA-101",
+        "Spray",
         "Painter",
-        "Guns"
+        "Guns",
+        "Purpose",
+        "Special"
       ],
       "specifications": {
         "Operating Pressure": "WRA-200",
@@ -6436,11 +6448,11 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Purpose",
-        "Special",
+        "Spray",
         "Painter",
         "Guns",
-        "Spray"
+        "WA-200",
+        "Purpose"
       ],
       "specifications": {
         "Operating Pressure": "W1-A",
@@ -6457,11 +6469,11 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Painter",
         "Equipment",
+        "WRA-200",
+        "Painter",
         "Paint",
-        "Elephant",
-        "WRA-200"
+        "Elephant"
       ],
       "specifications": {
         "Operating Pressure": "40-50 psi",
@@ -6481,10 +6493,10 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Painter",
-        "WA-101",
         "Equipment",
+        "Painter",
         "Paint",
+        "WA-101",
         "Elephant"
       ],
       "specifications": {
@@ -6505,9 +6517,9 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
+        "Equipment",
         "RB-4A",
         "Painter",
-        "Equipment",
         "Paint",
         "Elephant"
       ],
@@ -6530,9 +6542,9 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Painter",
-        "Equipment",
         "PT-08",
+        "Equipment",
+        "Painter",
         "Paint",
         "Elephant"
       ],
@@ -6553,11 +6565,11 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "M-20",
-        "Painter",
         "Equipment",
+        "Painter",
         "Paint",
-        "Elephant"
+        "Elephant",
+        "M-20"
       ],
       "specifications": {
         "Max. Pressure": "7 kg",
@@ -6578,10 +6590,10 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Painter",
         "Equipment",
-        "M-30",
+        "Painter",
         "Paint",
+        "M-30",
         "Elephant"
       ],
       "specifications": {
@@ -6603,10 +6615,10 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Painter",
         "Equipment",
-        "FG-21",
+        "Painter",
         "Paint",
+        "FG-21",
         "Elephant"
       ],
       "specifications": {
@@ -6624,8 +6636,8 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Painter",
         "Equipment",
+        "Painter",
         "Paint",
         "FG-23",
         "Elephant"
@@ -6645,11 +6657,11 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Painter",
         "Equipment",
+        "FG-22",
+        "Painter",
         "Paint",
-        "Elephant",
-        "FG-22"
+        "Elephant"
       ],
       "specifications": {
         "Conection": "1/4\"",
@@ -6668,10 +6680,10 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "FG-24",
-        "Painter",
         "Equipment",
+        "Painter",
         "Paint",
+        "FG-24",
         "Elephant"
       ],
       "specifications": {
@@ -6691,10 +6703,10 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Painter",
         "Equipment",
-        "FG-27",
+        "Painter",
         "Paint",
+        "FG-27",
         "Elephant"
       ],
       "specifications": {
@@ -6714,10 +6726,10 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Painter",
         "Equipment",
-        "FG-26",
+        "Painter",
         "Paint",
+        "FG-26",
         "Elephant"
       ],
       "specifications": {
@@ -6737,8 +6749,8 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Painter",
         "Equipment",
+        "Painter",
         "Paint",
         "CWG-01",
         "Elephant"
@@ -6758,10 +6770,10 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Cups",
         "WBG-14",
-        "Painter",
         "Spray",
+        "Painter",
+        "Spares",
         "Elephant"
       ],
       "specifications": {
@@ -6780,10 +6792,10 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Cups",
-        "SWN-08",
-        "Painter",
         "Spray",
+        "Painter",
+        "Spares",
+        "SWN-08",
         "Elephant"
       ],
       "specifications": {
@@ -6802,10 +6814,10 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Cups",
-        "Painter",
         "Spray",
+        "Painter",
         "CWG-02",
+        "Spares",
         "Elephant"
       ],
       "specifications": {
@@ -6824,10 +6836,10 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Cups",
         "CWG-03",
-        "Painter",
         "Spray",
+        "Painter",
+        "Spares",
         "Elephant"
       ],
       "specifications": {
@@ -6846,10 +6858,10 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Spares",
-        "Cups",
-        "Painter",
         "Spray",
+        "Painter",
+        "H-2000",
+        "Spares",
         "Elephant"
       ],
       "specifications": {
@@ -6867,10 +6879,10 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Cups",
-        "Painter",
-        "NM-01",
         "Spray",
+        "Painter",
+        "Spares",
+        "NM-01",
         "Elephant"
       ],
       "specifications": {
@@ -6888,11 +6900,11 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Cups",
-        "NM-04",
-        "Painter",
         "Spray",
-        "Elephant"
+        "Painter",
+        "Spares",
+        "Elephant",
+        "Cups"
       ],
       "specifications": {
         "Operating Pressure": "NM-05",
@@ -6909,11 +6921,11 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Cups",
-        "Painter",
         "Spray",
-        "Elephant",
-        "Spares"
+        "Painter",
+        "Spares",
+        "NM-07",
+        "Elephant"
       ],
       "specifications": {
         "Operating Pressure": "NM-08",
@@ -6930,10 +6942,10 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "NM-10",
-        "Cups",
-        "Painter",
         "Spray",
+        "Painter",
+        "Spares",
+        "NM-10",
         "Elephant"
       ],
       "specifications": {
@@ -6951,9 +6963,9 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Hose",
-        "Painter",
         "Coils",
+        "Painter",
+        "Hose",
         "PWR-0425",
         "Elephant"
       ],
@@ -6972,10 +6984,10 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Hose",
-        "Painter",
         "Coils",
+        "Painter",
         "PWR-0604",
+        "Hose",
         "Elephant"
       ],
       "specifications": {
@@ -6993,10 +7005,10 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Hose",
+        "Coils",
         "Painter",
         "PWR-0805",
-        "Coils",
+        "Hose",
         "Elephant"
       ],
       "specifications": {
@@ -7014,10 +7026,10 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Hose",
-        "PWR-0855",
-        "Painter",
         "Coils",
+        "Painter",
+        "PWR-0855",
+        "Hose",
         "Elephant"
       ],
       "specifications": {
@@ -7035,11 +7047,11 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Hose",
-        "Painter",
         "Coils",
-        "Elephant",
-        "PWR-0806"
+        "Painter",
+        "Hose",
+        "PWR-0806",
+        "Elephant"
       ],
       "specifications": {
         "Size - O.D. x I.D. (mm)": "8x6",
@@ -7056,11 +7068,11 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Hose",
-        "Painter",
         "Coils",
-        "Elephant",
-        "PWR-1065"
+        "Painter",
+        "PWR-1065",
+        "Hose",
+        "Elephant"
       ],
       "specifications": {
         "Size - O.D. x I.D. (mm)": "10x6.5",
@@ -7077,10 +7089,10 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Hose",
-        "Painter",
         "Coils",
+        "Painter",
         "PWR-1080",
+        "Hose",
         "Elephant"
       ],
       "specifications": {
@@ -7098,9 +7110,9 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Hose",
-        "Painter",
         "Coils",
+        "Painter",
+        "Hose",
         "PWR-1280",
         "Elephant"
       ],
@@ -7119,11 +7131,11 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Hose",
-        "Painter",
         "Coils",
-        "Elephant",
-        "PWR-1612"
+        "Painter",
+        "Hose",
+        "PWR-1612",
+        "Elephant"
       ],
       "specifications": {
         "Size - O.D. x I.D. (mm)": "16x12",
@@ -7140,11 +7152,11 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Hose",
-        "PWR-0604C",
-        "Painter",
         "Coils",
-        "Elephant"
+        "Painter",
+        "Hose",
+        "Elephant",
+        "PWR-0604C"
       ],
       "specifications": {
         "Size - O.D. x I.D. (mm)": "6x4"
@@ -7160,9 +7172,9 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Hose",
-        "Painter",
         "Coils",
+        "Painter",
+        "Hose",
         "PWR-0805C",
         "Elephant"
       ],
@@ -7180,11 +7192,11 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Hose",
-        "Painter",
         "Coils",
-        "PWR-1065C",
-        "Elephant"
+        "Painter",
+        "Hose",
+        "Elephant",
+        "PWR-1065C"
       ],
       "specifications": {
         "Size - O.D. x I.D. (mm)": "10x6.5"
@@ -7200,11 +7212,11 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Hose",
-        "Painter",
         "Coils",
-        "Elephant",
-        "PWR-1208C"
+        "Painter",
+        "Hose",
+        "PWR-1208C",
+        "Elephant"
       ],
       "specifications": {
         "Size - O.D. x I.D. (mm)": "12x8"
@@ -7220,11 +7232,11 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Hose",
-        "Painter",
         "Coils",
-        "E-4",
-        "Elephant"
+        "Painter",
+        "Hose",
+        "Elephant",
+        "E-4"
       ],
       "specifications": {},
       "inStock": true
@@ -7240,8 +7252,8 @@
       "tags": [
         "Elephant",
         "AC-06C",
-        "Compressors",
-        "Painter"
+        "Painter",
+        "Compressors"
       ],
       "specifications": {
         "Operating Pressure": "1",
@@ -7264,9 +7276,9 @@
       "brand": "Elephant",
       "tags": [
         "Elephant",
-        "AC-30C",
+        "Painter",
         "Compressors",
-        "Painter"
+        "AC-30C"
       ],
       "specifications": {
         "Voltage": "220V/50HZ",
@@ -7289,9 +7301,9 @@
       "brand": "Elephant",
       "tags": [
         "Elephant",
-        "AC-50C",
+        "Painter",
         "Compressors",
-        "Painter"
+        "AC-50C"
       ],
       "specifications": {
         "Voltage": "220V/50HZ",
@@ -7313,10 +7325,10 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "TBB-01",
         "Elephant",
+        "Painter",
         "Compressors",
-        "Painter"
+        "TBB-01"
       ],
       "specifications": {
         "Voltage": "BBG-01",
@@ -7334,9 +7346,9 @@
       "brand": "Elephant",
       "tags": [
         "Elephant",
-        "TV-01",
+        "Painter",
         "Compressors",
-        "Painter"
+        "TV-01"
       ],
       "specifications": {
         "Voltage": "TMDT-01",
@@ -7353,10 +7365,10 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "BBG-01",
         "Elephant",
-        "Compressors",
-        "Painter"
+        "BBG-01",
+        "Painter",
+        "Compressors"
       ],
       "specifications": {
         "Description": "5 Gallon",
@@ -7368,16 +7380,17 @@
     {
       "id": "elp-iwt-01",
       "model": "IWT-01",
-      "name": "IWT-01 Air Compressors",
+      "name": "IWT-01 Impact Wrenches",
       "description": "IWT-01 \u2014 Elephant / Painter. Description: IMPACT WRENCH TROLLEY \u00b7 Body: M.S. \u00b7 Package Size: 20*45*59 cm \u00b7 Weight: 20 Kg.",
-      "categoryId": "elp-compressors",
+      "categoryId": "elp-impact-wrenches",
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Elephant",
+        "Painter",
         "IWT-01",
-        "Compressors",
-        "Painter"
+        "Wrenches",
+        "Impact",
+        "Elephant"
       ],
       "specifications": {
         "Description": "IMPACT WRENCH TROLLEY",
@@ -7398,9 +7411,9 @@
       "brand": "Elephant",
       "tags": [
         "Elephant",
+        "Painter",
         "Compressors",
-        "TMDT-01",
-        "Painter"
+        "TMDT-01"
       ],
       "specifications": {
         "Description": "100*28*25 cm",
@@ -7421,8 +7434,8 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Wrenches",
         "Painter",
+        "Wrenches",
         "Impact",
         "IW 02",
         "Elephant"
@@ -7444,10 +7457,10 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "X-8",
-        "Wrenches",
         "Painter",
+        "Wrenches",
         "Impact",
+        "X-8",
         "Elephant"
       ],
       "specifications": {
@@ -7467,10 +7480,10 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Wrenches",
-        "A-6",
         "Painter",
+        "Wrenches",
         "Impact",
+        "A-6",
         "Elephant"
       ],
       "specifications": {
@@ -7490,9 +7503,9 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Wrenches",
         "Painter",
         "IW 03",
+        "Wrenches",
         "Impact",
         "Elephant"
       ],
@@ -7511,10 +7524,10 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Wrenches",
-        "Painter",
-        "Impact",
         "IW 01",
+        "Painter",
+        "Wrenches",
+        "Impact",
         "Elephant"
       ],
       "specifications": {
@@ -7534,8 +7547,8 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Wrenches",
         "Painter",
+        "Wrenches",
         "IW 04",
         "Impact",
         "Elephant"
@@ -7559,8 +7572,8 @@
       "tags": [
         "Painter",
         "Accessories",
-        "Pneumatic",
         "LSM-01",
+        "Pneumatic",
         "Elephant"
       ],
       "specifications": {
@@ -7583,10 +7596,10 @@
       "brand": "Elephant",
       "tags": [
         "Painter",
+        "LSM-02",
         "Accessories",
         "Pneumatic",
-        "Elephant",
-        "LSM-02"
+        "Elephant"
       ],
       "specifications": {
         "Max. Torque": "4800 N.m.",
@@ -7608,8 +7621,8 @@
       "brand": "Elephant",
       "tags": [
         "Painter",
-        "Accessories",
         "UJ-01",
+        "Accessories",
         "Pneumatic",
         "Elephant"
       ],
@@ -7621,16 +7634,16 @@
     {
       "id": "elp-tj-02",
       "model": "TJ-02",
-      "name": "TJ-02 Pneumatic Accessories",
+      "name": "TJ-02 Hydraulic Jacks",
       "description": "TJ-02 \u2014 Elephant / Painter. Description: ATJ-03H.",
-      "categoryId": "elp-pneumatic-acc",
+      "categoryId": "elp-jacks",
       "unit": "No",
       "brand": "Elephant",
       "tags": [
+        "Jacks",
         "Painter",
-        "Accessories",
+        "Hydraulic",
         "TJ-02",
-        "Pneumatic",
         "Elephant"
       ],
       "specifications": {
@@ -7641,16 +7654,16 @@
     {
       "id": "elp-atj-04h",
       "model": "ATJ-04H",
-      "name": "ATJ-04H Pneumatic Accessories",
+      "name": "ATJ-04H Hydraulic Jacks",
       "description": "ATJ-04H \u2014 Elephant / Painter. Description: GBJ-01.",
-      "categoryId": "elp-pneumatic-acc",
+      "categoryId": "elp-jacks",
       "unit": "No",
       "brand": "Elephant",
       "tags": [
+        "Jacks",
         "Painter",
+        "Hydraulic",
         "ATJ-04H",
-        "Accessories",
-        "Pneumatic",
         "Elephant"
       ],
       "specifications": {
@@ -7667,11 +7680,11 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
+        "Jacks",
+        "TJ-01",
         "Painter",
         "Hydraulic",
-        "TJ-01",
-        "Elephant",
-        "Jacks"
+        "Elephant"
       ],
       "specifications": {
         "Operating Pressure": "2 Ton",
@@ -7692,11 +7705,11 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "TJ-03",
+        "Jacks",
         "Painter",
         "Hydraulic",
         "Elephant",
-        "Jacks"
+        "TJ-03"
       ],
       "specifications": {
         "Operating Pressure": "3 Ton",
@@ -7717,11 +7730,11 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
+        "Jacks",
+        "TJ-04",
         "Painter",
         "Hydraulic",
-        "TJ-04",
-        "Elephant",
-        "Jacks"
+        "Elephant"
       ],
       "specifications": {
         "Operating Pressure": "5 Ton",
@@ -7742,11 +7755,11 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "TJ-05",
+        "Jacks",
         "Painter",
         "Hydraulic",
-        "Elephant",
-        "Jacks"
+        "TJ-05",
+        "Elephant"
       ],
       "specifications": {
         "Operating Pressure": "10 Ton",
@@ -7767,11 +7780,11 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
+        "Jacks",
         "Painter",
-        "TJ-06",
         "Hydraulic",
-        "Elephant",
-        "Jacks"
+        "TJ-06",
+        "Elephant"
       ],
       "specifications": {
         "Operating Pressure": "15 Ton",
@@ -7792,11 +7805,11 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
+        "Jacks",
         "Painter",
         "Hydraulic",
         "TJ-07",
-        "Elephant",
-        "Jacks"
+        "Elephant"
       ],
       "specifications": {
         "Operating Pressure": "20 Ton",
@@ -7817,11 +7830,11 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
+        "Jacks",
         "Painter",
-        "ATJ-03H",
         "Hydraulic",
         "Elephant",
-        "Jacks"
+        "ATJ-03H"
       ],
       "specifications": {
         "Operating Pressure": "3 Ton",
@@ -7842,11 +7855,11 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
+        "Jacks",
         "Painter",
         "Hydraulic",
         "GBJ-01",
-        "Elephant",
-        "Jacks"
+        "Elephant"
       ],
       "specifications": {
         "Operating Pressure": "20 mm",
@@ -7867,11 +7880,11 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
+        "Jacks",
         "Painter",
-        "GBJ-02",
         "Hydraulic",
-        "Elephant",
-        "Jacks"
+        "GBJ-02",
+        "Elephant"
       ],
       "specifications": {
         "Operating Pressure": "25 mm",
@@ -7892,11 +7905,11 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Painter",
-        "Pressure",
         "Washers",
+        "HPP 01",
+        "Painter",
         "Elephant",
-        "HPP 01"
+        "Pressure"
       ],
       "specifications": {
         "Motor": "2.2 HP",
@@ -7919,11 +7932,11 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
+        "Washers",
         "Painter",
         "HPP 02",
-        "Pressure",
-        "Washers",
-        "Elephant"
+        "Elephant",
+        "Pressure"
       ],
       "specifications": {
         "Motor": "3.0 HP",
@@ -7946,11 +7959,11 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "HPP 03",
-        "Painter",
-        "Pressure",
         "Washers",
-        "Elephant"
+        "Painter",
+        "HPP 03",
+        "Elephant",
+        "Pressure"
       ],
       "specifications": {
         "Motor": "5.5 HP",
@@ -7973,11 +7986,11 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "WP 01",
-        "Painter",
-        "Pressure",
         "Washers",
-        "Elephant"
+        "Painter",
+        "WP 01",
+        "Elephant",
+        "Pressure"
       ],
       "specifications": {
         "Motor": "2.2 HP",
@@ -7999,11 +8012,11 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "WP 02",
-        "Painter",
-        "Pressure",
         "Washers",
-        "Elephant"
+        "Painter",
+        "WP 02",
+        "Elephant",
+        "Pressure"
       ],
       "specifications": {
         "Motor": "3.0 HP",
@@ -8025,11 +8038,11 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Painter",
-        "Pressure",
-        "WP 03",
         "Washers",
-        "Elephant"
+        "Painter",
+        "WP 03",
+        "Elephant",
+        "Pressure"
       ],
       "specifications": {
         "Motor": "5.5 HP",
@@ -8051,11 +8064,11 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Painter",
-        "Pressure",
         "Washers",
+        "V2S",
+        "Painter",
         "Elephant",
-        "V2S"
+        "Pressure"
       ],
       "specifications": {
         "Motor": "1.5 HP",
@@ -8078,11 +8091,11 @@
       "unit": "No",
       "brand": "Elephant",
       "tags": [
+        "Washers",
         "Painter",
         "CC 280",
-        "Pressure",
-        "Washers",
-        "Elephant"
+        "Elephant",
+        "Pressure"
       ],
       "specifications": {
         "Motor": "1.3 HP",
@@ -8099,16 +8112,16 @@
     {
       "id": "elp-vc-20",
       "model": "VC-20",
-      "name": "VC-20 Pressure Washers",
+      "name": "VC-20 Vacuum Cleaners & Foam Tanks",
       "description": "VC-20 \u2014 Elephant / Painter. Motor: VC-35 \u00b7 Power: VC-80.",
-      "categoryId": "elp-pressure-washer",
+      "categoryId": "elp-vacuum",
       "unit": "No",
       "brand": "Elephant",
       "tags": [
         "Painter",
+        "Cleaners",
+        "Foam",
         "VC-20",
-        "Pressure",
-        "Washers",
         "Elephant"
       ],
       "specifications": {
@@ -8120,17 +8133,17 @@
     {
       "id": "elp-vcmc-1500w",
       "model": "VCMC-1500W",
-      "name": "VCMC-1500W Pressure Washers",
+      "name": "VCMC-1500W Vacuum Cleaners & Foam Tanks",
       "description": "VCMC-1500W \u2014 Elephant / Painter. Motor: VCMC-1200W \u00b7 Power: FTG-01 / FT-25.",
-      "categoryId": "elp-pressure-washer",
+      "categoryId": "elp-vacuum",
       "unit": "No",
       "brand": "Elephant",
       "tags": [
         "Painter",
-        "Pressure",
-        "Washers",
-        "Elephant",
-        "VCMC-1500W"
+        "Cleaners",
+        "Foam",
+        "VCMC-1500W",
+        "Elephant"
       ],
       "specifications": {
         "Motor": "VCMC-1200W",
@@ -8141,17 +8154,17 @@
     {
       "id": "elp-vc-35",
       "model": "VC-35",
-      "name": "VC-35 FRL Units & Palm Sanders",
+      "name": "VC-35 Vacuum Cleaners & Foam Tanks",
       "description": "VC-35 \u2014 Elephant / Painter. Capacity: 35 Ltr. \u00b7 Power: 1500 W \u00b7 Air Flow Rate: 53 L/s \u00b7 Voltage: 200 mbar.",
-      "categoryId": "elp-frl-sander",
+      "categoryId": "elp-vacuum",
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Palm",
         "Painter",
+        "Cleaners",
+        "Foam",
         "VC-35",
-        "Sanders",
-        "Units"
+        "Elephant"
       ],
       "specifications": {
         "Capacity": "35 Ltr.",
@@ -8166,16 +8179,16 @@
     {
       "id": "elp-vc-80",
       "model": "VC-80",
-      "name": "VC-80 FRL Units & Palm Sanders",
+      "name": "VC-80 Vacuum Cleaners & Foam Tanks",
       "description": "VC-80 \u2014 Elephant / Painter. Capacity: 80 Ltr. \u00b7 Power: 4500 W \u00b7 Air Flow Rate: 120 L/s \u00b7 Voltage: 200 mbar.",
-      "categoryId": "elp-frl-sander",
+      "categoryId": "elp-vacuum",
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Palm",
         "Painter",
-        "Sanders",
-        "Units",
+        "Cleaners",
+        "Foam",
+        "Tanks",
         "Elephant"
       ],
       "specifications": {
@@ -8191,17 +8204,17 @@
     {
       "id": "elp-ft-26",
       "model": "FT-26",
-      "name": "FT-26 FRL Units & Palm Sanders",
+      "name": "FT-26 Vacuum Cleaners & Foam Tanks",
       "description": "FT-26 \u2014 Elephant / Painter. Air Inlet: 1/4\" \u00b7 Air Pressure: 1-2 bar \u00b7 Weight: 14 kg \u00b7 Std. Packing: 1 Pc..",
-      "categoryId": "elp-frl-sander",
+      "categoryId": "elp-vacuum",
       "unit": "No",
       "brand": "Elephant",
       "tags": [
-        "Palm",
         "Painter",
+        "Cleaners",
+        "Foam",
         "FT-26",
-        "Sanders",
-        "Units"
+        "Elephant"
       ],
       "specifications": {
         "Air Inlet": "1/4\"",
@@ -8221,9 +8234,9 @@
       "brand": "Elephant",
       "tags": [
         "Painter",
+        "HPH-10",
         "Accessories",
         "Pneumatic",
-        "HPH-10",
         "Elephant"
       ],
       "specifications": {
@@ -8231,6 +8244,69 @@
         "Working Pressure": "200 kg / cm2",
         "Weight": "17 Kg",
         "Layer": "5 Layer"
+      },
+      "inStock": true
+    },
+    {
+      "id": "elp-vcmc-1200w",
+      "model": "VCMC-1200W",
+      "name": "VCMC-1200W Vacuum Cleaners & Foam Tanks",
+      "description": "VCMC-1200W \u2014 Elephant / Painter. Power: 1200 Watt Copper Motor.",
+      "categoryId": "elp-vacuum",
+      "unit": "No",
+      "brand": "Elephant",
+      "tags": [
+        "Painter",
+        "VCMC-1200W",
+        "Cleaners",
+        "Foam",
+        "Elephant"
+      ],
+      "specifications": {
+        "Power": "1200 Watt Copper Motor"
+      },
+      "inStock": true
+    },
+    {
+      "id": "elp-ft-25",
+      "model": "FT-25",
+      "name": "FT-25 Vacuum Cleaners & Foam Tanks",
+      "description": "FT-25 \u2014 Elephant / Painter. Type: Foam Tank S.S. \u00b7 Air Inlet: 1/4\" \u00b7 Air Pressure: 1-2 bar \u00b7 Weight: 12 kg.",
+      "categoryId": "elp-vacuum",
+      "unit": "No",
+      "brand": "Elephant",
+      "tags": [
+        "Painter",
+        "Cleaners",
+        "Foam",
+        "Elephant",
+        "Tanks"
+      ],
+      "specifications": {
+        "Type": "Foam Tank S.S.",
+        "Air Inlet": "1/4\"",
+        "Air Pressure": "1-2 bar",
+        "Weight": "12 kg"
+      },
+      "inStock": true
+    },
+    {
+      "id": "elp-evs-991",
+      "model": "EVS-991",
+      "name": "EVS-991 FRL Units & Palm Sanders",
+      "description": "EVS-991 \u2014 Elephant / Painter. Type: 6\" Air Palm Sander.",
+      "categoryId": "elp-frl-sander",
+      "unit": "No",
+      "brand": "Elephant",
+      "tags": [
+        "Sanders",
+        "Painter",
+        "EVS-991",
+        "Palm",
+        "Units"
+      ],
+      "specifications": {
+        "Type": "6\" Air Palm Sander"
       },
       "inStock": true
     }
