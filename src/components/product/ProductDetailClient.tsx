@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import { ShoppingCart, Check, ChevronRight, Tag, Package } from 'lucide-react'
 import Link from 'next/link'
 import { toast } from 'sonner'
@@ -16,12 +17,18 @@ interface Props {
 
 export default function ProductDetailClient({ product, categoryName, relatedProducts }: Props) {
   const { addItem, isInCart } = useQuoteCart()
-  const inCart = isInCart(product.id)
+  const hasSizes = !!product.sizeOptions?.length
+  const [size, setSize] = useState<string | undefined>(product.sizeOptions?.[0])
+  const inCart = isInCart(product.id, hasSizes ? size : undefined)
+
+  // specs for the selected variant (family) merged over common specs
+  const activeVariant = product.variants?.find((v) => v.option === size)
+  const activeSpecs = { ...(product.specifications || {}), ...(activeVariant?.specifications || {}) }
 
   const handleAdd = () => {
     if (!inCart) {
-      addItem(product)
-      toast.success('Added to quote cart', { description: product.name })
+      addItem(product, hasSizes ? size : undefined)
+      toast.success('Added to quote cart', { description: hasSizes ? `${product.name} — ${size}` : product.name })
     }
   }
 
@@ -85,12 +92,38 @@ export default function ProductDetailClient({ product, categoryName, relatedProd
               </div>
             </div>
 
-            {/* specifications */}
-            {product.specifications && Object.keys(product.specifications).length > 0 && (
+            {/* size / variant selector */}
+            {hasSizes && (
+              <div className="mb-6">
+                <h3 className="font-semibold text-brand-dark text-sm mb-2 uppercase tracking-wider">
+                  {product.sizeLabel || 'Size'}
+                  <span className="ml-2 text-gray-400 font-normal normal-case">({product.sizeOptions!.length} options)</span>
+                </h3>
+                <div className="flex flex-wrap gap-2">
+                  {product.sizeOptions!.map((opt) => (
+                    <button
+                      key={opt}
+                      onClick={() => setSize(opt)}
+                      className={cn(
+                        'text-sm rounded-lg px-3 py-1.5 border transition-colors',
+                        size === opt
+                          ? 'bg-brand-red text-white border-brand-red'
+                          : 'bg-white text-brand-dark border-gray-200 hover:border-brand-red'
+                      )}
+                    >
+                      {opt}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* specifications (for selected variant) */}
+            {Object.keys(activeSpecs).length > 0 && (
               <div className="bg-white rounded-xl border border-gray-200 p-4 mb-6">
                 <h3 className="font-semibold text-brand-dark text-sm mb-3 uppercase tracking-wider">Specifications</h3>
                 <dl className="grid grid-cols-2 gap-2">
-                  {Object.entries(product.specifications).map(([k, v]) => (
+                  {Object.entries(activeSpecs).map(([k, v]) => (
                     <div key={k} className="bg-gray-50 rounded-lg px-3 py-2">
                       <dt className="text-xs text-gray-400">{k}</dt>
                       <dd className="text-sm font-medium text-brand-dark mt-0.5">{v}</dd>

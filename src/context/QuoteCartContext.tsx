@@ -13,55 +13,63 @@ import type { Product } from '@/data/types'
 export interface CartItem {
   product: Product
   quantity: number
+  size?: string          // selected size/variant option, if any
 }
 
 interface CartState {
   items: CartItem[]
 }
 
+/** Unique line key per product + chosen size (same product in two sizes = two lines). */
+const lineKey = (id: string, size?: string) => `${id}__${size ?? ''}`
+
 type CartAction =
-  | { type: 'ADD';    payload: Product }
-  | { type: 'REMOVE'; payload: string }   // product id
-  | { type: 'UPDATE'; payload: { id: string; quantity: number } }
+  | { type: 'ADD';    payload: { product: Product; size?: string } }
+  | { type: 'REMOVE'; payload: { id: string; size?: string } }
+  | { type: 'UPDATE'; payload: { id: string; size?: string; quantity: number } }
   | { type: 'CLEAR' }
   | { type: 'HYDRATE'; payload: CartItem[] }
 
 interface CartContextValue {
   items:       CartItem[]
   totalItems:  number
-  addItem:     (product: Product) => void
-  removeItem:  (id: string) => void
-  updateQty:   (id: string, quantity: number) => void
+  addItem:     (product: Product, size?: string) => void
+  removeItem:  (id: string, size?: string) => void
+  updateQty:   (id: string, size: string | undefined, quantity: number) => void
   clearCart:   () => void
-  isInCart:    (id: string) => boolean
+  isInCart:    (id: string, size?: string) => boolean
 }
 
 /* ── reducer ─────────────────────────────────────────────────── */
 function cartReducer(state: CartState, action: CartAction): CartState {
   switch (action.type) {
     case 'ADD': {
-      const existing = state.items.find((i) => i.product.id === action.payload.id)
+      const { product, size } = action.payload
+      const key = lineKey(product.id, size)
+      const existing = state.items.find((i) => lineKey(i.product.id, i.size) === key)
       if (existing) {
         return {
           items: state.items.map((i) =>
-            i.product.id === action.payload.id
-              ? { ...i, quantity: i.quantity + 1 }
-              : i
+            lineKey(i.product.id, i.size) === key ? { ...i, quantity: i.quantity + 1 } : i
           ),
         }
       }
-      return { items: [...state.items, { product: action.payload, quantity: 1 }] }
+      return { items: [...state.items, { product, quantity: 1, size }] }
     }
-    case 'REMOVE':
-      return { items: state.items.filter((i) => i.product.id !== action.payload) }
-    case 'UPDATE':
+    case 'REMOVE': {
+      const key = lineKey(action.payload.id, action.payload.size)
+      return { items: state.items.filter((i) => lineKey(i.product.id, i.size) !== key) }
+    }
+    case 'UPDATE': {
+      const key = lineKey(action.payload.id, action.payload.size)
       return {
         items: state.items.map((i) =>
-          i.product.id === action.payload.id
+          lineKey(i.product.id, i.size) === key
             ? { ...i, quantity: Math.max(1, action.payload.quantity) }
             : i
         ),
       }
+    }
     case 'CLEAR':
       return { items: [] }
     case 'HYDRATE':
@@ -79,20 +87,15 @@ const STORAGE_KEY = 'sv-sales-quote-cart'
 export function QuoteCartProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(cartReducer, { items: [] })
 
-  /* hydrate from localStorage on mount */
   useEffect(() => {
     try {
       const raw = localStorage.getItem(STORAGE_KEY)
-      if (raw) {
-        const parsed: CartItem[] = JSON.parse(raw)
-        dispatch({ type: 'HYDRATE', payload: parsed })
-      }
+      if (raw) dispatch({ type: 'HYDRATE', payload: JSON.parse(raw) as CartItem[] })
     } catch {
       /* ignore parse errors */
     }
   }, [])
 
-  /* persist on every change */
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state.items))
   }, [state.items])
@@ -100,11 +103,11 @@ export function QuoteCartProvider({ children }: { children: ReactNode }) {
   const value: CartContextValue = {
     items:      state.items,
     totalItems: state.items.reduce((acc, i) => acc + i.quantity, 0),
-    addItem:    (product) => dispatch({ type: 'ADD', payload: product }),
-    removeItem: (id)      => dispatch({ type: 'REMOVE', payload: id }),
-    updateQty:  (id, qty) => dispatch({ type: 'UPDATE', payload: { id, quantity: qty } }),
-    clearCart:  ()        => dispatch({ type: 'CLEAR' }),
-    isInCart:   (id)      => state.items.some((i) => i.product.id === id),
+    addItem:    (product, size) => dispatch({ type: 'ADD', payload: { product, size } }),
+    removeItem: (id, size)      => dispatch({ type: 'REMOVE', payload: { id, size } }),
+    updateQty:  (id, size, qty) => dispatch({ type: 'UPDATE', payload: { id, size, quantity: qty } }),
+    clearCart:  ()              => dispatch({ type: 'CLEAR' }),
+    isInCart:   (id, size)      => state.items.some((i) => lineKey(i.product.id, i.size) === lineKey(id, size)),
   }
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>

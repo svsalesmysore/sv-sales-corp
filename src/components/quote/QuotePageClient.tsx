@@ -46,7 +46,7 @@ export default function QuotePageClient() {
   /** Build the plain-text quote message shared by WhatsApp and email. */
   const buildQuoteText = (): string => {
     const lines = items.map(
-      (i, idx) => `${idx + 1}. ${i.product.name} — Qty: ${i.quantity} ${i.product.unit}`,
+      (i, idx) => `${idx + 1}. ${i.product.name}${i.size ? ` — ${i.product.sizeLabel || 'Size'}: ${i.size}` : ''} — Qty: ${i.quantity} ${i.product.unit}`,
     )
     return [
       '*New Quote Request — S V Sales Corporation*',
@@ -175,7 +175,7 @@ export default function QuotePageClient() {
                 : getProductImage(item.product.id)
 
               return (
-                <div key={item.product.id} className="bg-white rounded-xl border border-gray-100 p-4 flex items-start gap-4">
+                <div key={`${item.product.id}__${item.size ?? ''}`} className="bg-white rounded-xl border border-gray-100 p-4 flex items-start gap-4">
                   <div className="relative w-20 h-16 rounded-lg overflow-hidden bg-gray-100 shrink-0">
                     <Image
                       src={imgUrl}
@@ -189,25 +189,28 @@ export default function QuotePageClient() {
 
                   <div className="flex-1 min-w-0">
                     <p className="font-medium text-sm text-brand-dark line-clamp-2 mb-1">{item.product.name}</p>
+                    {item.size && (
+                      <p className="text-xs text-brand-red font-medium mb-0.5">{item.product.sizeLabel || 'Size'}: {item.size}</p>
+                    )}
                     <p className="text-xs text-gray-400 capitalize">{item.product.categoryId.replace(/-/g, ' ')} · Per {item.product.unit}</p>
                   </div>
 
                   <div className="flex items-center gap-1 shrink-0">
                     <button
-                      onClick={() => updateQty(item.product.id, item.quantity - 1)}
+                      onClick={() => updateQty(item.product.id, item.size, item.quantity - 1)}
                       className="w-7 h-7 rounded-full border border-gray-200 flex items-center justify-center hover:border-brand-red hover:text-brand-red transition-colors"
                     >
                       <Minus className="w-3 h-3" />
                     </button>
                     <span className="w-8 text-center text-sm font-semibold">{item.quantity}</span>
                     <button
-                      onClick={() => updateQty(item.product.id, item.quantity + 1)}
+                      onClick={() => updateQty(item.product.id, item.size, item.quantity + 1)}
                       className="w-7 h-7 rounded-full border border-gray-200 flex items-center justify-center hover:border-brand-red hover:text-brand-red transition-colors"
                     >
                       <Plus className="w-3 h-3" />
                     </button>
                     <button
-                      onClick={() => removeItem(item.product.id)}
+                      onClick={() => removeItem(item.product.id, item.size)}
                       className="ml-2 w-7 h-7 rounded-full flex items-center justify-center text-gray-300 hover:text-brand-red hover:bg-red-50 transition-colors"
                     >
                       <Trash2 className="w-3.5 h-3.5" />

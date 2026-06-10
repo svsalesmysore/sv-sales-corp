@@ -18,7 +18,9 @@ interface Props {
 export default function ProductCard({ product, showCategory = false }: Props) {
   const { addItem, isInCart } = useQuoteCart()
   const [imgError, setImgError] = useState(false)
-  const inCart = isInCart(product.id)
+  const hasSizes = !!product.sizeOptions?.length
+  const [size, setSize] = useState<string | undefined>(product.sizeOptions?.[0])
+  const inCart = isInCart(product.id, hasSizes ? size : undefined)
 
   const imageUrl = imgError
     ? getFallbackImage()
@@ -28,9 +30,9 @@ export default function ProductCard({ product, showCategory = false }: Props) {
     e.preventDefault()
     e.stopPropagation()
     if (!inCart) {
-      addItem(product)
+      addItem(product, hasSizes ? size : undefined)
       toast.success(`Added to quote`, {
-        description: product.name,
+        description: hasSizes ? `${product.name} — ${size}` : product.name,
         duration: 2000,
       })
     }
@@ -86,6 +88,25 @@ export default function ProductCard({ product, showCategory = false }: Props) {
             </span>
           )}
         </div>
+
+        {/* size selector */}
+        {hasSizes && (
+          <div className="mb-3">
+            <label className="block text-[10px] uppercase tracking-wider text-gray-400 mb-1">
+              {product.sizeLabel || 'Size'}
+            </label>
+            <select
+              value={size}
+              onChange={(e) => { e.stopPropagation(); setSize(e.target.value) }}
+              onClick={(e) => e.stopPropagation()}
+              className="w-full text-xs border border-gray-200 rounded-lg px-2 py-1.5 text-brand-dark focus:outline-none focus:ring-1 focus:ring-brand-red/40 focus:border-brand-red bg-white"
+            >
+              {product.sizeOptions!.map((opt) => (
+                <option key={opt} value={opt}>{opt}</option>
+              ))}
+            </select>
+          </div>
+        )}
 
         {/* footer */}
         <div className="flex items-center justify-between">
