@@ -29,20 +29,32 @@ export default function Header() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  /* ⌘K / Ctrl+K opens search */
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault()
+        setSearchOpen(true)
+      }
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [])
+
   return (
     <header
       className={cn(
         'fixed top-0 inset-x-0 z-50 transition-all duration-300',
-        scrolled
-          ? 'bg-brand-dark/95 backdrop-blur shadow-lg shadow-black/20'
-          : 'bg-brand-dark'
+        scrolled ? 'glass-dark shadow-xl shadow-black/25' : 'bg-brand-dark'
       )}
     >
       {/* top bar */}
-      <div className="bg-brand-red/90 text-white text-xs py-1 hidden sm:block">
+      <div className="border-b border-white/[0.06] text-xs py-1.5 hidden sm:block">
         <div className="container mx-auto px-4 flex items-center justify-between">
-          <span>Authorized Dealer: ELGI · Unipatch · Taparia · Mysore Tubes</span>
-          <a href={`tel:${BRAND.phone}`} className="flex items-center gap-1 hover:text-brand-gold transition-colors">
+          <span className="text-brand-silver">
+            Authorized Dealer — <span className="text-white/90">Lion</span> · <span className="text-white/90">GOWIN</span> · <span className="text-white/90">Elephant</span> · Mysore, Karnataka
+          </span>
+          <a href={`tel:${BRAND.phone}`} className="flex items-center gap-1.5 text-brand-silver hover:text-brand-gold transition-colors">
             <Phone className="w-3 h-3" />
             {BRAND.phone} / {BRAND.mobile}
           </a>
@@ -53,13 +65,13 @@ export default function Header() {
       <nav className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* logo */}
-          <Link href="/" className="flex items-center gap-2 group">
-            <div className="w-9 h-9 bg-brand-red rounded-lg flex items-center justify-center group-hover:bg-brand-red/80 transition-colors">
+          <Link href="/" className="flex items-center gap-2.5 group cursor-pointer">
+            <div className="w-9 h-9 bg-gradient-to-br from-brand-red-bright to-brand-red rounded-xl flex items-center justify-center glow-red-soft group-hover:scale-105 transition-transform duration-200">
               <Wrench className="w-5 h-5 text-white" />
             </div>
             <div className="hidden sm:block">
-              <div className="text-white font-display font-bold text-lg leading-tight">S V Sales</div>
-              <div className="text-brand-silver text-xs leading-tight">Corporation</div>
+              <div className="text-white font-display font-bold text-lg leading-tight tracking-tight">S V Sales</div>
+              <div className="text-brand-silver text-[11px] leading-tight tracking-[0.18em] uppercase">Corporation</div>
             </div>
           </Link>
 
@@ -70,10 +82,10 @@ export default function Header() {
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  'px-4 py-2 rounded-md text-sm font-medium transition-colors',
+                  'relative px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200',
                   pathname === link.href
-                    ? 'bg-brand-red text-white'
-                    : 'text-brand-silver hover:text-white hover:bg-white/10'
+                    ? 'text-white after:absolute after:left-4 after:right-4 after:-bottom-[1px] after:h-[2px] after:rounded-full after:bg-gradient-to-r after:from-brand-red-bright after:to-brand-gold'
+                    : 'text-brand-silver hover:text-white hover:bg-white/[0.06]'
                 )}
               >
                 {link.label}
@@ -82,21 +94,22 @@ export default function Header() {
           </div>
 
           {/* right side */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2.5">
             {/* search products */}
             <button
               onClick={() => setSearchOpen(true)}
-              className="flex items-center gap-2 text-brand-silver hover:text-white border border-white/20 hover:border-white/40 px-3 py-2 rounded-lg text-sm font-medium transition-colors"
+              className="flex items-center gap-2 text-brand-silver hover:text-white hairline hover:border-white/25 bg-white/[0.04] hover:bg-white/[0.08] px-3.5 py-2 rounded-xl text-sm font-medium transition-all duration-200 cursor-pointer"
               aria-label="Search products"
             >
               <Search className="w-4 h-4" />
-              <span className="hidden sm:inline">Search Products</span>
+              <span className="hidden sm:inline">Search</span>
+              <kbd className="hidden lg:inline text-[10px] text-brand-silver/70 bg-white/[0.06] rounded px-1.5 py-0.5 border border-white/10">⌘K</kbd>
             </button>
 
             {/* quote cart */}
             <Link
               href="/quote"
-              className="relative flex items-center gap-2 bg-brand-red hover:bg-brand-red/80 text-white px-3 py-2 rounded-lg text-sm font-medium transition-colors"
+              className="relative flex items-center gap-2 bg-gradient-to-b from-brand-red-bright to-brand-red hover:brightness-110 text-white px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200 glow-red-soft cursor-pointer"
             >
               <ShoppingCart className="w-4 h-4" />
               <span className="hidden sm:inline">Quote</span>

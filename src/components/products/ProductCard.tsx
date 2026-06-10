@@ -41,60 +41,54 @@ export default function ProductCard({ product, showCategory = false }: Props) {
   }
 
   return (
-    <div className="group bg-white rounded-2xl border border-gray-100 hover:border-brand-red/30 shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5 overflow-hidden">
+    <div className="group bg-white rounded-2xl border border-slate-200/80 hover:border-brand-red/25 card-premium overflow-hidden flex flex-col">
       {/* image */}
-      <Link href={`/products/${product.categoryId}/${product.id}`} className="block relative">
-        <div className="relative aspect-[4/3] overflow-hidden bg-gray-50">
+      <Link href={`/products/${product.categoryId}/${product.id}`} className="block relative cursor-pointer">
+        <div className="relative aspect-[4/3] overflow-hidden bg-white">
           <Image
             src={imageUrl}
             alt={product.name}
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            className="object-cover group-hover:scale-105 transition-transform duration-500"
+            className="object-contain p-4 group-hover:scale-[1.06] transition-transform duration-500 ease-out"
             onError={() => setImgError(true)}
             unoptimized
           />
-          {/* hover overlay */}
-          <div className="absolute inset-0 bg-brand-dark/0 group-hover:bg-brand-dark/20 transition-colors flex items-center justify-center">
-            <Eye className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity" />
-          </div>
-        </div>
-      </Link>
-
-      {/* body */}
-      <div className="p-4">
-        {showCategory && (
-          <Link href={`/products/${product.categoryId}`} className="text-xs text-brand-red font-medium uppercase tracking-wider hover:underline">
-            {product.categoryId.replace(/-/g, ' ')}
-          </Link>
-        )}
-        <Link href={`/products/${product.categoryId}/${product.id}`}>
-          <h3 className="font-semibold text-brand-dark text-sm mt-1 mb-1 leading-snug group-hover:text-brand-red transition-colors line-clamp-2">
-            {product.name}
-          </h3>
-        </Link>
-        <p className="text-gray-400 text-xs line-clamp-2 mb-3 leading-relaxed">
-          {product.description}
-        </p>
-
-        {/* tags */}
-        <div className="flex flex-wrap gap-1 mb-3">
-          {product.tags.slice(0, 2).map((tag) => (
-            <span key={tag} className="text-[10px] bg-gray-100 text-gray-500 rounded px-1.5 py-0.5">
-              {tag}
+          {/* hover veil */}
+          <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/0 to-transparent group-hover:from-brand-dark/10 transition-all duration-300 flex items-center justify-center">
+            <span className="opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 inline-flex items-center gap-1.5 bg-brand-dark/85 backdrop-blur text-white text-xs font-medium rounded-full px-3.5 py-1.5">
+              <Eye className="w-3.5 h-3.5" /> View details
             </span>
-          ))}
+          </div>
+          {/* brand chip */}
           {product.brand && (
-            <span className="text-[10px] bg-brand-red/10 text-brand-red rounded px-1.5 py-0.5">
+            <span className="absolute top-3 left-3 text-[10px] font-semibold uppercase tracking-wider bg-brand-dark/85 backdrop-blur text-white rounded-full px-2.5 py-1">
               {product.brand}
             </span>
           )}
         </div>
+      </Link>
+
+      {/* body */}
+      <div className="p-4 pt-3 border-t border-slate-100 flex flex-col flex-1">
+        {showCategory && (
+          <Link href={`/products/${product.categoryId}`} className="text-[10px] text-brand-red font-semibold uppercase tracking-wider hover:underline cursor-pointer">
+            {product.categoryId.replace(/-/g, ' ')}
+          </Link>
+        )}
+        <Link href={`/products/${product.categoryId}/${product.id}`} className="cursor-pointer">
+          <h3 className="font-semibold text-brand-dark text-sm mt-1 mb-1 leading-snug group-hover:text-brand-red transition-colors line-clamp-2">
+            {product.name}
+          </h3>
+        </Link>
+        <p className="text-slate-400 text-xs line-clamp-2 mb-3 leading-relaxed">
+          {product.description}
+        </p>
 
         {/* size selector */}
         {hasSizes && (
           <div className="mb-3">
-            <label className="block text-[10px] uppercase tracking-wider text-gray-400 mb-1">
+            <label className="block text-[10px] uppercase tracking-wider text-slate-400 mb-1">
               {product.sizeLabel || 'Size'}
             </label>
             <select
@@ -102,8 +96,8 @@ export default function ProductCard({ product, showCategory = false }: Props) {
               onChange={(e) => { e.stopPropagation(); setSize(e.target.value) }}
               onClick={(e) => e.stopPropagation()}
               className={cn(
-                'w-full text-xs border rounded-lg px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-brand-red/40 focus:border-brand-red bg-white',
-                needsSize ? 'border-brand-red/50 text-gray-500' : 'border-gray-200 text-brand-dark'
+                'w-full text-xs border rounded-xl px-2.5 py-2 focus:outline-none focus:ring-2 focus:ring-brand-red/30 focus:border-brand-red bg-white transition-colors cursor-pointer',
+                needsSize ? 'border-brand-red/40 text-slate-500' : 'border-slate-200 text-brand-dark'
               )}
             >
               <option value="" disabled>Select {product.sizeLabel || 'size'}…</option>
@@ -115,18 +109,18 @@ export default function ProductCard({ product, showCategory = false }: Props) {
         )}
 
         {/* footer */}
-        <div className="flex items-center justify-between">
-          <span className="text-xs text-gray-400">Per {product.unit}</span>
+        <div className="mt-auto flex items-center justify-between pt-1">
+          <span className="text-xs text-slate-400">Per {product.unit}</span>
           <button
             onClick={handleAddToQuote}
             disabled={inCart}
             className={cn(
-              'flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg transition-all',
+              'flex items-center gap-1.5 text-xs font-semibold px-3.5 py-2 rounded-xl transition-all duration-200 cursor-pointer',
               inCart
                 ? 'bg-green-50 text-green-600 border border-green-200 cursor-default'
                 : needsSize
-                ? 'bg-gray-100 text-gray-400 border border-gray-200'
-                : 'bg-brand-red text-white hover:bg-brand-red/80 hover:scale-105'
+                ? 'bg-slate-100 text-slate-400 border border-slate-200 cursor-not-allowed'
+                : 'bg-gradient-to-b from-brand-red-bright to-brand-red text-white glow-red-soft hover:brightness-110 active:scale-[0.97]'
             )}
           >
             {inCart ? (

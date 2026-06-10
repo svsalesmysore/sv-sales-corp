@@ -35,10 +35,11 @@ export default function ProductDetailClient({ product, categoryName, relatedProd
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-surface">
       {/* breadcrumb */}
-      <div className="bg-brand-dark py-6 px-4">
-        <div className="container mx-auto">
+      <div className="relative bg-brand-dark py-6 px-4 overflow-hidden">
+        <div aria-hidden className="absolute inset-0 bg-grid-dark opacity-60" />
+        <div className="relative container mx-auto">
           <nav className="flex items-center gap-1 text-sm text-brand-silver">
             <Link href="/" className="hover:text-white transition-colors">Home</Link>
             <ChevronRight className="w-3 h-3" />
@@ -107,10 +108,10 @@ export default function ProductDetailClient({ product, categoryName, relatedProd
                       key={opt}
                       onClick={() => setSize(opt)}
                       className={cn(
-                        'text-sm rounded-lg px-3 py-1.5 border transition-colors',
+                        'text-sm rounded-xl px-3.5 py-2 border font-medium transition-all duration-200 cursor-pointer active:scale-[0.97]',
                         size === opt
-                          ? 'bg-brand-red text-white border-brand-red'
-                          : 'bg-white text-brand-dark border-gray-200 hover:border-brand-red'
+                          ? 'bg-gradient-to-b from-brand-red-bright to-brand-red text-white border-transparent glow-red-soft'
+                          : 'bg-white text-brand-dark border-slate-200 hover:border-brand-red/50'
                       )}
                     >
                       {opt}
@@ -162,8 +163,8 @@ export default function ProductDetailClient({ product, categoryName, relatedProd
                   inCart
                     ? 'bg-green-50 text-green-600 border-2 border-green-200 cursor-default'
                     : needsSize
-                    ? 'bg-gray-100 text-gray-400 border-2 border-gray-200'
-                    : 'bg-brand-red text-white hover:bg-brand-red/80 shadow-lg shadow-brand-red/20 hover:scale-[1.02]'
+                    ? 'bg-slate-100 text-slate-400 border-2 border-slate-200 cursor-not-allowed'
+                    : 'bg-gradient-to-b from-brand-red-bright to-brand-red text-white glow-red hover:brightness-110 active:scale-[0.98] cursor-pointer'
                 )}
               >
                 {inCart ? (

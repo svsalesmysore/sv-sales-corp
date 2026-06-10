@@ -3,27 +3,28 @@ import { Phone, Mail, MapPin, ExternalLink } from 'lucide-react'
 import { BRAND } from '@/lib/brand'
 
 const categories = [
-  { id: 'tyre-repair',         name: 'Tyre Repair' },
-  { id: 'spanners-wrenches',   name: 'Spanners & Wrenches' },
-  { id: 'jacks-lifting',       name: 'Jacks & Lifting' },
-  { id: 'pneumatic-air',       name: 'Pneumatic Tools' },
-  { id: 'welding',             name: 'Welding Equipment' },
-  { id: 'electrical-fans',     name: 'Electrical & Fans' },
+  { id: 'domestic-pressure-washer', name: 'Pressure Washers' },
+  { id: 'impact-wrench',            name: 'Impact Wrenches' },
+  { id: 'air-compressor',           name: 'Air Compressors' },
+  { id: 'hydraulic-jack',           name: 'Hydraulic Jacks' },
+  { id: 'gowin-vices',              name: 'Bench Vices' },
+  { id: 'elp-conventional-guns',    name: 'Spray Guns' },
 ]
 
 export default function Footer() {
   return (
-    <footer className="bg-brand-dark border-t border-white/10">
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+    <footer className="relative bg-brand-dark border-t border-white/[0.08] overflow-hidden">
+      <div aria-hidden className="absolute -top-32 right-0 w-[420px] h-[280px] rounded-full bg-brand-red/10 blur-[110px]" />
+      <div className="relative container mx-auto px-4 py-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
 
           {/* brand column */}
           <div className="sm:col-span-2 lg:col-span-1">
-            <h3 className="font-display font-bold text-xl text-white mb-2">{BRAND.name}</h3>
-            <p className="text-brand-silver text-sm mb-4 leading-relaxed">{BRAND.tagline}</p>
+            <h3 className="font-display font-bold text-2xl text-white tracking-tight mb-3">{BRAND.name}</h3>
+            <p className="text-brand-silver text-sm mb-5 leading-relaxed">{BRAND.tagline}</p>
             <div className="flex flex-wrap gap-2">
               {BRAND.authorizedFor.map((b) => (
-                <span key={b} className="text-xs bg-brand-red/20 text-brand-silver border border-brand-red/30 rounded px-2 py-0.5">
+                <span key={b} className="text-xs glass-panel text-brand-silver rounded-full px-3 py-1">
                   {b}
                 </span>
               ))}

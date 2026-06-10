@@ -26,13 +26,17 @@ export default function AboutPage() {
   return (
     <div className="min-h-screen">
       {/* hero */}
-      <div className="bg-brand-dark py-20 px-4">
-        <div className="container mx-auto text-center max-w-3xl">
-          <h1 className="font-display font-bold text-5xl text-white mb-4">{BRAND.name}</h1>
+      <div className="relative bg-brand-dark py-24 px-4 overflow-hidden">
+        <div aria-hidden className="absolute inset-0 bg-grid-dark [mask-image:radial-gradient(ellipse_60%_90%_at_50%_0%,black,transparent)]" />
+        <div aria-hidden className="absolute -top-24 left-1/2 -translate-x-1/2 w-[520px] h-[280px] rounded-full bg-brand-red/15 blur-[110px]" />
+        <div className="relative container mx-auto text-center max-w-3xl">
+          <h1 className="font-display font-bold text-5xl sm:text-6xl tracking-tight mb-5">
+            <span className="text-gradient-silver">{BRAND.name}</span>
+          </h1>
           <p className="text-brand-silver text-xl leading-relaxed">{BRAND.tagline}</p>
-          <div className="mt-6 flex flex-wrap justify-center gap-3">
+          <div className="mt-7 flex flex-wrap justify-center gap-3">
             {BRAND.authorizedFor.map((b) => (
-              <span key={b} className="bg-brand-red/20 border border-brand-red/40 text-white rounded-full px-4 py-1.5 text-sm">
+              <span key={b} className="glass-panel text-white rounded-full px-4 py-1.5 text-sm">
                 {b}
               </span>
             ))}

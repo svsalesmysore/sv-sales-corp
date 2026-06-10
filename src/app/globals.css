@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Rajdhani:wght@500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
@@ -50,12 +50,19 @@
 }
 
 @theme {
-  --color-brand-red: #C0392B;
-  --color-brand-dark: #1A1A2E;
-  --color-brand-steel: #2C3E50;
-  --color-brand-silver: #BDC3C7;
-  --color-brand-gold: #F39C12;
-  --font-display: "Rajdhani", system-ui, sans-serif;
+  /* ── premium brand palette ─────────────────────────────── */
+  --color-brand-red: #C0392B;          /* primary CTA — 5.2:1 on white */
+  --color-brand-red-bright: #E8604C;   /* gradients & glow on dark */
+  --color-brand-dark: #0B1220;         /* cinematic deep slate (never pure black) */
+  --color-brand-ink: #0F172A;          /* elevated dark surface */
+  --color-brand-steel: #1E293B;        /* dark surface 2 */
+  --color-brand-silver: #94A3B8;       /* refined muted text on dark */
+  --color-brand-gold: #F5A623;         /* secondary accent */
+  --color-surface: #F8FAFC;            /* light page background */
+  --font-display: "Outfit", system-ui, sans-serif;
+
+  /* motion */
+  --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 :root {
@@ -133,8 +140,98 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: "Inter", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
   }
   html {
     @apply font-sans;
+    scroll-behavior: smooth;
   }
+  ::selection {
+    background: #C0392B;
+    color: #fff;
+  }
+}
+
+@layer utilities {
+  /* ── glassmorphism (used sparingly: header, overlays) ──── */
+  .glass-dark {
+    background: rgba(11, 18, 32, 0.72);
+    backdrop-filter: blur(16px) saturate(1.4);
+    -webkit-backdrop-filter: blur(16px) saturate(1.4);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .glass-panel {
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+  }
+
+  /* ── hairline borders on dark ──────────────────────────── */
+  .hairline { border: 1px solid rgba(255, 255, 255, 0.08); }
+  .hairline-strong { border: 1px solid rgba(255, 255, 255, 0.14); }
+
+  /* ── subtle engineering grid for dark bands ────────────── */
+  .bg-grid-dark {
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+    background-size: 44px 44px;
+  }
+
+  /* ── text gradient for display headlines ───────────────── */
+  .text-gradient-red {
+    background: linear-gradient(100deg, #E8604C 0%, #F5A623 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .text-gradient-silver {
+    background: linear-gradient(180deg, #FFFFFF 30%, #94A3B8 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* ── premium card hover (transform/opacity only) ───────── */
+  .card-premium {
+    transition: transform 220ms var(--ease-premium), box-shadow 220ms var(--ease-premium), border-color 220ms var(--ease-premium);
+  }
+  .card-premium:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px -12px rgba(11, 18, 32, 0.18), 0 4px 12px -6px rgba(11, 18, 32, 0.10);
+  }
+
+  /* ── CTA glow ───────────────────────────────────────────── */
+  .glow-red { box-shadow: 0 8px 32px -8px rgba(192, 57, 43, 0.55); }
+  .glow-red-soft { box-shadow: 0 4px 24px -6px rgba(192, 57, 43, 0.35); }
+}
+
+/* ── entrance animations ─────────────────────────────────── */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes float-slow {
+  0%, 100% { transform: translate(0, 0); }
+  50%      { transform: translate(12px, -16px); }
+}
+.animate-fade-up { animation: fade-up 600ms var(--ease-premium) both; }
+.animate-fade-in { animation: fade-in 700ms ease-out both; }
+.animate-float-slow { animation: float-slow 9s ease-in-out infinite; }
+.delay-75  { animation-delay: 75ms; }
+.delay-150 { animation-delay: 150ms; }
+.delay-225 { animation-delay: 225ms; }
+.delay-300 { animation-delay: 300ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-up, .animate-fade-in, .animate-float-slow { animation: none; }
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition-duration: 0.01ms !important; }
 }

@@ -21,7 +21,7 @@ export default function ProductViewer3D({ productName, productId, sketchfabModel
     : getProductImage(productId)
 
   return (
-    <div className="rounded-2xl overflow-hidden border border-gray-200 bg-gray-50">
+    <div className="rounded-3xl overflow-hidden border border-slate-200/80 bg-white shadow-sm shadow-slate-200/50">
       {/* toggle tabs */}
       {sketchfabModelId && (
         <div className="flex border-b border-gray-200 bg-white">
@@ -58,7 +58,7 @@ export default function ProductViewer3D({ productName, productId, sketchfabModel
             alt={productName}
             fill
             sizes="(max-width: 640px) 100vw, 50vw"
-            className="object-cover"
+            className="object-contain p-8"
             onError={() => setImgError(true)}
             unoptimized
           />

@@ -29,20 +29,24 @@ export default async function BrandPage({ params }: Props) {
   const all = getProductsByBrand(brand)
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-surface">
       {/* header */}
-      <div className="bg-brand-dark py-12 px-4">
-        <div className="container mx-auto">
-          <nav className="flex items-center gap-1 text-sm text-brand-silver mb-4">
+      <div className="relative bg-brand-dark py-14 px-4 overflow-hidden">
+        <div aria-hidden className="absolute inset-0 bg-grid-dark [mask-image:radial-gradient(ellipse_60%_100%_at_30%_0%,black,transparent)]" />
+        <div aria-hidden className="absolute -top-20 -right-20 w-[380px] h-[240px] rounded-full bg-brand-gold/10 blur-[100px]" />
+        <div className="relative container mx-auto">
+          <nav className="flex items-center gap-1 text-sm text-brand-silver mb-5">
             <Link href="/" className="hover:text-white transition-colors">Home</Link>
             <ChevronRight className="w-3 h-3" />
             <Link href="/products" className="hover:text-white transition-colors">Products</Link>
             <ChevronRight className="w-3 h-3" />
             <span className="text-white">{b.name}</span>
           </nav>
-          <h1 className="font-display font-bold text-4xl sm:text-5xl text-white mb-2">{b.name}</h1>
+          <h1 className="font-display font-bold text-4xl sm:text-5xl tracking-tight mb-3">
+            <span className="text-gradient-silver">{b.name}</span>
+          </h1>
           <p className="text-brand-silver text-base max-w-2xl">{b.blurb}</p>
-          <div className="mt-3 inline-flex items-center gap-2 bg-brand-red/20 border border-brand-red/40 rounded-full px-3 py-1 text-sm text-white">
+          <div className="mt-4 inline-flex items-center gap-2 glass-panel rounded-full px-3.5 py-1.5 text-sm text-white tabular-nums">
             {all.length} products · {cats.length} categories
           </div>
         </div>

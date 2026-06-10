@@ -31,20 +31,24 @@ export default async function CategoryPage({ params }: Props) {
   const products = getProductsByCategory(category)
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-surface">
       {/* breadcrumb + header */}
-      <div className="bg-brand-dark py-12 px-4">
-        <div className="container mx-auto">
-          <nav className="flex items-center gap-1 text-sm text-brand-silver mb-4">
+      <div className="relative bg-brand-dark py-14 px-4 overflow-hidden">
+        <div aria-hidden className="absolute inset-0 bg-grid-dark [mask-image:radial-gradient(ellipse_60%_100%_at_30%_0%,black,transparent)]" />
+        <div aria-hidden className="absolute -top-20 -right-20 w-[380px] h-[240px] rounded-full bg-brand-red/12 blur-[100px]" />
+        <div className="relative container mx-auto">
+          <nav className="flex items-center gap-1 text-sm text-brand-silver mb-5">
             <Link href="/" className="hover:text-white transition-colors">Home</Link>
             <ChevronRight className="w-3 h-3" />
             <Link href="/products" className="hover:text-white transition-colors">Products</Link>
             <ChevronRight className="w-3 h-3" />
             <span className="text-white">{cat.name}</span>
           </nav>
-          <h1 className="font-display font-bold text-4xl sm:text-5xl text-white mb-2">{cat.name}</h1>
+          <h1 className="font-display font-bold text-4xl sm:text-5xl tracking-tight mb-3">
+            <span className="text-gradient-silver">{cat.name}</span>
+          </h1>
           <p className="text-brand-silver text-base max-w-2xl">{cat.description}</p>
-          <div className="mt-3 inline-flex items-center gap-2 bg-brand-red/20 border border-brand-red/40 rounded-full px-3 py-1 text-sm text-white">
+          <div className="mt-4 inline-flex items-center gap-2 glass-panel rounded-full px-3.5 py-1.5 text-sm text-white tabular-nums">
             {products.length} products
           </div>
         </div>
@@ -55,9 +59,9 @@ export default async function CategoryPage({ params }: Props) {
       </div>
 
       {/* other categories */}
-      <div className="border-t bg-white py-8">
+      <div className="border-t border-slate-100 bg-white py-10">
         <div className="container mx-auto px-4">
-          <p className="text-sm font-medium text-gray-500 mb-4">Other Categories</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400 mb-4">Other Categories</p>
           <div className="flex flex-wrap gap-2">
             {categoriesWithCounts
               .filter((c) => c.id !== category)
@@ -65,7 +69,7 @@ export default async function CategoryPage({ params }: Props) {
                 <Link
                   key={c.id}
                   href={`/products/${c.id}`}
-                  className="text-sm bg-gray-100 hover:bg-brand-red/10 hover:text-brand-red text-gray-600 rounded-full px-3 py-1.5 transition-colors"
+                  className="text-sm bg-slate-100 hover:bg-brand-red hover:text-white text-slate-600 rounded-full px-3.5 py-1.5 transition-all duration-200 cursor-pointer"
                 >
                   {c.name}
                 </Link>

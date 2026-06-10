@@ -147,12 +147,16 @@ export default function QuotePageClient() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-surface">
       {/* header */}
-      <div className="bg-brand-dark py-12 px-4">
-        <div className="container mx-auto">
-          <h1 className="font-display font-bold text-4xl text-white mb-2">Request a Quote</h1>
-          <p className="text-brand-silver">{totalItems} item{totalItems !== 1 ? 's' : ''} in your quote cart</p>
+      <div className="relative bg-brand-dark py-14 px-4 overflow-hidden">
+        <div aria-hidden className="absolute inset-0 bg-grid-dark [mask-image:radial-gradient(ellipse_60%_100%_at_30%_0%,black,transparent)]" />
+        <div aria-hidden className="absolute -top-20 -right-20 w-[380px] h-[240px] rounded-full bg-brand-red/12 blur-[100px]" />
+        <div className="relative container mx-auto">
+          <h1 className="font-display font-bold text-4xl sm:text-5xl tracking-tight mb-3">
+            <span className="text-gradient-silver">Request a Quote</span>
+          </h1>
+          <p className="text-brand-silver tabular-nums">{totalItems} item{totalItems !== 1 ? 's' : ''} in your quote cart</p>
         </div>
       </div>
 

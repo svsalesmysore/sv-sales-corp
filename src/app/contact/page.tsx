@@ -36,11 +36,15 @@ const contactCards = [
 
 export default function ContactPage() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-surface">
       {/* header */}
-      <div className="bg-brand-dark py-16 px-4">
-        <div className="container mx-auto text-center">
-          <h1 className="font-display font-bold text-5xl text-white mb-3">Contact Us</h1>
+      <div className="relative bg-brand-dark py-20 px-4 overflow-hidden">
+        <div aria-hidden className="absolute inset-0 bg-grid-dark [mask-image:radial-gradient(ellipse_60%_90%_at_50%_0%,black,transparent)]" />
+        <div aria-hidden className="absolute -top-24 left-1/2 -translate-x-1/2 w-[520px] h-[280px] rounded-full bg-brand-red/15 blur-[110px]" />
+        <div className="relative container mx-auto text-center">
+          <h1 className="font-display font-bold text-5xl sm:text-6xl tracking-tight mb-4">
+            <span className="text-gradient-silver">Contact Us</span>
+          </h1>
           <p className="text-brand-silver text-lg">We&apos;re here to help with quotes, orders, and technical questions</p>
         </div>
       </div>
