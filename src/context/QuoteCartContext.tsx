@@ -24,7 +24,7 @@ interface CartState {
 const lineKey = (id: string, size?: string) => `${id}__${size ?? ''}`
 
 type CartAction =
-  | { type: 'ADD';    payload: { product: Product; size?: string } }
+  | { type: 'ADD';    payload: { product: Product; size?: string; qty?: number } }
   | { type: 'REMOVE'; payload: { id: string; size?: string } }
   | { type: 'UPDATE'; payload: { id: string; size?: string; quantity: number } }
   | { type: 'CLEAR' }
@@ -33,7 +33,7 @@ type CartAction =
 interface CartContextValue {
   items:       CartItem[]
   totalItems:  number
-  addItem:     (product: Product, size?: string) => void
+  addItem:     (product: Product, size?: string, qty?: number) => void
   removeItem:  (id: string, size?: string) => void
   updateQty:   (id: string, size: string | undefined, quantity: number) => void
   clearCart:   () => void
@@ -44,17 +44,17 @@ interface CartContextValue {
 function cartReducer(state: CartState, action: CartAction): CartState {
   switch (action.type) {
     case 'ADD': {
-      const { product, size } = action.payload
+      const { product, size, qty = 1 } = action.payload
       const key = lineKey(product.id, size)
       const existing = state.items.find((i) => lineKey(i.product.id, i.size) === key)
       if (existing) {
         return {
           items: state.items.map((i) =>
-            lineKey(i.product.id, i.size) === key ? { ...i, quantity: i.quantity + 1 } : i
+            lineKey(i.product.id, i.size) === key ? { ...i, quantity: i.quantity + qty } : i
           ),
         }
       }
-      return { items: [...state.items, { product, quantity: 1, size }] }
+      return { items: [...state.items, { product, quantity: qty, size }] }
     }
     case 'REMOVE': {
       const key = lineKey(action.payload.id, action.payload.size)
@@ -103,7 +103,7 @@ export function QuoteCartProvider({ children }: { children: ReactNode }) {
   const value: CartContextValue = {
     items:      state.items,
     totalItems: state.items.reduce((acc, i) => acc + i.quantity, 0),
-    addItem:    (product, size) => dispatch({ type: 'ADD', payload: { product, size } }),
+    addItem:    (product, size, qty = 1) => dispatch({ type: 'ADD', payload: { product, size, qty } }),
     removeItem: (id, size)      => dispatch({ type: 'REMOVE', payload: { id, size } }),
     updateQty:  (id, size, qty) => dispatch({ type: 'UPDATE', payload: { id, size, quantity: qty } }),
     clearCart:  ()              => dispatch({ type: 'CLEAR' }),

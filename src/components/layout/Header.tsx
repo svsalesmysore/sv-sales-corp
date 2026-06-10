@@ -3,10 +3,11 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Menu, X, ShoppingCart, Phone, Wrench } from 'lucide-react'
+import { Menu, X, ShoppingCart, Phone, Wrench, Search } from 'lucide-react'
 import { useQuoteCart } from '@/context/QuoteCartContext'
 import { BRAND } from '@/lib/brand'
 import { cn } from '@/lib/utils'
+import SearchOverlay from '@/components/search/SearchOverlay'
 
 const navLinks = [
   { href: '/',         label: 'Home' },
@@ -20,6 +21,7 @@ export default function Header() {
   const { totalItems } = useQuoteCart()
   const [menuOpen, setMenuOpen]   = useState(false)
   const [scrolled, setScrolled]   = useState(false)
+  const [searchOpen, setSearchOpen] = useState(false)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10)
@@ -81,6 +83,16 @@ export default function Header() {
 
           {/* right side */}
           <div className="flex items-center gap-3">
+            {/* search products */}
+            <button
+              onClick={() => setSearchOpen(true)}
+              className="flex items-center gap-2 text-brand-silver hover:text-white border border-white/20 hover:border-white/40 px-3 py-2 rounded-lg text-sm font-medium transition-colors"
+              aria-label="Search products"
+            >
+              <Search className="w-4 h-4" />
+              <span className="hidden sm:inline">Search Products</span>
+            </button>
+
             {/* quote cart */}
             <Link
               href="/quote"
@@ -109,6 +121,12 @@ export default function Header() {
         {/* mobile menu */}
         {menuOpen && (
           <div className="md:hidden border-t border-white/10 py-3 space-y-1">
+            <button
+              onClick={() => { setMenuOpen(false); setSearchOpen(true) }}
+              className="w-full text-left flex items-center gap-2 px-4 py-2.5 rounded-md text-sm font-medium text-brand-silver hover:text-white hover:bg-white/10"
+            >
+              <Search className="w-4 h-4" /> Search Products
+            </button>
             {navLinks.map((link) => (
               <Link
                 key={link.href}
@@ -132,6 +150,8 @@ export default function Header() {
           </div>
         )}
       </nav>
+
+      <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
     </header>
   )
 }
