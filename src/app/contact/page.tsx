@@ -87,8 +87,8 @@ export default function ContactPage() {
             </div>
 
             <div className="space-y-3 text-sm text-gray-500">
-              <p className="font-medium text-brand-dark">Authorized Dealer for:</p>
-              {BRAND.authorizedFor.map((b) => (
+              <p className="font-medium text-brand-dark">Dealer for:</p>
+              {BRAND.dealerFor.map((b) => (
                 <div key={b} className="flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-brand-red shrink-0" />
                   {b}

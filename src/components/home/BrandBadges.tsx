@@ -15,9 +15,9 @@ export default function BrandBadges() {
       <div className="relative container mx-auto px-4">
         {/* brand wordmarks */}
         <div className="text-center mb-10">
-          <p className="text-brand-silver/80 text-xs uppercase tracking-[0.28em] mb-5">Authorized Dealer For</p>
+          <p className="text-brand-silver/80 text-xs uppercase tracking-[0.28em] mb-5">Dealer For</p>
           <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-4">
-            {BRAND.authorizedFor.map((b) => (
+            {BRAND.dealerFor.map((b) => (
               <span key={b} className="font-display font-bold text-xl sm:text-2xl text-white/40 hover:text-white/80 transition-colors duration-300 tracking-tight cursor-default">
                 {b}
               </span>

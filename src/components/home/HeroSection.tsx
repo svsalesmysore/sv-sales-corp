@@ -33,7 +33,7 @@ export default function HeroSection() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-red-bright opacity-60" />
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-red-bright" />
               </span>
-              <span className="text-brand-silver text-sm">Authorized Dealer — Lion · GOWIN · Elephant</span>
+              <span className="text-brand-silver text-sm">Dealer — Lion · GOWIN · Elephant</span>
             </div>
 
             <h1 className="font-display font-bold text-5xl sm:text-6xl xl:text-7xl leading-[1.04] tracking-tight mb-6 animate-fade-up delay-75">

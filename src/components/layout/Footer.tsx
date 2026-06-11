@@ -23,7 +23,7 @@ export default function Footer() {
             <h3 className="font-display font-bold text-2xl text-white tracking-tight mb-3">{BRAND.name}</h3>
             <p className="text-brand-silver text-sm mb-5 leading-relaxed">{BRAND.tagline}</p>
             <div className="flex flex-wrap gap-2">
-              {BRAND.authorizedFor.map((b) => (
+              {BRAND.dealerFor.map((b) => (
                 <span key={b} className="text-xs glass-panel text-brand-silver rounded-full px-3 py-1">
                   {b}
                 </span>

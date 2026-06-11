@@ -52,7 +52,7 @@ export default function Header() {
       <div className="border-b border-white/[0.06] text-xs py-1.5 hidden sm:block">
         <div className="container mx-auto px-4 flex items-center justify-between">
           <span className="text-brand-silver">
-            Authorized Dealer — <span className="text-white/90">Lion</span> · <span className="text-white/90">GOWIN</span> · <span className="text-white/90">Elephant</span> · Mysore, Karnataka
+            Dealer — <span className="text-white/90">Lion</span> · <span className="text-white/90">GOWIN</span> · <span className="text-white/90">Elephant</span> · Mysore, Karnataka
           </span>
           <a href={`tel:${BRAND.phone}`} className="flex items-center gap-1.5 text-brand-silver hover:text-brand-gold transition-colors">
             <Phone className="w-3 h-3" />
