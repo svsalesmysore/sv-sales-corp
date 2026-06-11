@@ -90,6 +90,26 @@ export default function QuotePageClient() {
       .join('\n')
   }
 
+  /** Store the quote in the owner's ledger (admin quotes inbox). Fire-and-forget. */
+  const recordQuote = () => {
+    fetch('/api/quotes', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        ...form,
+        items: items.map((i) => ({
+          productId: i.product.id,
+          name: i.product.name,
+          size: i.size,
+          qty: i.quantity,
+          unit: i.product.unit,
+        })),
+        uploaded: uploadedItems,
+        attachment,
+      }),
+    }).catch(() => { /* ledger is best-effort; WhatsApp/email still deliver */ })
+  }
+
   const finishSubmit = () => {
     setSent(true)
     clearCart()
@@ -103,6 +123,7 @@ export default function QuotePageClient() {
     e.preventDefault()
     if (!validate()) return
     setSub(true)
+    recordQuote()
     const text = encodeURIComponent(buildQuoteText())
     window.open(`https://wa.me/${BRAND.whatsapp}?text=${text}`, '_blank', 'noopener,noreferrer')
     toast.success('Opening WhatsApp…', { description: 'Tap send to deliver your quote.' })
@@ -117,6 +138,7 @@ export default function QuotePageClient() {
    */
   const submitEmail = () => {
     if (!validate()) return
+    recordQuote()
     const subject = encodeURIComponent(`New Quote Request — ${form.name}`)
     const body = encodeURIComponent(buildQuoteText().replace(/\*/g, ''))
     window.location.href = `mailto:${BRAND.email}?subject=${subject}&body=${body}`
