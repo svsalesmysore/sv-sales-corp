@@ -7,7 +7,7 @@
 import { useState, useEffect, useMemo, useCallback } from 'react'
 import {
   Lock, Boxes, Inbox, Receipt, Search, Save, Upload, Download, X, Plus,
-  Check, RefreshCw, LogOut, AlertTriangle, Phone, Trash2,
+  Check, RefreshCw, LogOut, AlertTriangle, Phone, Trash2, FileSpreadsheet,
 } from 'lucide-react'
 import { toast } from 'sonner'
 import { allProducts } from '@/data/index'
@@ -238,6 +238,10 @@ export default function AdminPage() {
                 <input value={stockQuery} onChange={(e) => setStockQuery(e.target.value)} placeholder="Search product, model, brand…"
                   className="w-full border border-slate-200 rounded-xl pl-9 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-red/30" />
               </div>
+              <a href="/SV-Sales-Stock-Count-Template.xlsx" download
+                className="flex items-center gap-1.5 text-sm font-medium text-brand-red border border-brand-red/30 bg-brand-red/5 rounded-xl px-3.5 py-2 hover:bg-brand-red/10 cursor-pointer">
+                <FileSpreadsheet className="w-4 h-4" /> Blank Template
+              </a>
               <label className="flex items-center gap-1.5 text-sm font-medium text-slate-600 border border-slate-200 rounded-xl px-3.5 py-2 hover:border-brand-red/40 cursor-pointer">
                 <Upload className="w-4 h-4" /> Import Excel/CSV
                 <input type="file" accept=".xlsx,.xls,.csv" className="hidden" onChange={(e) => { const f = e.target.files?.[0]; if (f) importFile(f); e.currentTarget.value = '' }} />
