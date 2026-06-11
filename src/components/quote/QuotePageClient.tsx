@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Trash2, Plus, Minus, ShoppingCart, Send, Phone, ArrowLeft, MessageCircle, Mail } from 'lucide-react'
@@ -9,6 +9,7 @@ import { useQuoteCart } from '@/context/QuoteCartContext'
 import { BRAND } from '@/lib/brand'
 import { cn } from '@/lib/utils'
 import { getProductImage, getFallbackImage } from '@/lib/image'
+import UploadListPanel, { type UploadedItem } from './UploadListPanel'
 
 interface FormData {
   name:    string
@@ -19,6 +20,7 @@ interface FormData {
 }
 
 const EMPTY_FORM: FormData = { name: '', company: '', phone: '', email: '', message: '' }
+const UPLOAD_KEY = 'sv-sales-uploaded-list'
 
 export default function QuotePageClient() {
   const { items, totalItems, removeItem, updateQty, clearCart } = useQuoteCart()
@@ -26,14 +28,33 @@ export default function QuotePageClient() {
   const [submitting, setSub]  = useState(false)
   const [submitted, setSent]  = useState(false)
   const [imgErrors, setImgErrors] = useState<Record<string, boolean>>({})
+  const [uploadedItems, setUploadedItems] = useState<UploadedItem[]>([])
+  const [attachment, setAttachment] = useState<string | null>(null)
+
+  /* persist the uploaded list so it survives reloads */
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(UPLOAD_KEY)
+      if (raw) {
+        const saved = JSON.parse(raw) as { items?: UploadedItem[]; attachment?: string | null }
+        if (saved.items?.length) setUploadedItems(saved.items)
+        if (saved.attachment) setAttachment(saved.attachment)
+      }
+    } catch { /* ignore */ }
+  }, [])
+  useEffect(() => {
+    localStorage.setItem(UPLOAD_KEY, JSON.stringify({ items: uploadedItems, attachment }))
+  }, [uploadedItems, attachment])
+
+  const hasAnything = items.length > 0 || uploadedItems.length > 0 || !!attachment
 
   const handleField = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }))
 
-  /** Validate the cart + required fields before sending. */
+  /** Validate cart/uploaded list + required fields before sending. */
   const validate = (): boolean => {
-    if (items.length === 0) {
-      toast.error('Your quote cart is empty')
+    if (!hasAnything) {
+      toast.error('Add products or upload your list first')
       return false
     }
     if (!form.name || !form.phone) {
@@ -48,6 +69,9 @@ export default function QuotePageClient() {
     const lines = items.map(
       (i, idx) => `${idx + 1}. ${i.product.name}${i.size ? ` — ${i.product.sizeLabel || 'Size'}: ${i.size}` : ''} — Qty: ${i.quantity} ${i.product.unit}`,
     )
+    const uploadedLines = uploadedItems.map(
+      (u, idx) => `${idx + 1}. ${u.name} — Qty: ${u.qty}`,
+    )
     return [
       '*New Quote Request — S V Sales Corporation*',
       '',
@@ -56,9 +80,11 @@ export default function QuotePageClient() {
       `Phone: ${form.phone}`,
       form.email ? `Email: ${form.email}` : '',
       form.message ? `Notes: ${form.message}` : '',
-      '',
-      `Products (${items.length}):`,
+      items.length ? `\nProducts (${items.length}):` : '',
       ...lines,
+      uploadedLines.length ? `\nFrom my list (${uploadedLines.length}):` : '',
+      ...uploadedLines,
+      attachment ? `\n📎 I am attaching my product list file: ${attachment}` : '',
     ]
       .filter(Boolean)
       .join('\n')
@@ -67,6 +93,9 @@ export default function QuotePageClient() {
   const finishSubmit = () => {
     setSent(true)
     clearCart()
+    setUploadedItems([])
+    setAttachment(null)
+    localStorage.removeItem(UPLOAD_KEY)
   }
 
   /** Primary: open WhatsApp pre-filled with the quote, addressed to the business. */
@@ -95,22 +124,37 @@ export default function QuotePageClient() {
     finishSubmit()
   }
 
-  /* ── Empty state ── */
-  if (items.length === 0 && !submitted) {
+  /* ── Empty state: two paths — browse, or upload your own list ── */
+  if (!hasAnything && !submitted) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
-        <div className="text-center max-w-md">
-          <div className="w-20 h-20 bg-brand-red/10 rounded-full flex items-center justify-center mx-auto mb-5">
-            <ShoppingCart className="w-10 h-10 text-brand-red" />
+      <div className="min-h-screen bg-surface flex items-center justify-center px-4 py-16">
+        <div className="w-full max-w-lg">
+          <div className="text-center mb-8">
+            <div className="w-20 h-20 bg-brand-red/10 rounded-full flex items-center justify-center mx-auto mb-5">
+              <ShoppingCart className="w-10 h-10 text-brand-red" />
+            </div>
+            <h1 className="font-display font-bold text-3xl text-brand-dark tracking-tight mb-3">Start your quote</h1>
+            <p className="text-slate-400 mb-6">Browse the catalog and add products — or skip browsing and upload the list you already have.</p>
+            <Link
+              href="/products"
+              className="inline-flex items-center gap-2 bg-gradient-to-b from-brand-red-bright to-brand-red text-white px-6 py-3 rounded-xl font-semibold glow-red-soft hover:brightness-110 active:scale-[0.98] transition-all duration-200 cursor-pointer"
+            >
+              <ArrowLeft className="w-4 h-4" /> Browse Products
+            </Link>
           </div>
-          <h1 className="font-display font-bold text-3xl text-brand-dark mb-3">Your quote cart is empty</h1>
-          <p className="text-gray-400 mb-8">Browse our catalog and add products to request a quote.</p>
-          <Link
-            href="/products"
-            className="inline-flex items-center gap-2 bg-brand-red text-white px-6 py-3 rounded-xl font-semibold hover:bg-brand-red/80 transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" /> Browse Products
-          </Link>
+
+          <div className="flex items-center gap-3 mb-6" aria-hidden>
+            <div className="flex-1 h-px bg-slate-200" />
+            <span className="text-xs uppercase tracking-wider text-slate-400">or</span>
+            <div className="flex-1 h-px bg-slate-200" />
+          </div>
+
+          <UploadListPanel
+            items={uploadedItems}
+            onItemsChange={setUploadedItems}
+            attachment={attachment}
+            onAttachmentChange={setAttachment}
+          />
         </div>
       </div>
     )
@@ -156,7 +200,11 @@ export default function QuotePageClient() {
           <h1 className="font-display font-bold text-4xl sm:text-5xl tracking-tight mb-3">
             <span className="text-gradient-silver">Request a Quote</span>
           </h1>
-          <p className="text-brand-silver tabular-nums">{totalItems} item{totalItems !== 1 ? 's' : ''} in your quote cart</p>
+          <p className="text-brand-silver tabular-nums">
+            {totalItems} item{totalItems !== 1 ? 's' : ''} in your quote cart
+            {uploadedItems.length > 0 && ` · ${uploadedItems.length} from your uploaded list`}
+            {attachment && ' · 1 file to attach'}
+          </p>
         </div>
       </div>
 
@@ -165,12 +213,14 @@ export default function QuotePageClient() {
 
           {/* left: cart items */}
           <div className="lg:col-span-3 space-y-3">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="font-semibold text-brand-dark text-lg">Selected Products</h2>
-              <button onClick={clearCart} className="text-xs text-gray-400 hover:text-brand-red transition-colors">
-                Clear all
-              </button>
-            </div>
+            {items.length > 0 && (
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="font-semibold text-brand-dark text-lg">Selected Products</h2>
+                <button onClick={clearCart} className="text-xs text-slate-400 hover:text-brand-red transition-colors cursor-pointer">
+                  Clear all
+                </button>
+              </div>
+            )}
 
             {items.map((item) => {
               const imgErr = imgErrors[item.product.id]
@@ -224,9 +274,20 @@ export default function QuotePageClient() {
               )
             })}
 
-            <Link href="/products" className="flex items-center gap-2 text-sm text-brand-red hover:underline pt-2">
+            <Link href="/products" className="flex items-center gap-2 text-sm text-brand-red hover:underline pt-2 cursor-pointer">
               <ArrowLeft className="w-4 h-4" /> Add more products
             </Link>
+
+            {/* upload your own list */}
+            <div className="pt-4">
+              <UploadListPanel
+                compact
+                items={uploadedItems}
+                onItemsChange={setUploadedItems}
+                attachment={attachment}
+                onAttachmentChange={setAttachment}
+              />
+            </div>
           </div>
 
           {/* right: contact form */}
