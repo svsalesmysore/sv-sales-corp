@@ -22,14 +22,14 @@ export async function POST(req: NextRequest) {
     qty: Math.trunc(Number(l.qty)),
   }))
 
-  decrementStock(clean)
-  const sale = addSale({
+  await decrementStock(clean)
+  const sale = await addSale({
     source: body.quoteId ? 'quote' : 'manual',
     quoteId: body.quoteId ? String(body.quoteId) : undefined,
     customer: body.customer ? String(body.customer).slice(0, 120) : undefined,
     lines: clean,
   })
-  if (body.quoteId) updateQuoteStatus(String(body.quoteId), 'deal')
+  if (body.quoteId) await updateQuoteStatus(String(body.quoteId), 'deal')
 
   return NextResponse.json({ ok: true, saleId: sale.id })
 }

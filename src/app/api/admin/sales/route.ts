@@ -4,5 +4,5 @@ import { isAdmin, unauthorized } from '@/lib/admin-auth'
 
 export async function GET(req: NextRequest) {
   if (!isAdmin(req)) return unauthorized()
-  return NextResponse.json({ ok: true, sales: listSales() })
+  return NextResponse.json({ ok: true, sales: await listSales() })
 }

@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
   }
   const items: QuoteLine[] = Array.isArray(body.items) ? body.items.slice(0, 200) : []
   const uploaded = Array.isArray(body.uploaded) ? body.uploaded.slice(0, 200) : []
-  const rec = addQuote({
+  const rec = await addQuote({
     name: String(body.name).slice(0, 120),
     company: body.company ? String(body.company).slice(0, 120) : undefined,
     phone: String(body.phone).slice(0, 40),
@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
 /** Admin: list stored quotes. */
 export async function GET(req: NextRequest) {
   if (!isAdmin(req)) return unauthorized()
-  return NextResponse.json({ ok: true, quotes: listQuotes() })
+  return NextResponse.json({ ok: true, quotes: await listQuotes() })
 }
 
 /** Admin: dismiss / restore a quote. Body: { id, status: 'dismissed' | 'new' } */
@@ -36,7 +36,7 @@ export async function PATCH(req: NextRequest) {
   if (!body?.id || !['dismissed', 'new'].includes(body?.status)) {
     return NextResponse.json({ ok: false, error: 'id and status required' }, { status: 400 })
   }
-  const q = updateQuoteStatus(String(body.id), body.status)
+  const q = await updateQuoteStatus(String(body.id), body.status)
   if (!q) return NextResponse.json({ ok: false, error: 'not found' }, { status: 404 })
   return NextResponse.json({ ok: true })
 }

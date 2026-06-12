@@ -1,23 +1,14 @@
 /**
- * Server-side inventory ledger — JSON files under data/ with atomic writes.
- * Local-first by design: works with `npm run dev`. Swap for a real DB when deploying.
- * NOTE: stock counts are ADMIN-ONLY; nothing here is exposed to public pages.
+ * Server-side inventory ledger — Supabase (Postgres) backend.
+ * All functions are async. Admin-only data: never exposed to public pages.
  */
-import fs from 'node:fs'
-import path from 'node:path'
 import crypto from 'node:crypto'
+import { supabaseAdmin } from './supabase'
 import catalog from '@/data/lion-catalog.json'
-
-const DATA_DIR = path.join(process.cwd(), 'data')
-const FILES = {
-  stock: path.join(DATA_DIR, 'stock.json'),
-  quotes: path.join(DATA_DIR, 'quotes.json'),
-  sales: path.join(DATA_DIR, 'sales.json'),
-}
 
 /* ── types ──────────────────────────────────────────────────── */
 export interface StockEntry {
-  key: string          // productId, or `${productId}::${variantModel}` for families
+  key: string
   productId: string
   model: string
   label: string
@@ -59,32 +50,13 @@ export interface SaleRecord {
   lines: SaleLine[]
 }
 
-/* ── low-level json io ──────────────────────────────────────── */
-function ensureDir() {
-  if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true })
-}
-function readJson<T>(file: string, fallback: T): T {
-  try {
-    return JSON.parse(fs.readFileSync(file, 'utf8')) as T
-  } catch {
-    return fallback
-  }
-}
-function writeJson(file: string, data: unknown) {
-  ensureDir()
-  const tmp = `${file}.tmp`
-  fs.writeFileSync(tmp, JSON.stringify(data, null, 2))
-  fs.renameSync(tmp, file)
-}
-
-/* ── stock ──────────────────────────────────────────────────── */
+/* ── catalog helpers ────────────────────────────────────────── */
 interface CatalogVariant { option: string; model?: string }
 interface CatalogProduct {
   id: string; name: string; model?: string; brand?: string; categoryId: string
   variants?: CatalogVariant[]
 }
 
-/** Every sellable unit in the catalog (families expand to one entry per variant). */
 function catalogEntries(): Omit<StockEntry, 'qty'>[] {
   const out: Omit<StockEntry, 'qty'>[] = []
   for (const p of catalog.products as unknown as CatalogProduct[]) {
@@ -114,68 +86,132 @@ function catalogEntries(): Omit<StockEntry, 'qty'>[] {
   return out
 }
 
-/** Stock list seeded from the catalog; existing quantities are preserved. */
-export function getStock(): StockEntry[] {
-  const saved = readJson<Record<string, number>>(FILES.stock, {})
+/* ── stock ──────────────────────────────────────────────────── */
+export async function getStock(): Promise<StockEntry[]> {
+  const { data } = await supabaseAdmin.from('stock').select('key, qty')
+  const saved: Record<string, number> = {}
+  for (const row of data ?? []) saved[row.key] = row.qty
   return catalogEntries().map((e) => ({ ...e, qty: saved[e.key] ?? 0 }))
 }
 
-export function setStock(updates: Record<string, number>) {
-  const saved = readJson<Record<string, number>>(FILES.stock, {})
-  for (const [k, v] of Object.entries(updates)) saved[k] = Math.trunc(v)
-  writeJson(FILES.stock, saved)
+export async function setStock(updates: Record<string, number>) {
+  const rows = Object.entries(updates).map(([key, qty]) => ({ key, qty: Math.trunc(qty) }))
+  await supabaseAdmin.from('stock').upsert(rows, { onConflict: 'key' })
 }
 
-/** Decrement (sale). Quantities may go negative — that signals an oversell to fix. */
-export function decrementStock(lines: SaleLine[]) {
-  const saved = readJson<Record<string, number>>(FILES.stock, {})
-  for (const l of lines) saved[l.key] = (saved[l.key] ?? 0) - Math.max(0, Math.trunc(l.qty))
-  writeJson(FILES.stock, saved)
+export async function decrementStock(lines: SaleLine[]) {
+  for (const l of lines) {
+    await supabaseAdmin.rpc('decrement_stock', {
+      p_key: l.key,
+      p_qty: Math.max(0, Math.trunc(l.qty)),
+    })
+  }
 }
 
 /* ── quotes ─────────────────────────────────────────────────── */
-export function listQuotes(): QuoteRecord[] {
-  return readJson<QuoteRecord[]>(FILES.quotes, [])
-}
-export function addQuote(q: Omit<QuoteRecord, 'id' | 'createdAt' | 'status'>): QuoteRecord {
-  const all = listQuotes()
-  const rec: QuoteRecord = {
-    ...q,
-    id: crypto.randomUUID(),
-    createdAt: new Date().toISOString(),
-    status: 'new',
+function rowToQuote(row: Record<string, unknown>): QuoteRecord {
+  return {
+    id: row.id as string,
+    createdAt: row.created_at as string,
+    name: row.name as string,
+    company: row.company as string | undefined,
+    phone: row.phone as string,
+    email: row.email as string | undefined,
+    message: row.message as string | undefined,
+    items: (row.items ?? []) as QuoteLine[],
+    uploaded: (row.uploaded ?? []) as { name: string; qty: number }[],
+    attachment: row.attachment as string | null,
+    status: row.status as QuoteRecord['status'],
+    dealAt: row.deal_at as string | undefined,
   }
-  all.unshift(rec)
-  writeJson(FILES.quotes, all.slice(0, 500)) // keep the latest 500
-  return rec
 }
-export function updateQuoteStatus(id: string, status: QuoteRecord['status']) {
-  const all = listQuotes()
-  const q = all.find((x) => x.id === id)
-  if (!q) return null
-  q.status = status
-  if (status === 'deal') q.dealAt = new Date().toISOString()
-  writeJson(FILES.quotes, all)
-  return q
+
+export async function listQuotes(): Promise<QuoteRecord[]> {
+  const { data } = await supabaseAdmin
+    .from('quotes')
+    .select('*')
+    .order('created_at', { ascending: false })
+    .limit(500)
+  return (data ?? []).map(rowToQuote)
+}
+
+export async function addQuote(
+  q: Omit<QuoteRecord, 'id' | 'createdAt' | 'status'>,
+): Promise<QuoteRecord> {
+  const id = crypto.randomUUID()
+  const createdAt = new Date().toISOString()
+  await supabaseAdmin.from('quotes').insert({
+    id,
+    created_at: createdAt,
+    name: q.name,
+    company: q.company ?? null,
+    phone: q.phone,
+    email: q.email ?? null,
+    message: q.message ?? null,
+    items: q.items,
+    uploaded: q.uploaded,
+    attachment: q.attachment ?? null,
+    status: 'new',
+  })
+  return { ...q, id, createdAt, status: 'new' }
+}
+
+export async function updateQuoteStatus(
+  id: string,
+  status: QuoteRecord['status'],
+): Promise<QuoteRecord | null> {
+  const update: Record<string, unknown> = { status }
+  if (status === 'deal') update.deal_at = new Date().toISOString()
+  const { data } = await supabaseAdmin
+    .from('quotes')
+    .update(update)
+    .eq('id', id)
+    .select()
+    .single()
+  return data ? rowToQuote(data) : null
 }
 
 /* ── sales ──────────────────────────────────────────────────── */
-export function listSales(): SaleRecord[] {
-  return readJson<SaleRecord[]>(FILES.sales, [])
-}
-export function addSale(s: Omit<SaleRecord, 'id' | 'at'>): SaleRecord {
-  const all = listSales()
-  const rec: SaleRecord = { ...s, id: crypto.randomUUID(), at: new Date().toISOString() }
-  all.unshift(rec)
-  writeJson(FILES.sales, all)
-  return rec
+function rowToSale(row: Record<string, unknown>): SaleRecord {
+  return {
+    id: row.id as string,
+    at: row.at as string,
+    source: row.source as 'quote' | 'manual',
+    quoteId: row.quote_id as string | undefined,
+    customer: row.customer as string | undefined,
+    lines: (row.lines ?? []) as SaleLine[],
+  }
 }
 
-/* ── admin auth (simple local password) ─────────────────────── */
+export async function listSales(): Promise<SaleRecord[]> {
+  const { data } = await supabaseAdmin
+    .from('sales')
+    .select('*')
+    .order('at', { ascending: false })
+  return (data ?? []).map(rowToSale)
+}
+
+export async function addSale(s: Omit<SaleRecord, 'id' | 'at'>): Promise<SaleRecord> {
+  const id = crypto.randomUUID()
+  const at = new Date().toISOString()
+  await supabaseAdmin.from('sales').insert({
+    id,
+    at,
+    source: s.source,
+    quote_id: s.quoteId ?? null,
+    customer: s.customer ?? null,
+    lines: s.lines,
+  })
+  return { ...s, id, at }
+}
+
+/* ── admin auth ─────────────────────────────────────────────── */
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'svsales123'
+
 export function adminToken(): string {
   return crypto.createHash('sha256').update(`sv-admin:${ADMIN_PASSWORD}`).digest('hex')
 }
+
 export function checkPassword(pw: string): boolean {
   return pw === ADMIN_PASSWORD
 }

@@ -4,7 +4,7 @@ import { isAdmin, unauthorized } from '@/lib/admin-auth'
 
 export async function GET(req: NextRequest) {
   if (!isAdmin(req)) return unauthorized()
-  return NextResponse.json({ ok: true, stock: getStock() })
+  return NextResponse.json({ ok: true, stock: await getStock() })
 }
 
 /** Bulk update: { updates: { [key]: qty } } */
@@ -20,6 +20,6 @@ export async function PUT(req: NextRequest) {
     const n = Number(v)
     if (Number.isFinite(n)) clean[k] = Math.trunc(n)
   }
-  setStock(clean)
+  await setStock(clean)
   return NextResponse.json({ ok: true, updated: Object.keys(clean).length })
 }

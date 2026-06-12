@@ -44,3 +44,6 @@ __pycache__/
 
 # runtime inventory ledger (admin-only)
 data/
+
+# knowledge graph build artifacts
+graphify-out/
