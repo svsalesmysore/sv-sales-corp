@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { checkPassword, adminToken } from '@/lib/store'
-import { supabaseAdmin } from '@/lib/supabase-admin'
+import { supabase } from '@/lib/supabase'
 
 const ADMIN_EMAILS = new Set(['svsalesmysore@gmail.com', 'abhidk123@gmail.com'])
 
@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
 
   // OAuth path: callback page passes the Supabase access token; verify it server-side
   if (body?.accessToken) {
-    const { data: { user }, error } = await supabaseAdmin.auth.getUser(body.accessToken)
+    const { data: { user }, error } = await supabase.auth.getUser(body.accessToken)
     if (error || !user || !ADMIN_EMAILS.has(user.email ?? '')) {
       return NextResponse.json({ ok: false, error: 'Unauthorized' }, { status: 401 })
     }
