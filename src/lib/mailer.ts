@@ -16,7 +16,7 @@ interface QuoteEmailData {
   email?: string
   message?: string
   items: { name: string; size?: string; qty: number; unit: string; brand?: string }[]
-  uploaded: { name: string; qty: number }[]
+  uploaded: { name: string; qty: number; brand?: string }[]
   attachment?: string | null
   fileData?: string | null
   fileType?: string | null
@@ -150,7 +150,7 @@ async function generateQuoteExcel(q: QuoteEmailData): Promise<Buffer> {
 
   if (q.uploaded.length > 0) {
     const rows = q.uploaded.map((u, i) => ({
-      srno: i + 1, brand: '', name: u.name, size: '', qty: u.qty, unit: '',
+      srno: i + 1, brand: u.brand ?? '', name: u.name, size: '', qty: u.qty, unit: '',
     }))
     addSheet(
       'Uploaded List',
@@ -206,10 +206,10 @@ export async function sendQuoteEmail(q: QuoteEmailData) {
   }
   if (q.uploaded.length) {
     textParts.push('', `── Uploaded list (${q.uploaded.length}) ──`)
-    textParts.push('Sr  Product Name                                     Qty')
-    textParts.push('--  -----------------------------------------------  ---')
+    textParts.push('Sr  Brand        Product Name                          Qty')
+    textParts.push('--  -----------  ------------------------------------  ---')
     q.uploaded.forEach((u, n) =>
-      textParts.push(`${String(n+1).padEnd(2)}  ${u.name.slice(0,47).padEnd(47)}  ${u.qty}`),
+      textParts.push(`${String(n+1).padEnd(2)}  ${(u.brand??'').padEnd(11)}  ${u.name.slice(0,36).padEnd(36)}  ${u.qty}`),
     )
   }
   if (q.attachment) textParts.push('', `Attached file: ${q.attachment}`)
@@ -240,10 +240,10 @@ export async function sendQuoteEmail(q: QuoteEmailData) {
 
   let uploadedSection = ''
   if (q.uploaded.length) {
-    const rows = q.uploaded.map((u, n) => [n + 1, u.name, u.qty])
+    const rows = q.uploaded.map((u, n) => [n + 1, u.brand ?? '', u.name, u.qty])
     uploadedSection = `
       <h3 style="margin:24px 0 8px;font-size:14px;color:#1e293b;">Uploaded list (${q.uploaded.length})</h3>
-      ${buildTable(['Sr No', 'Product Name', 'Qty'], rows)}`
+      ${buildTable(['Sr No', 'Brand', 'Product Name', 'Qty'], rows)}`
   }
 
   const excelNote = `<div style="margin-top:20px;padding:12px 16px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:6px;font-size:12px;color:#166534;">

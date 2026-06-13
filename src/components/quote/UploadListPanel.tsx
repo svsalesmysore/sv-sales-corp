@@ -8,6 +8,7 @@ import { cn } from '@/lib/utils'
 export interface UploadedItem {
   name: string
   qty: number
+  brand?: string
 }
 
 interface Props {
@@ -22,6 +23,7 @@ interface Props {
 const HEADER_WORDS = new Set(['item', 'items', 'product', 'products', 'name', 'description', 'particulars', 'sr', 'sl', 'no', 's.no', 'sno'])
 const QTY_KEYS   = new Set(['qty', 'quantity', 'count', 'nos', 'pcs', 'pieces', 'required', 'req', 'order'])
 const NAME_KEYS  = new Set(['description', 'name', 'product', 'item', 'particulars', 'article', 'particular', 'productname', 'itemname', 'productdescription', 'itemdescription'])
+const BRAND_KEYS = new Set(['brand', 'brandname', 'manufacturer', 'make', 'company'])
 
 /** "Spanner set x 2" / "Spanner set - 2" / "Spanner set, 2" → { name, qty } */
 function parseLine(line: string): UploadedItem | null {
@@ -40,7 +42,7 @@ function rowsToItems(rows: (string | number | undefined | null)[][]): UploadedIt
   const out: UploadedItem[] = []
 
   // Scan first 5 rows for a header that contains a qty column
-  let qtyCol = -1, nameCol = -1, dataStart = 0
+  let qtyCol = -1, nameCol = -1, brandCol = -1, dataStart = 0
   for (let r = 0; r < Math.min(5, rows.length); r++) {
     const cells = (rows[r] ?? []).map((c) => norm(String(c ?? '')))
     const qi = cells.findIndex((c) => QTY_KEYS.has(c))
@@ -48,8 +50,8 @@ function rowsToItems(rows: (string | number | undefined | null)[][]): UploadedIt
       qtyCol = qi
       dataStart = r + 1
       const ni = cells.findIndex((c) => NAME_KEYS.has(c))
-      // fall back to first long text column that isn't the qty col
-      nameCol = ni !== -1 ? ni : cells.findIndex((c, i) => i !== qi && c.length > 2 && !/^\d+$/.test(c))
+      nameCol  = ni !== -1 ? ni : cells.findIndex((c, i) => i !== qi && c.length > 2 && !/^\d+$/.test(c))
+      brandCol = cells.findIndex((c) => BRAND_KEYS.has(c))
       break
     }
   }
@@ -73,7 +75,8 @@ function rowsToItems(rows: (string | number | undefined | null)[][]): UploadedIt
           .sort((a, b) => b.length - a.length)[0] ?? ''
       }
       if (!name || name.length < 2) continue
-      out.push({ name, qty })
+      const brand = brandCol !== -1 ? String(raw[brandCol] ?? '').trim() : undefined
+      out.push({ name, qty, brand: brand || undefined })
     } else {
       // No header detected — fallback: only rows with an explicit number cell
       const cells = raw.map((c) => String(c ?? '').trim()).filter(Boolean)
