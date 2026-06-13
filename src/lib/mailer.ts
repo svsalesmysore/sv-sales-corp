@@ -62,7 +62,7 @@ function styleTotal(cell: ExcelJS.Cell, shade = false) {
 }
 
 /* ─── Excel generator ──────────────────────────────────────────────────────── */
-// Columns: A=Sr No  B=Brand  C=Product Name  D=Size  E=Qty  F=Unit  G=Quote/Unit(₹)  H=Total Quote(₹)
+// Columns: A=Sr No  B=Brand  C=Product Name  D=Qty  E=Unit  F=Quote/Unit(₹)  G=Total Quote(₹)
 
 async function generateQuoteExcel(q: QuoteEmailData): Promise<Buffer> {
   const wb = new ExcelJS.Workbook()
@@ -70,7 +70,7 @@ async function generateQuoteExcel(q: QuoteEmailData): Promise<Buffer> {
 
   const addSheet = (
     sheetName: string,
-    rows: { srno: number; brand: string; name: string; size: string; qty: number; unit: string }[],
+    rows: { srno: number; brand: string; name: string; qty: number; unit: string }[],
     qtyCol: string,   // Excel col letter for Qty
     quoteCol: string, // Excel col letter for Quote/Unit
     totalCol: string, // Excel col letter for Total Quote
@@ -92,7 +92,7 @@ async function generateQuoteExcel(q: QuoteEmailData): Promise<Buffer> {
     rows.forEach((r, i) => {
       const excelRow = i + 2
       const shade = i % 2 === 1
-      const row = ws.addRow([r.srno, r.brand, r.name, r.size, r.qty, r.unit, null, null])
+      const row = ws.addRow([r.srno, r.brand, r.name, r.qty, r.unit, null, null])
       row.height = 18
       row.eachCell({ includeEmpty: true }, (cell, colNum) => {
         const colLetter = ws.getColumn(colNum).letter
@@ -138,25 +138,25 @@ async function generateQuoteExcel(q: QuoteEmailData): Promise<Buffer> {
   if (q.items.length > 0) {
     const rows = q.items.map((item, i) => ({
       srno: i + 1, brand: item.brand ?? '', name: item.name,
-      size: item.size ?? '', qty: item.qty, unit: item.unit,
+      qty: item.qty, unit: item.unit,
     }))
     addSheet(
       'Products',
-      rows, 'E', 'G', 'H',
-      ['Sr No', 'Brand', 'Product Name', 'Size', 'Qty', 'Unit', 'Quote/Unit (₹)', 'Total Quote (₹)'],
-      [7, 12, 46, 14, 6, 7, 16, 18],
+      rows, 'D', 'F', 'G',
+      ['Sr No', 'Brand', 'Product Name', 'Qty', 'Unit', 'Quote/Unit (₹)', 'Total Quote (₹)'],
+      [7, 12, 52, 6, 7, 16, 18],
     )
   }
 
   if (q.uploaded.length > 0) {
     const rows = q.uploaded.map((u, i) => ({
-      srno: i + 1, brand: u.brand ?? '', name: u.name, size: '', qty: u.qty, unit: '',
+      srno: i + 1, brand: u.brand ?? '', name: u.name, qty: u.qty, unit: '',
     }))
     addSheet(
       'Uploaded List',
-      rows, 'E', 'G', 'H',
-      ['Sr No', 'Brand', 'Product Name', 'Size', 'Qty', 'Unit', 'Quote/Unit (₹)', 'Total Quote (₹)'],
-      [7, 12, 46, 14, 6, 7, 16, 18],
+      rows, 'D', 'F', 'G',
+      ['Sr No', 'Brand', 'Product Name', 'Qty', 'Unit', 'Quote/Unit (₹)', 'Total Quote (₹)'],
+      [7, 12, 52, 6, 7, 16, 18],
     )
   }
 
@@ -232,10 +232,10 @@ export async function sendQuoteEmail(q: QuoteEmailData) {
 
   let productSection = ''
   if (q.items.length) {
-    const rows = q.items.map((i, n) => [n + 1, i.brand ?? '', i.name, i.size ?? '—', i.qty, i.unit])
+    const rows = q.items.map((i, n) => [n + 1, i.brand ?? '', i.name, i.qty, i.unit])
     productSection = `
       <h3 style="margin:24px 0 8px;font-size:14px;color:#1e293b;">Products (${q.items.length})</h3>
-      ${buildTable(['Sr No', 'Brand', 'Product Name', 'Size', 'Qty', 'Unit'], rows)}`
+      ${buildTable(['Sr No', 'Brand', 'Product Name', 'Qty', 'Unit'], rows)}`
   }
 
   let uploadedSection = ''
