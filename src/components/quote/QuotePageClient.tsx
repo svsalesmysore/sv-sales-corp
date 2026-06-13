@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Trash2, Plus, Minus, ShoppingCart, Send, Phone, ArrowLeft, MessageCircle, Mail } from 'lucide-react'
+import { Trash2, Plus, Minus, ShoppingCart, Send, Phone, ArrowLeft, MessageCircle } from 'lucide-react'
 import { toast } from 'sonner'
 import { useQuoteCart } from '@/context/QuoteCartContext'
 import { BRAND } from '@/lib/brand'
@@ -118,31 +118,19 @@ export default function QuotePageClient() {
     localStorage.removeItem(UPLOAD_KEY)
   }
 
-  /** Primary: open WhatsApp pre-filled with the quote, addressed to the business. */
-  const submitWhatsApp = (e: React.FormEvent) => {
+  /** Send quote via both WhatsApp and email simultaneously. */
+  const submitBoth = (e: React.FormEvent) => {
     e.preventDefault()
     if (!validate()) return
     setSub(true)
     recordQuote()
     const text = encodeURIComponent(buildQuoteText())
-    window.open(`https://wa.me/${BRAND.whatsapp}?text=${text}`, '_blank', 'noopener,noreferrer')
-    toast.success('Opening WhatsApp…', { description: 'Tap send to deliver your quote.' })
-    setSub(false)
-    finishSubmit()
-  }
-
-  /**
-   * Fallback: open the customer's email client pre-filled to the business inbox.
-   * (For fully-automatic email — no customer action — add a Resend API route and
-   * POST `buildQuoteText()` to it once the site is deployed.)
-   */
-  const submitEmail = () => {
-    if (!validate()) return
-    recordQuote()
     const subject = encodeURIComponent(`New Quote Request — ${form.name}`)
-    const body = encodeURIComponent(buildQuoteText().replace(/\*/g, ''))
-    window.location.href = `mailto:${BRAND.email}?subject=${subject}&body=${body}`
-    toast.success('Opening your email app…', { description: 'Send the email to deliver your quote.' })
+    const emailBody = encodeURIComponent(buildQuoteText().replace(/\*/g, ''))
+    window.open(`https://wa.me/${BRAND.whatsapp}?text=${text}`, '_blank', 'noopener,noreferrer')
+    window.location.href = `mailto:${BRAND.email}?subject=${subject}&body=${emailBody}`
+    toast.success('Quote sent!', { description: 'WhatsApp and email are both opening.' })
+    setSub(false)
     finishSubmit()
   }
 
@@ -195,7 +183,7 @@ export default function QuotePageClient() {
             Thank you, <span className="font-semibold">{form.name}</span>. Your quote has been prepared.
           </p>
           <p className="text-gray-400 text-sm mb-8">
-            Please tap <span className="font-medium">Send</span> in the WhatsApp (or email) window that just
+            Please tap <span className="font-medium">Send</span> in the WhatsApp and email windows that just
             opened to deliver it. We&apos;ll reply on {form.phone} with pricing shortly.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
@@ -314,7 +302,7 @@ export default function QuotePageClient() {
 
           {/* right: contact form */}
           <div className="lg:col-span-2">
-            <form onSubmit={submitWhatsApp} className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm sticky top-24">
+            <form onSubmit={submitBoth} className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm sticky top-24">
               <h2 className="font-semibold text-brand-dark text-lg mb-5">Your Details</h2>
 
               <div className="space-y-4">
@@ -350,7 +338,6 @@ export default function QuotePageClient() {
                 </div>
               </div>
 
-              {/* Primary: WhatsApp */}
               <button
                 type="submit"
                 disabled={submitting}
@@ -358,23 +345,13 @@ export default function QuotePageClient() {
                   'w-full flex items-center justify-center gap-2 py-3 rounded-xl font-semibold text-white transition-all mt-5',
                   submitting
                     ? 'bg-gray-400 cursor-not-allowed'
-                    : 'bg-green-600 hover:bg-green-700 shadow-lg shadow-green-600/20 hover:scale-[1.02]'
+                    : 'bg-gradient-to-b from-brand-red-bright to-brand-red shadow-lg shadow-brand-red/20 hover:brightness-110 hover:scale-[1.02] glow-red-soft'
                 )}
               >
                 <MessageCircle className="w-4 h-4" />
-                {submitting ? 'Opening WhatsApp…' : 'Send Quote via WhatsApp'}
+                {submitting ? 'Sending…' : 'Send Quote'}
               </button>
-
-              {/* Fallback: Email */}
-              <button
-                type="button"
-                onClick={submitEmail}
-                disabled={submitting}
-                className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl font-medium text-gray-600 border border-gray-200 hover:border-brand-red hover:text-brand-red transition-all mt-3"
-              >
-                <Mail className="w-4 h-4" />
-                Email the Quote Instead
-              </button>
+              <p className="text-xs text-gray-400 text-center mt-2">Sends to WhatsApp &amp; email together</p>
 
               <p className="text-xs text-gray-400 text-center mt-3">
                 We&apos;ll reply within 24 hours with pricing
