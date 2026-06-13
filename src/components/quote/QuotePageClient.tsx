@@ -102,7 +102,7 @@ export default function QuotePageClient() {
           ...form,
           items: items.map((i) => ({
             productId: i.product.id, name: i.product.name,
-            size: i.size, qty: i.quantity, unit: i.product.unit,
+            size: i.size, qty: i.quantity, unit: i.product.unit, brand: i.product.brand,
           })),
           uploaded: uploadedItems,
           attachment,

@@ -23,6 +23,7 @@ export interface QuoteLine {
   size?: string
   qty: number
   unit: string
+  brand?: string
 }
 
 export interface QuoteRecord {
