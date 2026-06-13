@@ -152,7 +152,7 @@ export default function UploadListPanel({ items, onItemsChange, attachment, onAt
     const blob = await res.blob()
     const a = document.createElement('a')
     a.href = URL.createObjectURL(blob)
-    a.download = 'sv-sales-quote-template.csv'
+    a.download = 'sv-sales-quote-template.xlsx'
     a.click()
     URL.revokeObjectURL(a.href)
   }

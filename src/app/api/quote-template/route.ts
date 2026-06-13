@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import ExcelJS from 'exceljs'
 import catalog from '@/data/lion-catalog.json'
 
 interface CatalogVariant { option: string; model?: string }
@@ -7,28 +8,95 @@ interface CatalogProduct {
   variants?: CatalogVariant[]
 }
 
-function escape(s: string) { return `"${String(s).replace(/"/g, '""')}"` }
+const THIN: ExcelJS.BorderStyle = 'thin'
+
+function borderAll(color = 'FFB0BEC5'): Partial<ExcelJS.Borders> {
+  const s = { style: THIN, color: { argb: color } }
+  return { top: s, left: s, bottom: s, right: s }
+}
+function fill(argb: string): ExcelJS.Fill {
+  return { type: 'pattern', pattern: 'solid', fgColor: { argb } }
+}
 
 export async function GET() {
-  const rows: string[][] = [['Sr No', 'Brand', 'Model', 'Product Name', 'Qty']]
+  const wb = new ExcelJS.Workbook()
+  wb.creator = 'SV Sales Corporation'
+  const ws = wb.addWorksheet('Quote Template')
+
+  // Freeze header row
+  ws.views = [{ state: 'frozen', ySplit: 1 }]
+
+  // Column definitions
+  ws.columns = [
+    { width: 7  },  // A – Sr No
+    { width: 12 },  // B – Brand
+    { width: 14 },  // C – Model
+    { width: 48 },  // D – Product Name
+    { width: 10 },  // E – Qty
+  ]
+
+  // ── Header row ──────────────────────────────────────────────────
+  const hRow = ws.addRow(['Sr No', 'Brand', 'Model', 'Product Name', 'Qty'])
+  hRow.height = 22
+  hRow.eachCell((cell, col) => {
+    cell.fill = fill('FF1E293B')
+    cell.font = { bold: true, color: { argb: 'FFFFFFFF' }, size: 10 }
+    cell.border = borderAll('FF334155')
+    cell.alignment = { vertical: 'middle', horizontal: col === 4 ? 'left' : 'center' }
+  })
+  // Qty header — yellow to hint "fill this in"
+  const qtyHeader = ws.getCell('E1')
+  qtyHeader.fill = fill('FFF59E0B')
+  qtyHeader.font = { bold: true, color: { argb: 'FF1C1917' }, size: 10 }
+  qtyHeader.border = borderAll('FFB45309')
+
+  // ── Data rows ───────────────────────────────────────────────────
   let n = 1
-  for (const p of catalog.products as unknown as CatalogProduct[]) {
+  const products = catalog.products as unknown as CatalogProduct[]
+
+  for (const p of products) {
     const brand = p.brand ?? ''
-    if (p.variants?.length) {
-      for (const v of p.variants) {
-        const model = v.model || p.model || ''
-        rows.push([String(n++), brand, model, `${p.name} — ${v.option}`, ''])
-      }
-    } else {
-      rows.push([String(n++), brand, p.model ?? '', p.name, ''])
+    const entries: [string, string, string][] = p.variants?.length
+      ? p.variants.map((v) => [brand, v.model || p.model || '', `${p.name} — ${v.option}`])
+      : [[brand, p.model ?? '', p.name]]
+
+    for (const [b, model, name] of entries) {
+      const shade = n % 2 === 0
+      const row = ws.addRow([n, b, model, name, null])
+      row.height = 16
+
+      row.eachCell({ includeEmpty: true }, (cell, col) => {
+        cell.font = { size: 10 }
+        cell.alignment = { vertical: 'middle', horizontal: col === 4 ? 'left' : 'center' }
+
+        if (col === 5) {
+          // Qty column — light yellow, user fills this in
+          cell.fill = fill(shade ? 'FFFFFCE7' : 'FFFFFBEB')
+          cell.border = {
+            top:    { style: THIN, color: { argb: 'FFFCD34D' } },
+            left:   { style: THIN, color: { argb: 'FFFCD34D' } },
+            bottom: { style: THIN, color: { argb: 'FFFCD34D' } },
+            right:  { style: THIN, color: { argb: 'FFFCD34D' } },
+          }
+        } else {
+          cell.fill = fill(shade ? 'FFF8FAFC' : 'FFFFFFFF')
+          cell.border = borderAll()
+        }
+      })
+      n++
     }
   }
 
-  const csv = rows.map((r) => r.map(escape).join(',')).join('\r\n')
-  return new NextResponse(csv, {
+  // ── Footer note ─────────────────────────────────────────────────
+  ws.addRow([])
+  const noteRow = ws.addRow([null, null, null, 'Fill in the Qty column for products you need, then upload this file at svsales.co.in/quote'])
+  ws.getCell(`D${noteRow.number}`).font = { italic: true, color: { argb: 'FF94A3B8' }, size: 9 }
+
+  const buf = Buffer.from(await wb.xlsx.writeBuffer())
+  return new NextResponse(buf, {
     headers: {
-      'Content-Type': 'text/csv; charset=utf-8',
-      'Content-Disposition': 'attachment; filename="sv-sales-quote-template.csv"',
+      'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      'Content-Disposition': 'attachment; filename="sv-sales-quote-template.xlsx"',
     },
   })
 }
