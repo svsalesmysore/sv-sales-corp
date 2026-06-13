@@ -20,6 +20,8 @@ interface Props {
 }
 
 const HEADER_WORDS = new Set(['item', 'items', 'product', 'products', 'name', 'description', 'particulars', 'sr', 'sl', 'no', 's.no', 'sno'])
+const QTY_KEYS   = new Set(['qty', 'quantity', 'count', 'nos', 'pcs', 'pieces', 'required', 'req', 'order'])
+const NAME_KEYS  = new Set(['description', 'name', 'product', 'item', 'particulars', 'article', 'particular'])
 
 /** "Spanner set x 2" / "Spanner set - 2" / "Spanner set, 2" → { name, qty } */
 function parseLine(line: string): UploadedItem | null {
@@ -32,20 +34,59 @@ function parseLine(line: string): UploadedItem | null {
   return { name: s, qty: 1 }
 }
 
-function rowsToItems(rows: (string | number | undefined | null)[][], requireQty = false): UploadedItem[] {
+function norm(s: string) { return s.toLowerCase().replace(/[.\s_]/g, '') }
+
+function rowsToItems(rows: (string | number | undefined | null)[][]): UploadedItem[] {
   const out: UploadedItem[] = []
-  for (const row of rows) {
-    const cells = (row ?? []).map((c) => String(c ?? '').trim()).filter(Boolean)
-    if (!cells.length) continue
-    // drop pure serial-number leading cell ("1", "2.", …)
-    if (cells.length > 1 && /^\d{1,3}\.?$/.test(cells[0])) cells.shift()
-    if (!cells.length) continue
-    const name = cells[0]
-    if (HEADER_WORDS.has(name.toLowerCase().replace(/[.:]/g, ''))) continue
-    if (name.length < 2) continue
-    const qtyCell = cells.slice(1).find((c) => /^\d{1,4}$/.test(c))
-    if (requireQty && !qtyCell) continue
-    out.push({ name, qty: qtyCell ? Math.max(1, parseInt(qtyCell, 10)) : 1 })
+
+  // Scan first 5 rows for a header that contains a qty column
+  let qtyCol = -1, nameCol = -1, dataStart = 0
+  for (let r = 0; r < Math.min(5, rows.length); r++) {
+    const cells = (rows[r] ?? []).map((c) => norm(String(c ?? '')))
+    const qi = cells.findIndex((c) => QTY_KEYS.has(c))
+    if (qi !== -1) {
+      qtyCol = qi
+      dataStart = r + 1
+      const ni = cells.findIndex((c) => NAME_KEYS.has(c))
+      // fall back to first long text column that isn't the qty col
+      nameCol = ni !== -1 ? ni : cells.findIndex((c, i) => i !== qi && c.length > 2 && !/^\d+$/.test(c))
+      break
+    }
+  }
+
+  for (let r = dataStart; r < rows.length; r++) {
+    const raw = rows[r] ?? []
+
+    if (qtyCol !== -1) {
+      // Header-guided: only rows where the qty column has a positive integer
+      const qtyRaw = String(raw[qtyCol] ?? '').trim()
+      const qty = parseInt(qtyRaw, 10)
+      if (!qtyRaw || isNaN(qty) || qty <= 0) continue
+
+      // Name: use detected name column, otherwise pick the longest text cell in the row
+      let name = nameCol !== -1 ? String(raw[nameCol] ?? '').trim() : ''
+      if (!name) {
+        name = (raw as (string | number | undefined | null)[])
+          .filter((_, i) => i !== qtyCol)
+          .map((c) => String(c ?? '').trim())
+          .filter((c) => c.length > 2 && !/^\d+\.?$/.test(c))
+          .sort((a, b) => b.length - a.length)[0] ?? ''
+      }
+      if (!name || name.length < 2) continue
+      out.push({ name, qty })
+    } else {
+      // No header detected — fallback: only rows with an explicit number cell
+      const cells = raw.map((c) => String(c ?? '').trim()).filter(Boolean)
+      if (!cells.length) continue
+      if (cells.length > 1 && /^\d{1,3}\.?$/.test(cells[0])) cells.shift()
+      if (!cells.length) continue
+      const name = cells[0]
+      if (HEADER_WORDS.has(name.toLowerCase().replace(/[.:]/g, ''))) continue
+      if (name.length < 2) continue
+      const qtyCell = cells.slice(1).find((c) => /^\d{1,4}$/.test(c))
+      if (!qtyCell) continue  // no qty found → skip row
+      out.push({ name, qty: Math.max(1, parseInt(qtyCell, 10)) })
+    }
   }
   return out
 }
@@ -63,7 +104,7 @@ export default function UploadListPanel({ items, onItemsChange, attachment, onAt
         const text = await file.text()
         const parsed =
           ext === 'csv'
-            ? rowsToItems(text.split(/\r?\n/).map((l) => l.split(/[,;\t]/)), true)
+            ? rowsToItems(text.split(/\r?\n/).map((l) => l.split(/[,;\t]/)))
             : (text.split(/\r?\n/).map(parseLine).filter(Boolean) as UploadedItem[])
         if (!parsed.length) { toast.error('No items found in the file'); return }
         onItemsChange([...items, ...parsed])
@@ -73,7 +114,7 @@ export default function UploadListPanel({ items, onItemsChange, attachment, onAt
         const wb = XLSX.read(await file.arrayBuffer())
         const sheet = wb.Sheets[wb.SheetNames[0]]
         const rows = XLSX.utils.sheet_to_json<(string | number)[]>(sheet, { header: 1 })
-        const parsed = rowsToItems(rows, true)
+        const parsed = rowsToItems(rows)
         if (!parsed.length) { toast.error('No items found in the sheet'); return }
         onItemsChange([...items, ...parsed])
         toast.success(`Imported ${parsed.length} item${parsed.length !== 1 ? 's' : ''} from ${file.name}`)
