@@ -30,6 +30,7 @@ export default function QuotePageClient() {
   const [imgErrors, setImgErrors] = useState<Record<string, boolean>>({})
   const [uploadedItems, setUploadedItems] = useState<UploadedItem[]>([])
   const [attachment, setAttachment] = useState<string | null>(null)
+  const [attachmentFile, setAttachmentFile] = useState<File | null>(null)
 
   /* persist the uploaded list so it survives reloads */
   useEffect(() => {
@@ -69,6 +70,7 @@ export default function QuotePageClient() {
     clearCart()
     setUploadedItems([])
     setAttachment(null)
+    setAttachmentFile(null)
     localStorage.removeItem(UPLOAD_KEY)
   }
 
@@ -78,6 +80,15 @@ export default function QuotePageClient() {
     if (!validate()) return
     setSub(true)
     try {
+      // Read attachment as base64 if present
+      let fileData: string | null = null
+      let fileType: string | null = null
+      if (attachmentFile) {
+        const buf = await attachmentFile.arrayBuffer()
+        fileData = btoa(String.fromCharCode(...new Uint8Array(buf)))
+        fileType = attachmentFile.type || 'application/octet-stream'
+      }
+
       const r = await fetch('/api/quotes', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -89,6 +100,8 @@ export default function QuotePageClient() {
           })),
           uploaded: uploadedItems,
           attachment,
+          fileData,
+          fileType,
         }),
       })
       if (!r.ok) throw new Error('server error')
@@ -131,6 +144,7 @@ export default function QuotePageClient() {
             onItemsChange={setUploadedItems}
             attachment={attachment}
             onAttachmentChange={setAttachment}
+            onFileChange={setAttachmentFile}
           />
         </div>
       </div>
@@ -262,6 +276,7 @@ export default function QuotePageClient() {
                 onItemsChange={setUploadedItems}
                 attachment={attachment}
                 onAttachmentChange={setAttachment}
+                onFileChange={setAttachmentFile}
               />
             </div>
           </div>

@@ -17,6 +17,8 @@ interface QuoteEmailData {
   items: { name: string; size?: string; qty: number; unit: string }[]
   uploaded: { name: string; qty: number }[]
   attachment?: string | null
+  fileData?: string | null
+  fileType?: string | null
 }
 
 export async function sendQuoteEmail(q: QuoteEmailData) {
@@ -53,5 +55,8 @@ export async function sendQuoteEmail(q: QuoteEmailData) {
     replyTo: q.email || undefined,
     subject: `New Quote Request — ${q.name}${q.company ? ` (${q.company})` : ''}`,
     text: body,
+    attachments: q.fileData && q.attachment
+      ? [{ filename: q.attachment, content: Buffer.from(q.fileData, 'base64'), contentType: q.fileType || 'application/octet-stream' }]
+      : [],
   })
 }

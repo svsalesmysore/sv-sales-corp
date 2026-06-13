@@ -26,6 +26,8 @@ export async function POST(req: NextRequest) {
     name: rec.name, company: rec.company, phone: rec.phone,
     email: rec.email, message: rec.message,
     items, uploaded, attachment: rec.attachment,
+    fileData: body.fileData ? String(body.fileData).slice(0, 20_000_000) : null,
+    fileType: body.fileType ? String(body.fileType).slice(0, 100) : null,
   }).catch(() => {})
   return NextResponse.json({ ok: true, id: rec.id })
 }

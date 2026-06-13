@@ -15,6 +15,7 @@ interface Props {
   onItemsChange: (items: UploadedItem[]) => void
   attachment: string | null
   onAttachmentChange: (name: string | null) => void
+  onFileChange?: (file: File | null) => void
   compact?: boolean
 }
 
@@ -48,7 +49,7 @@ function rowsToItems(rows: (string | number | undefined | null)[][]): UploadedIt
   return out
 }
 
-export default function UploadListPanel({ items, onItemsChange, attachment, onAttachmentChange, compact = false }: Props) {
+export default function UploadListPanel({ items, onItemsChange, attachment, onAttachmentChange, onFileChange, compact = false }: Props) {
   const inputRef = useRef<HTMLInputElement>(null)
   const [dragOver, setDragOver] = useState(false)
   const [parsing, setParsing] = useState(false)
@@ -77,10 +78,8 @@ export default function UploadListPanel({ items, onItemsChange, attachment, onAt
         toast.success(`Imported ${parsed.length} item${parsed.length !== 1 ? 's' : ''} from ${file.name}`)
       } else if (['jpg', 'jpeg', 'png', 'webp', 'heic', 'pdf'].includes(ext)) {
         onAttachmentChange(file.name)
-        toast.success('File noted', {
-          description: 'Attach it in WhatsApp (or your email) when it opens — we read photos & PDFs there.',
-          duration: 4000,
-        })
+        onFileChange?.(file)
+        toast.success('File attached', { description: 'It will be sent with your quote.' })
       } else {
         toast.error('Unsupported file', { description: 'Use Excel, CSV, TXT, a photo, or a PDF.' })
       }
@@ -134,7 +133,7 @@ export default function UploadListPanel({ items, onItemsChange, attachment, onAt
           {parsing ? 'Reading file…' : 'Drop your list here or click to upload'}
         </p>
         <p className="text-xs text-slate-400 mt-1">
-          Excel / CSV / TXT — items &amp; quantities import automatically. Photos &amp; PDFs attach in WhatsApp.
+          Excel / CSV / TXT — items import automatically. PDF / photos — attached directly to your quote.
         </p>
       </button>
       <input
@@ -150,9 +149,9 @@ export default function UploadListPanel({ items, onItemsChange, attachment, onAt
         <div className="mt-3 flex items-center gap-2 bg-amber-50 border border-amber-200 rounded-xl px-3 py-2">
           <Paperclip className="w-3.5 h-3.5 text-amber-600 shrink-0" />
           <span className="text-xs text-amber-800 flex-1 truncate">
-            <span className="font-medium">{attachment}</span> — attach this file in WhatsApp/email when it opens
+            <span className="font-medium">{attachment}</span> — will be sent with your quote email
           </span>
-          <button onClick={() => onAttachmentChange(null)} className="text-amber-500 hover:text-amber-700 cursor-pointer" aria-label="Remove attachment note">
+          <button onClick={() => { onAttachmentChange(null); onFileChange?.(null) }} className="text-amber-500 hover:text-amber-700 cursor-pointer" aria-label="Remove attachment note">
             <X className="w-3.5 h-3.5" />
           </button>
         </div>
