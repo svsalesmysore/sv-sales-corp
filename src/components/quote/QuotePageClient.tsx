@@ -85,7 +85,13 @@ export default function QuotePageClient() {
       let fileType: string | null = null
       if (attachmentFile) {
         const buf = await attachmentFile.arrayBuffer()
-        fileData = btoa(String.fromCharCode(...new Uint8Array(buf)))
+        const uint8 = new Uint8Array(buf)
+        let binary = ''
+        const chunkSize = 8192
+        for (let i = 0; i < uint8.length; i += chunkSize) {
+          binary += String.fromCharCode(...uint8.subarray(i, i + chunkSize))
+        }
+        fileData = btoa(binary)
         fileType = attachmentFile.type || 'application/octet-stream'
       }
 
