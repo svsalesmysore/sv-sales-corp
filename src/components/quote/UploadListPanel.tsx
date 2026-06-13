@@ -144,6 +144,20 @@ export default function UploadListPanel({ items, onItemsChange, attachment, onAt
     onItemsChange(items.map((it, i) => (i === idx ? { ...it, qty: Math.max(1, qty) } : it)))
   const removeItem = (idx: number) => onItemsChange(items.filter((_, i) => i !== idx))
 
+  const downloadTemplate = () => {
+    const rows = [
+      ['Sr No', 'Product Name', 'Qty'],
+      ['1', 'Example: Lion Impact Wrench LI-2050', '2'],
+      ...Array.from({ length: 19 }, (_, i) => [String(i + 2), '', '']),
+    ]
+    const csv = rows.map((r) => r.map((c) => `"${c}"`).join(',')).join('\n')
+    const a = document.createElement('a')
+    a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }))
+    a.download = 'sv-sales-quote-template.csv'
+    a.click()
+    URL.revokeObjectURL(a.href)
+  }
+
   return (
     <div className="bg-white rounded-2xl border border-slate-200/80 p-5">
       <div className="flex items-center justify-between mb-3">
@@ -185,6 +199,19 @@ export default function UploadListPanel({ items, onItemsChange, attachment, onAt
         className="hidden"
         onChange={(e) => { const f = e.target.files?.[0]; if (f) handleFile(f) }}
       />
+
+      {/* template download */}
+      <p className="text-xs text-slate-400 mt-2 text-center">
+        Don&apos;t have a list?{' '}
+        <button
+          type="button"
+          onClick={downloadTemplate}
+          className="text-brand-red hover:underline cursor-pointer"
+        >
+          Download our template
+        </button>
+        {' '}— fill in the Qty column and upload.
+      </p>
 
       {/* attachment chip */}
       {attachment && (
