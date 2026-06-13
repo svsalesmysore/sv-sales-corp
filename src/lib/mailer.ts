@@ -49,7 +49,7 @@ export async function sendQuoteEmail(q: QuoteEmailData) {
 
   await transporter.sendMail({
     from: `"SV Sales Website" <${process.env.GMAIL_USER}>`,
-    to: process.env.GMAIL_USER,
+    to: 'svsalesmysore@gmail.com',
     replyTo: q.email || undefined,
     subject: `New Quote Request — ${q.name}${q.company ? ` (${q.company})` : ''}`,
     text: body,
