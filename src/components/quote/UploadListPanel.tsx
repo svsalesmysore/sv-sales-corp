@@ -21,7 +21,7 @@ interface Props {
 
 const HEADER_WORDS = new Set(['item', 'items', 'product', 'products', 'name', 'description', 'particulars', 'sr', 'sl', 'no', 's.no', 'sno'])
 const QTY_KEYS   = new Set(['qty', 'quantity', 'count', 'nos', 'pcs', 'pieces', 'required', 'req', 'order'])
-const NAME_KEYS  = new Set(['description', 'name', 'product', 'item', 'particulars', 'article', 'particular'])
+const NAME_KEYS  = new Set(['description', 'name', 'product', 'item', 'particulars', 'article', 'particular', 'productname', 'itemname', 'productdescription', 'itemdescription'])
 
 /** "Spanner set x 2" / "Spanner set - 2" / "Spanner set, 2" → { name, qty } */
 function parseLine(line: string): UploadedItem | null {
@@ -144,15 +144,11 @@ export default function UploadListPanel({ items, onItemsChange, attachment, onAt
     onItemsChange(items.map((it, i) => (i === idx ? { ...it, qty: Math.max(1, qty) } : it)))
   const removeItem = (idx: number) => onItemsChange(items.filter((_, i) => i !== idx))
 
-  const downloadTemplate = () => {
-    const rows = [
-      ['Sr No', 'Product Name', 'Qty'],
-      ['1', 'Example: Lion Impact Wrench LI-2050', '2'],
-      ...Array.from({ length: 19 }, (_, i) => [String(i + 2), '', '']),
-    ]
-    const csv = rows.map((r) => r.map((c) => `"${c}"`).join(',')).join('\n')
+  const downloadTemplate = async () => {
+    const res = await fetch('/api/quote-template')
+    const blob = await res.blob()
     const a = document.createElement('a')
-    a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }))
+    a.href = URL.createObjectURL(blob)
     a.download = 'sv-sales-quote-template.csv'
     a.click()
     URL.revokeObjectURL(a.href)
