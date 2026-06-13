@@ -4,7 +4,7 @@ import catalog from '@/data/lion-catalog.json'
 
 interface CatalogVariant { option: string; model?: string }
 interface CatalogProduct {
-  id: string; name: string; model?: string; brand?: string
+  id: string; name: string; model?: string; brand?: string; unit?: string
   variants?: CatalogVariant[]
 }
 
@@ -23,20 +23,20 @@ export async function GET() {
   wb.creator = 'SV Sales Corporation'
   const ws = wb.addWorksheet('Quote Template')
 
-  // Freeze header row
   ws.views = [{ state: 'frozen', ySplit: 1 }]
 
-  // Column definitions
+  // A=Sr No  B=Brand  C=Model  D=Product Name  E=Unit  F=Qty
   ws.columns = [
     { width: 7  },  // A – Sr No
     { width: 12 },  // B – Brand
     { width: 14 },  // C – Model
     { width: 48 },  // D – Product Name
-    { width: 10 },  // E – Qty
+    { width: 8  },  // E – Unit
+    { width: 10 },  // F – Qty
   ]
 
   // ── Header row ──────────────────────────────────────────────────
-  const hRow = ws.addRow(['Sr No', 'Brand', 'Model', 'Product Name', 'Qty'])
+  const hRow = ws.addRow(['Sr No', 'Brand', 'Model', 'Product Name', 'Unit', 'Qty'])
   hRow.height = 22
   hRow.eachCell((cell, col) => {
     cell.fill = fill('FF1E293B')
@@ -45,7 +45,7 @@ export async function GET() {
     cell.alignment = { vertical: 'middle', horizontal: col === 4 ? 'left' : 'center' }
   })
   // Qty header — yellow to hint "fill this in"
-  const qtyHeader = ws.getCell('E1')
+  const qtyHeader = ws.getCell('F1')
   qtyHeader.fill = fill('FFF59E0B')
   qtyHeader.font = { bold: true, color: { argb: 'FF1C1917' }, size: 10 }
   qtyHeader.border = borderAll('FFB45309')
@@ -56,20 +56,21 @@ export async function GET() {
 
   for (const p of products) {
     const brand = p.brand ?? ''
+    const unit  = p.unit  ?? ''
     const entries: [string, string, string][] = p.variants?.length
       ? p.variants.map((v) => [brand, v.model || p.model || '', `${p.name} — ${v.option}`])
       : [[brand, p.model ?? '', p.name]]
 
     for (const [b, model, name] of entries) {
       const shade = n % 2 === 0
-      const row = ws.addRow([n, b, model, name, null])
+      const row = ws.addRow([n, b, model, name, unit, null])
       row.height = 16
 
       row.eachCell({ includeEmpty: true }, (cell, col) => {
         cell.font = { size: 10 }
         cell.alignment = { vertical: 'middle', horizontal: col === 4 ? 'left' : 'center' }
 
-        if (col === 5) {
+        if (col === 6) {
           // Qty column — light yellow, user fills this in
           cell.fill = fill(shade ? 'FFFFFCE7' : 'FFFFFBEB')
           cell.border = {
