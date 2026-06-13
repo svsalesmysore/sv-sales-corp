@@ -32,7 +32,7 @@ function parseLine(line: string): UploadedItem | null {
   return { name: s, qty: 1 }
 }
 
-function rowsToItems(rows: (string | number | undefined | null)[][]): UploadedItem[] {
+function rowsToItems(rows: (string | number | undefined | null)[][], requireQty = false): UploadedItem[] {
   const out: UploadedItem[] = []
   for (const row of rows) {
     const cells = (row ?? []).map((c) => String(c ?? '').trim()).filter(Boolean)
@@ -44,6 +44,7 @@ function rowsToItems(rows: (string | number | undefined | null)[][]): UploadedIt
     if (HEADER_WORDS.has(name.toLowerCase().replace(/[.:]/g, ''))) continue
     if (name.length < 2) continue
     const qtyCell = cells.slice(1).find((c) => /^\d{1,4}$/.test(c))
+    if (requireQty && !qtyCell) continue
     out.push({ name, qty: qtyCell ? Math.max(1, parseInt(qtyCell, 10)) : 1 })
   }
   return out
@@ -62,7 +63,7 @@ export default function UploadListPanel({ items, onItemsChange, attachment, onAt
         const text = await file.text()
         const parsed =
           ext === 'csv'
-            ? rowsToItems(text.split(/\r?\n/).map((l) => l.split(/[,;\t]/)))
+            ? rowsToItems(text.split(/\r?\n/).map((l) => l.split(/[,;\t]/)), true)
             : (text.split(/\r?\n/).map(parseLine).filter(Boolean) as UploadedItem[])
         if (!parsed.length) { toast.error('No items found in the file'); return }
         onItemsChange([...items, ...parsed])
@@ -72,7 +73,7 @@ export default function UploadListPanel({ items, onItemsChange, attachment, onAt
         const wb = XLSX.read(await file.arrayBuffer())
         const sheet = wb.Sheets[wb.SheetNames[0]]
         const rows = XLSX.utils.sheet_to_json<(string | number)[]>(sheet, { header: 1 })
-        const parsed = rowsToItems(rows)
+        const parsed = rowsToItems(rows, true)
         if (!parsed.length) { toast.error('No items found in the sheet'); return }
         onItemsChange([...items, ...parsed])
         toast.success(`Imported ${parsed.length} item${parsed.length !== 1 ? 's' : ''} from ${file.name}`)
