@@ -21,14 +21,14 @@ export async function POST(req: NextRequest) {
     uploaded,
     attachment: body.attachment ? String(body.attachment).slice(0, 200) : null,
   })
-  // Fire-and-forget — quote is already saved; email failure doesn't block the response
-  sendQuoteEmail({
+  // Await email before responding — Vercel freezes execution after response returns
+  await sendQuoteEmail({
     name: rec.name, company: rec.company, phone: rec.phone,
     email: rec.email, message: rec.message,
     items, uploaded, attachment: rec.attachment,
     fileData: body.fileData ? String(body.fileData).slice(0, 20_000_000) : null,
     fileType: body.fileType ? String(body.fileType).slice(0, 100) : null,
-  }).catch(() => {})
+  }).catch(() => {}) // quote is already saved; swallow email errors
   return NextResponse.json({ ok: true, id: rec.id })
 }
 
