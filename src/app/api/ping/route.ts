@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { supabaseAdmin } from '@/lib/supabase'
+import { supabaseAdmin } from '@/lib/supabase-admin'
 
 // Called by Vercel cron daily to prevent Supabase free-tier pausing (pauses after 1 week inactivity)
 export async function GET() {

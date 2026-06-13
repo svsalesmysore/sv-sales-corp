@@ -3,7 +3,7 @@
  * All functions are async. Admin-only data: never exposed to public pages.
  */
 import crypto from 'node:crypto'
-import { supabaseAdmin } from './supabase'
+import { supabaseAdmin } from './supabase-admin'
 import catalog from '@/data/lion-catalog.json'
 
 /* ── types ──────────────────────────────────────────────────── */
