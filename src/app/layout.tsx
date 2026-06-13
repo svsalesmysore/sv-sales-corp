@@ -4,6 +4,7 @@ import { QuoteCartProvider } from '@/context/QuoteCartContext'
 import { Toaster } from '@/components/ui/sonner'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
+import AuthHandler from '@/components/AuthHandler'
 import { BRAND } from '@/lib/brand'
 
 export const metadata: Metadata = {
@@ -27,6 +28,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </main>
             <Footer />
           </div>
+          <AuthHandler />
           <Toaster richColors position="bottom-right" />
         </QuoteCartProvider>
       </body>
