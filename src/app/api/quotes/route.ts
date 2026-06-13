@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { addQuote, listQuotes, updateQuoteStatus, type QuoteLine } from '@/lib/store'
 import { isAdmin, unauthorized } from '@/lib/admin-auth'
+import { sendQuoteEmail } from '@/lib/mailer'
 
-/** Public: store a quote submission (called alongside the WhatsApp/email handoff). */
+/** Public: store a quote and email it to the owner. */
 export async function POST(req: NextRequest) {
   const body = await req.json().catch(() => null)
   if (!body?.name || !body?.phone) {
@@ -20,6 +21,12 @@ export async function POST(req: NextRequest) {
     uploaded,
     attachment: body.attachment ? String(body.attachment).slice(0, 200) : null,
   })
+  // Fire-and-forget — quote is already saved; email failure doesn't block the response
+  sendQuoteEmail({
+    name: rec.name, company: rec.company, phone: rec.phone,
+    email: rec.email, message: rec.message,
+    items, uploaded, attachment: rec.attachment,
+  }).catch(() => {})
   return NextResponse.json({ ok: true, id: rec.id })
 }
 

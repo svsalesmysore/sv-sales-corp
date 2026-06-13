@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Trash2, Plus, Minus, ShoppingCart, Send, Phone, ArrowLeft, MessageCircle } from 'lucide-react'
+import { Trash2, Plus, Minus, ShoppingCart, Send, Phone, ArrowLeft } from 'lucide-react'
 import { toast } from 'sonner'
 import { useQuoteCart } from '@/context/QuoteCartContext'
 import { BRAND } from '@/lib/brand'
@@ -64,52 +64,6 @@ export default function QuotePageClient() {
     return true
   }
 
-  /** Build the plain-text quote message shared by WhatsApp and email. */
-  const buildQuoteText = (): string => {
-    const lines = items.map(
-      (i, idx) => `${idx + 1}. ${i.product.name}${i.size ? ` — ${i.product.sizeLabel || 'Size'}: ${i.size}` : ''} — Qty: ${i.quantity} ${i.product.unit}`,
-    )
-    const uploadedLines = uploadedItems.map(
-      (u, idx) => `${idx + 1}. ${u.name} — Qty: ${u.qty}`,
-    )
-    return [
-      '*New Quote Request — S V Sales Corporation*',
-      '',
-      `Name: ${form.name}`,
-      form.company ? `Company: ${form.company}` : '',
-      `Phone: ${form.phone}`,
-      form.email ? `Email: ${form.email}` : '',
-      form.message ? `Notes: ${form.message}` : '',
-      items.length ? `\nProducts (${items.length}):` : '',
-      ...lines,
-      uploadedLines.length ? `\nFrom my list (${uploadedLines.length}):` : '',
-      ...uploadedLines,
-      attachment ? `\n📎 I am attaching my product list file: ${attachment}` : '',
-    ]
-      .filter(Boolean)
-      .join('\n')
-  }
-
-  /** Store the quote in the owner's ledger (admin quotes inbox). Fire-and-forget. */
-  const recordQuote = () => {
-    fetch('/api/quotes', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        ...form,
-        items: items.map((i) => ({
-          productId: i.product.id,
-          name: i.product.name,
-          size: i.size,
-          qty: i.quantity,
-          unit: i.product.unit,
-        })),
-        uploaded: uploadedItems,
-        attachment,
-      }),
-    }).catch(() => { /* ledger is best-effort; WhatsApp/email still deliver */ })
-  }
-
   const finishSubmit = () => {
     setSent(true)
     clearCart()
@@ -118,20 +72,33 @@ export default function QuotePageClient() {
     localStorage.removeItem(UPLOAD_KEY)
   }
 
-  /** Send quote via both WhatsApp and email simultaneously. */
-  const submitBoth = (e: React.FormEvent) => {
+  /** Submit quote — saved to DB and emailed to the owner automatically. */
+  const submitQuote = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!validate()) return
     setSub(true)
-    recordQuote()
-    const text = encodeURIComponent(buildQuoteText())
-    const subject = encodeURIComponent(`New Quote Request — ${form.name}`)
-    const emailBody = encodeURIComponent(buildQuoteText().replace(/\*/g, ''))
-    window.open(`https://wa.me/${BRAND.whatsapp}?text=${text}`, '_blank', 'noopener,noreferrer')
-    window.location.href = `mailto:${BRAND.email}?subject=${subject}&body=${emailBody}`
-    toast.success('Quote sent!', { description: 'WhatsApp and email are both opening.' })
-    setSub(false)
-    finishSubmit()
+    try {
+      const r = await fetch('/api/quotes', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...form,
+          items: items.map((i) => ({
+            productId: i.product.id, name: i.product.name,
+            size: i.size, qty: i.quantity, unit: i.product.unit,
+          })),
+          uploaded: uploadedItems,
+          attachment,
+        }),
+      })
+      if (!r.ok) throw new Error('server error')
+      toast.success('Quote sent!', { description: 'We\'ll get back to you shortly.' })
+      finishSubmit()
+    } catch {
+      toast.error('Something went wrong. Please try again.')
+    } finally {
+      setSub(false)
+    }
   }
 
   /* ── Empty state: two paths — browse, or upload your own list ── */
@@ -178,13 +145,12 @@ export default function QuotePageClient() {
           <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-5">
             <Send className="w-10 h-10 text-green-600" />
           </div>
-          <h1 className="font-display font-bold text-3xl text-brand-dark mb-3">Almost done!</h1>
+          <h1 className="font-display font-bold text-3xl text-brand-dark mb-3">Quote sent!</h1>
           <p className="text-gray-500 mb-2">
-            Thank you, <span className="font-semibold">{form.name}</span>. Your quote has been prepared.
+            Thank you, <span className="font-semibold">{form.name}</span>. Your quote has been received.
           </p>
           <p className="text-gray-400 text-sm mb-8">
-            Please tap <span className="font-medium">Send</span> in the WhatsApp and email windows that just
-            opened to deliver it. We&apos;ll reply on {form.phone} with pricing shortly.
+            We&apos;ll review your request and reply on <span className="font-medium">{form.phone}</span> with pricing within 24 hours.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             <Link href="/products" className="inline-flex items-center gap-2 bg-brand-red text-white px-5 py-2.5 rounded-xl font-medium hover:bg-brand-red/80 transition-colors">
@@ -302,7 +268,7 @@ export default function QuotePageClient() {
 
           {/* right: contact form */}
           <div className="lg:col-span-2">
-            <form onSubmit={submitBoth} className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm sticky top-24">
+            <form onSubmit={submitQuote} className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm sticky top-24">
               <h2 className="font-semibold text-brand-dark text-lg mb-5">Your Details</h2>
 
               <div className="space-y-4">
@@ -348,10 +314,10 @@ export default function QuotePageClient() {
                     : 'bg-gradient-to-b from-brand-red-bright to-brand-red shadow-lg shadow-brand-red/20 hover:brightness-110 hover:scale-[1.02] glow-red-soft'
                 )}
               >
-                <MessageCircle className="w-4 h-4" />
+                <Send className="w-4 h-4" />
                 {submitting ? 'Sending…' : 'Send Quote'}
               </button>
-              <p className="text-xs text-gray-400 text-center mt-2">Sends to WhatsApp &amp; email together</p>
+              <p className="text-xs text-gray-400 text-center mt-2">We&apos;ll reply within 24 hours with pricing</p>
 
               <p className="text-xs text-gray-400 text-center mt-3">
                 We&apos;ll reply within 24 hours with pricing
