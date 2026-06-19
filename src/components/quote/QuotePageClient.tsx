@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Trash2, Plus, Minus, ShoppingCart, Send, Phone, ArrowLeft } from 'lucide-react'
+import { Trash2, Plus, Minus, ShoppingCart, Send, Phone, ArrowLeft, Search, Upload, FileText, Clock, MessageSquare, Package } from 'lucide-react'
 import { toast } from 'sonner'
 import { useQuoteCart } from '@/context/QuoteCartContext'
 import { BRAND } from '@/lib/brand'
@@ -339,12 +339,109 @@ export default function QuotePageClient() {
                 {submitting ? 'Sending…' : 'Send Quote'}
               </button>
               <p className="text-xs text-gray-400 text-center mt-2">We&apos;ll reply within 24 hours with pricing</p>
-
-              <p className="text-xs text-gray-400 text-center mt-3">
-                We&apos;ll reply within 24 hours with pricing
-              </p>
             </form>
           </div>
+        </div>
+      </div>
+
+      {/* ── How to Submit + FAQ ─────────────────────────────────── */}
+      <div className="border-t border-slate-100 bg-white py-14 px-4">
+        <div className="container mx-auto max-w-4xl">
+
+          {/* Two paths */}
+          <h2 className="font-display font-bold text-2xl text-brand-dark mb-2">How to Request a Quote</h2>
+          <p className="text-slate-400 text-sm mb-8">Choose the path that works best for you.</p>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-14">
+            {/* Path 1 */}
+            <div className="rounded-2xl border border-slate-200 p-6">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-8 h-8 rounded-full bg-brand-red/10 flex items-center justify-center">
+                  <Search className="w-4 h-4 text-brand-red" />
+                </div>
+                <h3 className="font-semibold text-brand-dark">Browse &amp; Add</h3>
+              </div>
+              <ol className="space-y-3">
+                {[
+                  { icon: Search,      text: 'Go to Products and browse the catalog' },
+                  { icon: Package,     text: 'Click "Add to Quote" on products you need' },
+                  { icon: ShoppingCart,text: 'Open your Quote Cart (top right)' },
+                  { icon: Send,        text: 'Fill in your details and submit' },
+                ].map(({ icon: Icon, text }, i) => (
+                  <li key={i} className="flex items-start gap-3 text-sm text-slate-600">
+                    <span className="w-5 h-5 rounded-full bg-slate-100 text-xs font-bold text-slate-400 flex items-center justify-center shrink-0 mt-0.5">{i + 1}</span>
+                    <span>{text}</span>
+                  </li>
+                ))}
+              </ol>
+            </div>
+
+            {/* Path 2 */}
+            <div className="rounded-2xl border border-slate-200 p-6">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-8 h-8 rounded-full bg-brand-red/10 flex items-center justify-center">
+                  <Upload className="w-4 h-4 text-brand-red" />
+                </div>
+                <h3 className="font-semibold text-brand-dark">Upload Your List</h3>
+              </div>
+              <ol className="space-y-3">
+                {[
+                  { text: 'Download our product template (Excel)' },
+                  { text: 'Fill in quantities for products you need' },
+                  { text: 'Upload the file in the quote page' },
+                  { text: 'Fill in your details and submit' },
+                ].map(({ text }, i) => (
+                  <li key={i} className="flex items-start gap-3 text-sm text-slate-600">
+                    <span className="w-5 h-5 rounded-full bg-slate-100 text-xs font-bold text-slate-400 flex items-center justify-center shrink-0 mt-0.5">{i + 1}</span>
+                    <span>{text}</span>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </div>
+
+          {/* FAQ */}
+          <h2 className="font-display font-bold text-2xl text-brand-dark mb-6">Common Questions</h2>
+          <div className="space-y-4">
+            {[
+              {
+                icon: Package,
+                q: 'Can I request multiple products at once?',
+                a: 'Yes — add as many products as you need before submitting. There is no limit.',
+              },
+              {
+                icon: FileText,
+                q: 'What if I already have my own list?',
+                a: 'Download our template, fill in the quantities, and upload it. We also accept your own Excel or CSV files.',
+              },
+              {
+                icon: Clock,
+                q: 'How long does it take to get pricing?',
+                a: 'We reply within 24 hours with a full price quote on the phone number or email you provide.',
+              },
+              {
+                icon: Phone,
+                q: 'How will you contact me?',
+                a: 'Primarily via WhatsApp or phone call on the number you provide. Email if you share one.',
+              },
+              {
+                icon: MessageSquare,
+                q: 'Can I add special requirements or notes?',
+                a: 'Yes — use the "Additional Notes" field to mention delivery location, urgency, or any special requirements.',
+              },
+            ].map(({ icon: Icon, q, a }, i) => (
+              <div key={i} className="flex gap-4 p-5 rounded-xl bg-slate-50 border border-slate-100">
+                <div className="w-8 h-8 rounded-full bg-white border border-slate-200 flex items-center justify-center shrink-0 mt-0.5">
+                  <Icon className="w-4 h-4 text-brand-red" />
+                </div>
+                <div>
+                  <p className="font-semibold text-sm text-brand-dark mb-1">{q}</p>
+                  <p className="text-sm text-slate-500">{a}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
         </div>
       </div>
     </div>
