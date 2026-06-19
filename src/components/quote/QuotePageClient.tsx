@@ -18,11 +18,11 @@ function HowToSection() {
         <h2 className="font-display font-bold text-2xl text-brand-dark mb-2">How to Request a Quote</h2>
         <p className="text-slate-400 text-sm mb-8">Choose the path that works best for you.</p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-14">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-14">
           <div className="rounded-2xl border border-slate-200 p-6">
             <div className="flex items-center gap-2 mb-4">
               <div className="w-8 h-8 rounded-full bg-brand-red/10 flex items-center justify-center">
-                <Search className="w-4 h-4 text-brand-red" />
+                <Package className="w-4 h-4 text-brand-red" />
               </div>
               <h3 className="font-semibold text-brand-dark">Browse &amp; Add</h3>
             </div>
@@ -31,6 +31,28 @@ function HowToSection() {
                 'Go to Products and browse the catalog',
                 'Click "Add to Quote" on products you need',
                 'Open your Quote Cart (top right)',
+                'Fill in your details and submit',
+              ].map((text, i) => (
+                <li key={i} className="flex items-start gap-3 text-sm text-slate-600">
+                  <span className="w-5 h-5 rounded-full bg-slate-100 text-xs font-bold text-slate-400 flex items-center justify-center shrink-0 mt-0.5">{i + 1}</span>
+                  <span>{text}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
+
+          <div className="rounded-2xl border border-slate-200 p-6">
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-8 h-8 rounded-full bg-brand-red/10 flex items-center justify-center">
+                <Search className="w-4 h-4 text-brand-red" />
+              </div>
+              <h3 className="font-semibold text-brand-dark">Search &amp; Add</h3>
+            </div>
+            <ol className="space-y-3">
+              {[
+                'Click the search icon in the header',
+                'Type the product name you are looking for',
+                'Click "Add to Quote" on the result',
                 'Fill in your details and submit',
               ].map((text, i) => (
                 <li key={i} className="flex items-start gap-3 text-sm text-slate-600">
