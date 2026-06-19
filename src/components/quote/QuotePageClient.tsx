@@ -11,6 +11,84 @@ import { cn } from '@/lib/utils'
 import { getProductImage, getFallbackImage } from '@/lib/image'
 import UploadListPanel, { type UploadedItem } from './UploadListPanel'
 
+function HowToSection() {
+  return (
+    <div className="border-t border-slate-100 bg-white py-14 px-4">
+      <div className="container mx-auto max-w-4xl">
+        <h2 className="font-display font-bold text-2xl text-brand-dark mb-2">How to Request a Quote</h2>
+        <p className="text-slate-400 text-sm mb-8">Choose the path that works best for you.</p>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-14">
+          <div className="rounded-2xl border border-slate-200 p-6">
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-8 h-8 rounded-full bg-brand-red/10 flex items-center justify-center">
+                <Search className="w-4 h-4 text-brand-red" />
+              </div>
+              <h3 className="font-semibold text-brand-dark">Browse &amp; Add</h3>
+            </div>
+            <ol className="space-y-3">
+              {[
+                'Go to Products and browse the catalog',
+                'Click "Add to Quote" on products you need',
+                'Open your Quote Cart (top right)',
+                'Fill in your details and submit',
+              ].map((text, i) => (
+                <li key={i} className="flex items-start gap-3 text-sm text-slate-600">
+                  <span className="w-5 h-5 rounded-full bg-slate-100 text-xs font-bold text-slate-400 flex items-center justify-center shrink-0 mt-0.5">{i + 1}</span>
+                  <span>{text}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
+
+          <div className="rounded-2xl border border-slate-200 p-6">
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-8 h-8 rounded-full bg-brand-red/10 flex items-center justify-center">
+                <Upload className="w-4 h-4 text-brand-red" />
+              </div>
+              <h3 className="font-semibold text-brand-dark">Upload Your List</h3>
+            </div>
+            <ol className="space-y-3">
+              {[
+                'Download our product template (Excel)',
+                'Fill in quantities for products you need',
+                'Upload the file in the quote page',
+                'Fill in your details and submit',
+              ].map((text, i) => (
+                <li key={i} className="flex items-start gap-3 text-sm text-slate-600">
+                  <span className="w-5 h-5 rounded-full bg-slate-100 text-xs font-bold text-slate-400 flex items-center justify-center shrink-0 mt-0.5">{i + 1}</span>
+                  <span>{text}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </div>
+
+        <h2 className="font-display font-bold text-2xl text-brand-dark mb-6">Common Questions</h2>
+        <div className="space-y-4">
+          {[
+            { icon: Package,      q: 'Can I request multiple products at once?',       a: 'Yes — add as many products as you need before submitting. There is no limit.' },
+            { icon: FileText,     q: 'What if I already have my own list?',            a: 'Download our template, fill in the quantities, and upload it. We also accept your own Excel or CSV files.' },
+            { icon: Clock,        q: 'How long does it take to get pricing?',          a: 'We reply within 24 hours with a full price quote on the phone number or email you provide.' },
+            { icon: Phone,        q: 'How will you contact me?',                       a: 'Primarily via WhatsApp or phone call on the number you provide. Email if you share one.' },
+            { icon: MessageSquare,q: 'Can I add special requirements or notes?',       a: 'Yes — use the "Additional Notes" field to mention delivery location, urgency, or any special requirements.' },
+          ].map(({ icon: Icon, q, a }, i) => (
+            <div key={i} className="flex gap-4 p-5 rounded-xl bg-slate-50 border border-slate-100">
+              <div className="w-8 h-8 rounded-full bg-white border border-slate-200 flex items-center justify-center shrink-0 mt-0.5">
+                <Icon className="w-4 h-4 text-brand-red" />
+              </div>
+              <div>
+                <p className="font-semibold text-sm text-brand-dark mb-1">{q}</p>
+                <p className="text-sm text-slate-500">{a}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+
 interface FormData {
   name:    string
   company: string
@@ -123,36 +201,39 @@ export default function QuotePageClient() {
   /* ── Empty state: two paths — browse, or upload your own list ── */
   if (!hasAnything && !submitted) {
     return (
-      <div className="min-h-screen bg-surface flex items-center justify-center px-4 py-16">
-        <div className="w-full max-w-lg">
-          <div className="text-center mb-8">
-            <div className="w-20 h-20 bg-brand-red/10 rounded-full flex items-center justify-center mx-auto mb-5">
-              <ShoppingCart className="w-10 h-10 text-brand-red" />
+      <div className="min-h-screen bg-surface">
+        <div className="flex items-center justify-center px-4 py-16">
+          <div className="w-full max-w-lg">
+            <div className="text-center mb-8">
+              <div className="w-20 h-20 bg-brand-red/10 rounded-full flex items-center justify-center mx-auto mb-5">
+                <ShoppingCart className="w-10 h-10 text-brand-red" />
+              </div>
+              <h1 className="font-display font-bold text-3xl text-brand-dark tracking-tight mb-3">Start your quote</h1>
+              <p className="text-slate-400 mb-6">Browse the catalog and add products — or skip browsing and upload the list you already have.</p>
+              <Link
+                href="/products"
+                className="inline-flex items-center gap-2 bg-gradient-to-b from-brand-red-bright to-brand-red text-white px-6 py-3 rounded-xl font-semibold glow-red-soft hover:brightness-110 active:scale-[0.98] transition-all duration-200 cursor-pointer"
+              >
+                <ArrowLeft className="w-4 h-4" /> Browse Products
+              </Link>
             </div>
-            <h1 className="font-display font-bold text-3xl text-brand-dark tracking-tight mb-3">Start your quote</h1>
-            <p className="text-slate-400 mb-6">Browse the catalog and add products — or skip browsing and upload the list you already have.</p>
-            <Link
-              href="/products"
-              className="inline-flex items-center gap-2 bg-gradient-to-b from-brand-red-bright to-brand-red text-white px-6 py-3 rounded-xl font-semibold glow-red-soft hover:brightness-110 active:scale-[0.98] transition-all duration-200 cursor-pointer"
-            >
-              <ArrowLeft className="w-4 h-4" /> Browse Products
-            </Link>
-          </div>
 
-          <div className="flex items-center gap-3 mb-6" aria-hidden>
-            <div className="flex-1 h-px bg-slate-200" />
-            <span className="text-xs uppercase tracking-wider text-slate-400">or</span>
-            <div className="flex-1 h-px bg-slate-200" />
-          </div>
+            <div className="flex items-center gap-3 mb-6" aria-hidden>
+              <div className="flex-1 h-px bg-slate-200" />
+              <span className="text-xs uppercase tracking-wider text-slate-400">or</span>
+              <div className="flex-1 h-px bg-slate-200" />
+            </div>
 
-          <UploadListPanel
-            items={uploadedItems}
-            onItemsChange={setUploadedItems}
-            attachment={attachment}
-            onAttachmentChange={setAttachment}
-            onFileChange={setAttachmentFile}
-          />
+            <UploadListPanel
+              items={uploadedItems}
+              onItemsChange={setUploadedItems}
+              attachment={attachment}
+              onAttachmentChange={setAttachment}
+              onFileChange={setAttachmentFile}
+            />
+          </div>
         </div>
+        <HowToSection />
       </div>
     )
   }
@@ -344,106 +425,7 @@ export default function QuotePageClient() {
         </div>
       </div>
 
-      {/* ── How to Submit + FAQ ─────────────────────────────────── */}
-      <div className="border-t border-slate-100 bg-white py-14 px-4">
-        <div className="container mx-auto max-w-4xl">
-
-          {/* Two paths */}
-          <h2 className="font-display font-bold text-2xl text-brand-dark mb-2">How to Request a Quote</h2>
-          <p className="text-slate-400 text-sm mb-8">Choose the path that works best for you.</p>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-14">
-            {/* Path 1 */}
-            <div className="rounded-2xl border border-slate-200 p-6">
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-8 h-8 rounded-full bg-brand-red/10 flex items-center justify-center">
-                  <Search className="w-4 h-4 text-brand-red" />
-                </div>
-                <h3 className="font-semibold text-brand-dark">Browse &amp; Add</h3>
-              </div>
-              <ol className="space-y-3">
-                {[
-                  { icon: Search,      text: 'Go to Products and browse the catalog' },
-                  { icon: Package,     text: 'Click "Add to Quote" on products you need' },
-                  { icon: ShoppingCart,text: 'Open your Quote Cart (top right)' },
-                  { icon: Send,        text: 'Fill in your details and submit' },
-                ].map(({ icon: Icon, text }, i) => (
-                  <li key={i} className="flex items-start gap-3 text-sm text-slate-600">
-                    <span className="w-5 h-5 rounded-full bg-slate-100 text-xs font-bold text-slate-400 flex items-center justify-center shrink-0 mt-0.5">{i + 1}</span>
-                    <span>{text}</span>
-                  </li>
-                ))}
-              </ol>
-            </div>
-
-            {/* Path 2 */}
-            <div className="rounded-2xl border border-slate-200 p-6">
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-8 h-8 rounded-full bg-brand-red/10 flex items-center justify-center">
-                  <Upload className="w-4 h-4 text-brand-red" />
-                </div>
-                <h3 className="font-semibold text-brand-dark">Upload Your List</h3>
-              </div>
-              <ol className="space-y-3">
-                {[
-                  { text: 'Download our product template (Excel)' },
-                  { text: 'Fill in quantities for products you need' },
-                  { text: 'Upload the file in the quote page' },
-                  { text: 'Fill in your details and submit' },
-                ].map(({ text }, i) => (
-                  <li key={i} className="flex items-start gap-3 text-sm text-slate-600">
-                    <span className="w-5 h-5 rounded-full bg-slate-100 text-xs font-bold text-slate-400 flex items-center justify-center shrink-0 mt-0.5">{i + 1}</span>
-                    <span>{text}</span>
-                  </li>
-                ))}
-              </ol>
-            </div>
-          </div>
-
-          {/* FAQ */}
-          <h2 className="font-display font-bold text-2xl text-brand-dark mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {[
-              {
-                icon: Package,
-                q: 'Can I request multiple products at once?',
-                a: 'Yes — add as many products as you need before submitting. There is no limit.',
-              },
-              {
-                icon: FileText,
-                q: 'What if I already have my own list?',
-                a: 'Download our template, fill in the quantities, and upload it. We also accept your own Excel or CSV files.',
-              },
-              {
-                icon: Clock,
-                q: 'How long does it take to get pricing?',
-                a: 'We reply within 24 hours with a full price quote on the phone number or email you provide.',
-              },
-              {
-                icon: Phone,
-                q: 'How will you contact me?',
-                a: 'Primarily via WhatsApp or phone call on the number you provide. Email if you share one.',
-              },
-              {
-                icon: MessageSquare,
-                q: 'Can I add special requirements or notes?',
-                a: 'Yes — use the "Additional Notes" field to mention delivery location, urgency, or any special requirements.',
-              },
-            ].map(({ icon: Icon, q, a }, i) => (
-              <div key={i} className="flex gap-4 p-5 rounded-xl bg-slate-50 border border-slate-100">
-                <div className="w-8 h-8 rounded-full bg-white border border-slate-200 flex items-center justify-center shrink-0 mt-0.5">
-                  <Icon className="w-4 h-4 text-brand-red" />
-                </div>
-                <div>
-                  <p className="font-semibold text-sm text-brand-dark mb-1">{q}</p>
-                  <p className="text-sm text-slate-500">{a}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-        </div>
-      </div>
+      <HowToSection />
     </div>
   )
 }
